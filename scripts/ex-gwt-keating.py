@@ -17,6 +17,7 @@ import git
 import matplotlib.patches
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import pooch
 from flopy.plot.styles import styles
 from modflow_devtools.misc import get_env, timed
@@ -165,6 +166,7 @@ def build_mf6gwf():
         gwf,
         save_specific_discharge=True,
         save_saturation=True,
+        save_flows=True,
         icelltype=1,
         k=hydraulic_conductivity,
     )
@@ -291,26 +293,101 @@ def build_mf6gwt():
     return sim
 
 
+def build_mf6prt():
+    print(f"Building mf6prt model...{sim_name}")
+    name = "track"
+    sim_ws = workspace / sim_name / "mf6prt"
+    gwf_ws = workspace / sim_name / "mf6gwf"
+    sim = flopy.mf6.MFSimulation(
+        sim_name=name,
+        sim_ws=sim_ws,
+        exe_name="mf6",
+        continue_=True,
+    )
+    tdis_ds = ((period1, 1, 1.0), (period2, 1, 1.0))
+    flopy.mf6.ModflowTdis(
+        sim, nper=len(tdis_ds), perioddata=tdis_ds, time_units=time_units
+    )
+    prt = flopy.mf6.ModflowPrt(sim, modelname=name)
+    dis = flopy.mf6.ModflowGwtdis(
+        prt,
+        length_units=length_units,
+        nlay=nlay,
+        nrow=nrow,
+        ncol=ncol,
+        delr=delr,
+        delc=delc,
+        top=top,
+        botm=botm,
+    )
+    mip = flopy.mf6.ModflowPrtmip(prt, pname="mip", porosity=porosity)
+    nns = range(prt.modelgrid.ncpl)
+    ids = prt.modelgrid.get_lrc(nns)
+    ccs = list(
+        zip(prt.modelgrid.xcellcenters.ravel(), prt.modelgrid.ycellcenters.ravel())
+    )
+    prpdata = [(nn, *ids[nn], *ccs[nn], 0.5) for nn in nns]
+    prp = flopy.mf6.ModflowPrtprp(
+        prt,
+        pname="prp1a",
+        filename=f"{name}_1a.prp",
+        nreleasepts=len(prpdata),
+        packagedata=prpdata,
+        releasetimes=[(0,)],
+        nreleasetimes=1,
+        exit_solve_tolerance=1e-5,
+        extend_tracking=False,
+        local_z=True,
+    )
+    budget_record = [f"{name}.cbc"]
+    track_record = [f"{name}.trk"]
+    trackcsv_record = [f"{name}.trk.csv"]
+    flopy.mf6.ModflowPrtoc(
+        prt,
+        pname="oc",
+        budget_filerecord=budget_record,
+        track_filerecord=track_record,
+        trackcsv_filerecord=trackcsv_record,
+        saverecord=[("BUDGET", "ALL")],
+    )
+    pd = [
+        ("GWFHEAD", Path(f"../{gwf_ws.name}/flow.hds")),
+        ("GWFBUDGET", Path(f"../{gwf_ws.name}/flow.bud")),
+    ]
+    fmi = flopy.mf6.ModflowPrtfmi(prt, packagedata=pd)
+    ems = flopy.mf6.ModflowEms(
+        sim,
+        pname="ems",
+        filename=f"{name}.ems",
+    )
+    sim.register_solution_package(ems, [prt.name])
+    return sim
+
+
 def build_models():
     sim_mf6gwf = build_mf6gwf()
     sim_mf6gwt = build_mf6gwt()
+    sim_mf6prt = build_mf6prt()
     sim_mf2005 = None  # build_mf2005()
     sim_mt3dms = None  # build_mt3dms(sim_mf2005)
-    return sim_mf6gwf, sim_mf6gwt, sim_mf2005, sim_mt3dms
+    return sim_mf6gwf, sim_mf6gwt, sim_mf6prt, sim_mf2005, sim_mt3dms
 
 
 def write_models(sims, silent=True):
-    sim_mf6gwf, sim_mf6gwt, sim_mf2005, sim_mt3dms = sims
+    sim_mf6gwf, sim_mf6gwt, sim_mf6prt, sim_mf2005, sim_mt3dms = sims
     sim_mf6gwf.write_simulation(silent=silent)
     sim_mf6gwt.write_simulation(silent=silent)
+    sim_mf6prt.write_simulation(silent=silent)
 
 
 @timed
 def run_models(sims, silent=True):
-    sim_mf6gwf, sim_mf6gwt, sim_mf2005, sim_mt3dms = sims
+    sim_mf6gwf, sim_mf6gwt, sim_mf6prt, sim_mf2005, sim_mt3dms = sims
     success, buff = sim_mf6gwf.run_simulation(silent=silent)
     assert success, buff
     success, buff = sim_mf6gwt.run_simulation(silent=silent)
+    assert success, buff
+    success, buff = sim_mf6prt.run_simulation(silent=silent)
     assert success, buff
 
 
@@ -329,24 +406,25 @@ def plot_results(sims):
     print("Plotting model results...")
     plot_head_results(sims)
     plot_conc_results(sims)
+    plot_track_results(sims)
     plot_cvt_results(sims)
     if plot_save and gif_save:
         make_animated_gif(sims)
 
 
 def plot_head_results(sims):
-    print("Plotting head model results...")
-    sim_mf6gwf, _, _, _ = sims
+    print("Plotting heads...")
+    sim_mf6gwf, _, sim_mf6prt, _, _ = sims
     gwf = sim_mf6gwf.flow
     botm = gwf.dis.botm.array
 
     with styles.USGSMap():
-        sim_ws = Path(sim_mf6gwf.simulation_data.mfpath.get_sim_path())
         head = gwf.output.head().get_data()
         head = np.where(head > botm, head, np.nan)
         fig, ax = plt.subplots(1, 1, figsize=figure_size, dpi=300, tight_layout=True)
         pxs = flopy.plot.PlotCrossSection(model=gwf, ax=ax, line={"row": 0})
         pa = pxs.plot_array(head, head=head, cmap="jet")
+        pxs.plot_ibound()
         pxs.plot_bc(ftype="RCH", color="red")
         pxs.plot_bc(ftype="CHD")
         plt.colorbar(pa, shrink=0.5)
@@ -361,15 +439,52 @@ def plot_head_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = sim_ws.parent.name
+            sim_folder = sim_mf6gwf.sim_path.parent.name
             fname = f"{sim_folder}-head.png"
             fpth = figs_path / fname
             fig.savefig(fpth)
 
 
+def plot_track_results(sims):
+    print("Plotting particle tracks...")
+    sim_mf6gwf, _, sim_mf6prt, _, _ = sims
+    gwf = sim_mf6gwf.flow
+    botm = gwf.dis.botm.array
+
+    with styles.USGSMap():
+        head = gwf.output.head().get_data()
+        head = np.where(head > botm, head, np.nan)
+        fig, ax = plt.subplots(1, 1, figsize=figure_size, dpi=300, tight_layout=True)
+        pxs = flopy.plot.PlotCrossSection(model=gwf, ax=ax, line={"row": 0})
+        pa = pxs.plot_array(head, head=head, cmap="jet", alpha=0.5)
+        pxs.plot_ibound()
+        pxs.plot_bc(ftype="RCH", color="red")
+        pxs.plot_bc(ftype="CHD")
+        plt.colorbar(pa, shrink=0.5)
+        confining_rect = matplotlib.patches.Rectangle(
+            (3000, 1000), 3000, 100, color="gray", alpha=0.5
+        )
+        ax.add_patch(confining_rect)
+        ax.set_xlabel("x position (m)")
+        ax.set_ylabel("elevation (m)")
+        ax.set_aspect(plotaspect)
+
+        pathlines = pd.read_csv(sim_mf6prt.sim_path / "track.trk.csv")
+        for _, pl in pathlines.groupby("irpt"):
+            pl.plot("x", "z", lw=0.2, ax=ax, alpha=0.4, legend=False)
+
+        if plot_show:
+            plt.show()
+        if plot_save:
+            sim_folder = sim_mf6prt.sim_path.parent.name
+            fname = f"{sim_folder}-tracks.png"
+            fpth = figs_path / fname
+            fig.savefig(fpth)
+
+
 def plot_conc_results(sims):
-    print("Plotting conc model results...")
-    sim_mf6gwf, sim_mf6gwt, _, _ = sims
+    print("Plotting concentrations...")
+    sim_mf6gwf, sim_mf6gwt, _, _, _ = sims
     gwf = sim_mf6gwf.flow
     gwt = sim_mf6gwt.trans
     botm = gwf.dis.botm.array
@@ -436,8 +551,8 @@ def make_animated_gif(sims):
     import matplotlib as mpl
     from matplotlib.animation import FuncAnimation, PillowWriter
 
-    print("Animating conc model results...")
-    sim_mf6gwf, sim_mf6gwt, _, _ = sims
+    print("Animating concentrations...")
+    sim_mf6gwf, sim_mf6gwt, _, _, _ = sims
     gwf = sim_mf6gwf.flow
     gwt = sim_mf6gwt.trans
     botm = gwf.dis.botm.array
@@ -492,7 +607,7 @@ def make_animated_gif(sims):
 
 def plot_cvt_results(sims):
     print("Plotting cvt model results...")
-    _, sim_mf6gwt, _, _ = sims
+    _, sim_mf6gwt, _, _, _ = sims
     gwt = sim_mf6gwt.trans
 
     with styles.USGSMap():
@@ -583,5 +698,5 @@ def scenario(silent=True):
         plot_results(sim)
 
 
-scenario()
+scenario(silent=False)
 # -

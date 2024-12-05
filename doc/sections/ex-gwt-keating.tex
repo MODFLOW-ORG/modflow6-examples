@@ -3,6 +3,8 @@
 % Describe source of problem
 This example is based on an unsaturated flow and transport problem described in \cite{keating2009stable} under the section ``Extension to Mixed Vadose/ Saturated Zone Simulations.''  The problem consists of a two-dimensional cross-section model with a perched aquifer overlying a water table aquifer.  This problem offers a difficult test for the Newton flow formulation in \mf as well as for the transport model, which must transmit solute through dry cells.  This problem was also used by \cite{mt3dusgs} as a test for their solute routing approach implemented in MT3D-USGS for flow models solved with MODFLOW-NWT \citep{modflownwt}.
 
+In addition to the transport model, this example also includes a particle tracking model to simulate the advective motion of individual solute particles.  This model demonstrates the default approach taken by \mf to track particles through dry cells under the Newton formulation, which is to drop the particles instantaneously to the top-most active cell in the vertical column and resume tracking as usual.
+
 \subsection{Example description}
 
 The parameters used for this problem are listed in table~\ref{tab:ex-gwt-keating-01}.  The model grid consists of 1 row, 400 columns, and 80 layers.  The flow problem consists of a perched aquifer overlying an unconfined water table aquifer.  A perched aquifer forms due the presence of a thin, discontinuous low permeability lens located near the center of the model domain.  Flow conditions are simulated as steady state.  The solute transport simulation represents transient conditions, which begin with an initial concentration specified as zero everywhere within the model domain.  For the first 730 days, recharge enters at a concentration of one.  For the remainder of the simulation, recharge has a solute concentration of zero.
@@ -29,11 +31,18 @@ Simulated heads from \mf are shown in figure~\ref{fig:ex-gwt-keating-head}.  Cel
 
 Simulated concentrations from \mf are shown in figure~\ref{fig:ex-gwt-keating-conc} for three different times.  These plots show the development of the solute plume in the perched aquifer, and then shows flushing of the perched aquifer when the recharge concentration becomes zero.  In the underlying water table aquifer, two solute plumes are formed as groundwater flows over the edges of the low permeability lens.  These plumes then flow toward the right, and eventually exit through the constant head cells.  Plots of concentration versus time for the two yellow points shown in figure~\ref{fig:ex-gwt-keating-conc} are shown in figure~\ref{fig:ex-gwt-keating-cvt}.  Results from \mf are shown with the results presented by \cite{keating2009stable} and are in good agreement considering the complexity of the problem.  Similar plots for this problem are also presented by \cite{mt3dusgs}.
 
+Simulated particle tracks from \mf are shown in figure~\ref{fig:ex-gwt-keating-tracks}.  A particle is released at the center of every cell in the top layer of the grid.  Particle pathlines are colored such that adjacent pathlines may be easily distinguished.
+
 % a figure
 \begin{StandardFigure}{
                                      Color shaded plots of concentrations simulated by \mf for the \cite{keating2009stable} problem involving groundwater flow and transport through an unsaturated zone.  This plot can be compared to figure 11 in \cite{mt3dusgs}, which shows similar plots for MT3D-USGS results.  Plots of concentration versus time are shown in figure~\ref{fig:ex-gwt-keating-cvt} for the two points shown in yellow.
                                      }{fig:ex-gwt-keating-conc}{../figures/ex-gwt-keating-conc.png}
 \end{StandardFigure}                                  
+
+\begin{StandardFigure}{
+                                    Particle pathlines simulated by \mf for the \cite{keating2009stable} problem involving groundwater flow and transport through an unsaturated zone.  
+                                    }{fig:ex-gwt-keating-tracks}{../figures/ex-gwt-keating-tracks.png}
+\end{StandardFigure}      
 
 \begin{StandardFigure}{
                                      Concentrations versus time for two observation points as simulated by \mf and by \cite{keating2009stable} for a problem involving groundwater flow and transport through an unsaturated zone.  This plot can be compared to figure 12 in \cite{mt3dusgs}, which shows a similar plot for MT3D-USGS results.
