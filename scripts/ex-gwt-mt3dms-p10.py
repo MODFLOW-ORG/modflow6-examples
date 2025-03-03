@@ -99,7 +99,7 @@ laytyp = icelltype = 0
 # Starting Heads:
 fname = "p10shead.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:c6591c3c3cfd023ab930b7b1121bfccf",
@@ -161,7 +161,7 @@ wel_mf6_spd = {0: welspd_mf6}
 # Starting concentrations:
 fname = "p10cinit.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:8e2d3ba7af1ec65bb07f6039d1dfb2c8",

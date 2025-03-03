@@ -102,7 +102,7 @@ sfr_data_path = data_path.parent / sfr_sim_name if root else Path.cwd()
 
 fname = "idomain.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sfr_sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sfr_sim_name}/{fname}",
     fname=fname,
     path=sfr_data_path,
     known_hash="md5:a0b12472b8624aecdc79e5c19c97040c",
@@ -111,7 +111,7 @@ idomain = np.loadtxt(fpath, dtype=int)
 
 fname = "bottom.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sfr_sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sfr_sim_name}/{fname}",
     fname=fname,
     path=sfr_data_path,
     known_hash="md5:fa5fe276f4f58a01eabfe88516cc90af",
@@ -120,7 +120,7 @@ botm = np.loadtxt(fpath, dtype=float)
 
 fname = "top.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:88cc15f87824ebfd35ed5b4be7f68387",
@@ -129,7 +129,7 @@ top = np.loadtxt(fpath, dtype=float)
 
 fname = "infilt_mult.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:8bf0a48d604263cb35151587a9d8ca29",
@@ -138,7 +138,7 @@ infilt_mult = np.loadtxt(fpath, dtype=float)
 
 fname = "extwc_mult.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:6e289692a2b55b7bafb8bd9d71b0a2cb",
@@ -147,7 +147,7 @@ extwc_mult = np.loadtxt(fpath, dtype=float)
 
 fname = "routing_map.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:1bf9a6bb3513a184aa5093485e622f5b",

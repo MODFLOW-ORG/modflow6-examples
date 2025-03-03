@@ -89,7 +89,7 @@ shape3d = (nlay, nrow, ncol)
 # Load the bottom
 fname = "bottom.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:9287f9e214147d95e6ed159732079a0b",

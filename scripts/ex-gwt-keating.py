@@ -502,7 +502,7 @@ def plot_cvt_results(sims):
 
         fname = "keating_obs1.csv"
         fpath = pooch.retrieve(
-            url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+            url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
             fname=fname,
             path=data_path,
             known_hash="md5:174c5548c3bbb9ea4ebc8b5a33ea2851",
@@ -511,7 +511,7 @@ def plot_cvt_results(sims):
 
         fname = "keating_obs2.csv"
         fpath = pooch.retrieve(
-            url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+            url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
             fname=fname,
             path=data_path,
             known_hash="md5:8de2ef529a2537ecd6c62bc207b67fb5",

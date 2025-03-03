@@ -85,7 +85,7 @@ total_time = 9131.0  # Total simulation time ($d$)
 # Load Data Arrays
 fname = "bot1.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:c510defe0eb1ba1fbfab5663ff63cd83",
@@ -95,7 +95,7 @@ botm = [bot0] + [bot0 - (15.0 * k) for k in range(1, nlay)]
 
 fname = "idomain1.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:45d1ca08015e4a34125ccd95a83da0ee",
@@ -105,7 +105,7 @@ idomain = nlay * [idomain0]
 
 fname = "lakibd.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:18c90af94c34825a206935b7ddace2f9",
@@ -122,7 +122,7 @@ lakibd = np.loadtxt(fpath, dtype=int)
 def get_stream_data():
     fname = "stream.csv"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:1291c8dec5a415866c711ee14bf0b1f8",
@@ -246,7 +246,7 @@ def build_mf6gwf(sim_folder):
     chdlist = []
     fname = "chd.dat"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:7889521ec9ec9521377d604d9f6d1f74",
@@ -668,7 +668,7 @@ def plot_gwt_results(sims):
 
             fname = "teststrm.sg2"
             fpath = pooch.retrieve(
-                url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+                url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
                 fname=fname,
                 path=data_path,
                 known_hash="md5:4bb5e256ed8b67f1743d547b43a610d0",
@@ -678,7 +678,7 @@ def plot_gwt_results(sims):
 
             fname = "teststrm.sg3"
             fpath = pooch.retrieve(
-                url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+                url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
                 fname=fname,
                 path=data_path,
                 known_hash="md5:a30d8e27d0bbe09dcb9f39d115592ff5",
@@ -688,7 +688,7 @@ def plot_gwt_results(sims):
 
             fname = "teststrm.sg4"
             fpath = pooch.retrieve(
-                url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+                url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
                 fname=fname,
                 path=data_path,
                 known_hash="md5:ec589d7333fe160842945b5895f5160a",

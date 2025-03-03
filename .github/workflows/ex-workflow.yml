@@ -61,7 +61,7 @@ jobs:
       - name: Checkout MODFLOW 6
         uses: actions/checkout@v4
         with:
-          repository: MODFLOW-USGS/modflow6
+          repository: MODFLOW-ORG/modflow6
           path: modflow6
 
       - name: Setup Python
@@ -129,13 +129,13 @@ jobs:
       - name: Checkout MODFLOW 6
         uses: actions/checkout@v4
         with:
-          repository: MODFLOW-USGS/modflow6
+          repository: MODFLOW-ORG/modflow6
           path: modflow6
 
       - name: Checkout usgslatex
         uses: actions/checkout@v4
         with:
-          repository: MODFLOW-USGS/usgslatex
+          repository: MODFLOW-ORG/usgslatex
           path: usgslatex
 
       - name: Install LaTeX and extra fonts
@@ -238,7 +238,7 @@ jobs:
 
       - name: Delete latest release
         if: |
-          github.repository_owner == 'MODFLOW-USGS' &&
+          github.repository_owner == 'MODFLOW-ORG' &&
           github.ref_name == 'master' &&
           github.event_name == 'push'
         env:
@@ -250,7 +250,7 @@ jobs:
 
       - name: Create new release
         if: |
-          github.repository_owner == 'MODFLOW-USGS' &&
+          github.repository_owner == 'MODFLOW-ORG' &&
           github.ref_name == 'master' &&
           github.event_name == 'push'
         uses: ncipollo/release-action@v1
@@ -264,7 +264,7 @@ jobs:
 
       - name: Upload release assets
         if: |
-          github.repository_owner == 'MODFLOW-USGS' &&
+          github.repository_owner == 'MODFLOW-ORG' &&
           github.ref_name == 'master' &&
           github.event_name == 'push'
         uses: svenstaro/upload-release-action@v2

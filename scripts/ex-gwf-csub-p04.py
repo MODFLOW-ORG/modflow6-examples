@@ -98,7 +98,7 @@ ib_thick = [float(value) for value in ib_thick_str.split(",")]
 # Load active domain and create idomain array
 fname = "idomain.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:2f05a27b6f71e564c0d3616e3fd00ac8",

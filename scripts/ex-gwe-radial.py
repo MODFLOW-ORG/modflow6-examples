@@ -102,7 +102,7 @@ lhv = 2500.0  # Latent heat of vaporization (will eventually need to be removed)
 # Load a file stored in the data directory for building out the DISV grid
 fname = "Qin100_V1e-5.csv"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:2f45f4f50998964e49c6e0337973c6ac",

@@ -57,7 +57,7 @@ time_units = "days"
 # Load the wetdry array for layer 1
 fname = "wetdry01.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:3a4b357b7d2cd5175a205f3347ab973d",

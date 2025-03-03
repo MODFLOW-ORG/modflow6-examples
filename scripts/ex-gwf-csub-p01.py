@@ -87,7 +87,7 @@ locw201 = 11
 # Load the aquifer load time series
 fname = "train_load_193704231304.csv"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:32dc8e7b7e39876374af43605e264725",
@@ -311,7 +311,7 @@ def plot_results(sim, silent=True):
         # get the observed head
         fname = "s201_gw_2sec.csv"
         fpath = pooch.retrieve(
-            url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+            url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
             fname=fname,
             path=data_path,
             known_hash="md5:1098bcd3f4fc1bd3b38d3d55152a8fbb",

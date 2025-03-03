@@ -93,7 +93,7 @@ tdis_ds = [(86400.0, nstp, 1.0)]
 # load delr
 fname = "delr.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:893ce3e7e186fe81d19e3e8c720986c1",
@@ -123,7 +123,7 @@ ts_data = [(t, q) for t, q in zip(times, inflows)]
 # Load the initial conditions (heads and stages)
 fname = "initial_head.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:928af478596db57c65d3fbe8a0d15996",
@@ -131,7 +131,7 @@ fpath = pooch.retrieve(
 strt = np.loadtxt(fpath, dtype=float)
 fname = "initial_stage_a.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:4861ff917d741090aac22addd3a4726c",
@@ -142,7 +142,7 @@ parameters["ex-gwf-sfr-pindersauera"]["stage"] = [
 ]
 fname = "initial_stage_b.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:dc821ef57c471719387ac4e3fc659fa6",

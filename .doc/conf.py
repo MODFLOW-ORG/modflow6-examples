@@ -97,7 +97,7 @@ source_suffix = {
 # Settings for GitHub actions integration
 if on_rtd:
     extensions.append("rtds_action")
-    rtds_action_github_repo = "MODFLOW-USGS/modflow6-examples"
+    rtds_action_github_repo = "MODFLOW-ORG/modflow6-examples"
     rtds_action_path = "."
     rtds_action_artifact_prefix = "rtd-files-for-"
     rtds_action_github_token = os.environ.get("GITHUB_TOKEN", None)
@@ -212,7 +212,7 @@ nbsphinx_prolog = (
 
     <div class="admonition note">
       This page was generated from
-      <a class="reference external" href="https://github.com/MODFLOW-USGS/modflow6-examples/blob/"""
+      <a class="reference external" href="https://github.com/MODFLOW-ORG/modflow6-examples/blob/"""
     + ref
     + r"""/scripts/{{ env.docname.split('/')|last|e + '.py' }}">{{ env.docname.split('/')|last|e + '.py' }}</a>.
       It's also available as a <a href="{{ env.docname.split('/')|last|e + '.ipynb' }}" class="reference download internal" download>notebook</a>.

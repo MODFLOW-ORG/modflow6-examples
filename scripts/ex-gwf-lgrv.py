@@ -85,7 +85,7 @@ tdis_ds = list(zip(perlen, nstp, tsmult))
 # load data files and process into arrays
 fname = "top.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:7e95923e78d0a2e2133929376d913ecf",
@@ -122,7 +122,7 @@ hashes = [
 for k in range(nlay):
     fname = f"ikzone{k + 1}.dat"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash=f"md5:{hashes[k]}",
@@ -130,7 +130,7 @@ for k in range(nlay):
     ikzone[k, :, :] = np.loadtxt(fpath)
 fname = "riv.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:5ccbe4f29940376309db445dbb2d75d0",

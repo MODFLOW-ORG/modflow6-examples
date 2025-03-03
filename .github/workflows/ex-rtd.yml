@@ -96,7 +96,7 @@ jobs:
       - name: Checkout MODFLOW 6
         uses: actions/checkout@v4
         with:
-          repository: MODFLOW-USGS/modflow6
+          repository: MODFLOW-ORG/modflow6
           path: modflow6
           ref: ${{ needs.set_options.outputs.mf6_ref }}
 
@@ -174,7 +174,7 @@ jobs:
       - build
     runs-on: ubuntu-latest
     if: |
-      github.repository_owner == 'MODFLOW-USGS' &&
+      github.repository_owner == 'MODFLOW-ORG' &&
       (
         github.ref_name == 'master' ||
         github.ref_name == 'develop'

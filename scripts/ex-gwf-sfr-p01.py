@@ -80,7 +80,7 @@ shape3d = (nlay, nrow, ncol)
 # Load the idomain, top, bottom, and evapotranspiration surface arrays
 fname = "idomain.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:a0b12472b8624aecdc79e5c19c97040c",
@@ -88,7 +88,7 @@ fpath = pooch.retrieve(
 idomain = np.loadtxt(fpath, dtype=int)
 fname = "top.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:ab5097c1dc22e60fb313bf7f10dd8efe",
@@ -96,7 +96,7 @@ fpath = pooch.retrieve(
 top = np.loadtxt(fpath, dtype=float)
 fname = "bottom.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:fa5fe276f4f58a01eabfe88516cc90af",
@@ -104,7 +104,7 @@ fpath = pooch.retrieve(
 botm = np.loadtxt(fpath, dtype=float)
 fname = "recharge.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:82ed1ed29a457f1f38e51cd2657676e1",
@@ -112,7 +112,7 @@ fpath = pooch.retrieve(
 recharge = np.loadtxt(fpath, dtype=float)
 fname = "surf.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:743ce03e5e46867cf5af94f1ac283514",

@@ -68,7 +68,7 @@ See the [FloPy documentation](https://flopy.readthedocs.io/en/stable/md/get_modf
 
 ### Update FloPy classes
 
-FloPy and MODFLOW 6 versions must be kept in sync for FloPy to properly generate and consume MF6 input/output files. To update FloPy from some branch of the [MODFLOW 6 repository](https://github.com/MODFLOW-USGS/modflow6), for instance the `develop` branch:
+FloPy and MODFLOW 6 versions must be kept in sync for FloPy to properly generate and consume MF6 input/output files. To update FloPy from some branch of the [MODFLOW 6 repository](https://github.com/MODFLOW-ORG/modflow6), for instance the `develop` branch:
 
 ```shell
 python -m flopy.mf6.utils.generate_classes --ref develop --no-backup
@@ -123,7 +123,7 @@ Provided a file name `fname` and data directory `data_path`, the following snipp
 
 ```python
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:<MD5 hash of the file>",

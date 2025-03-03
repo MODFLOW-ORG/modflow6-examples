@@ -92,7 +92,7 @@ laytyp = 6 * [1] + 21 * [0]
 # Setting starting head information
 fname = "p08shead.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:673d570ab9d496355470ac598c4b8b55",

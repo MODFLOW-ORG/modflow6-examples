@@ -141,7 +141,7 @@ shape3d = (nlay, nrow, ncol)
 # Load the idomain arrays
 fname = "lakes-01.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:a74ded5357aa667b9df793847e5f8f41",
@@ -150,7 +150,7 @@ lake_map = np.ones(shape3d, dtype=int) * -1
 lake_map[0, :, :] = np.loadtxt(fpath, dtype=int) - 1
 fname = "lakes-02.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:7830e5223c958c35be349a3be24a60a3",

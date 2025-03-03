@@ -53,7 +53,7 @@ plot_save = get_env("PLOT_SAVE", True)
 # Load the constant time series
 fname = "boundary_heads.csv"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:8177e15feeeedcdd59ee15745e796e59",
@@ -721,7 +721,7 @@ def export_tables(silent=True):
 
 def get_obs_dataframe(file_name, hash):
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{file_name}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{file_name}",
         fname=file_name,
         path=data_path,
         known_hash=f"md5:{hash}",
@@ -1160,7 +1160,7 @@ def plot_calibration(silent=True):
 
         fname = "boundary_heads.csv"
         fpath = pooch.retrieve(
-            url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+            url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
             fname=fname,
             path=data_path,
             known_hash="md5:8177e15feeeedcdd59ee15745e796e59",

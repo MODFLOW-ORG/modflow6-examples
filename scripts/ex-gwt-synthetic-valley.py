@@ -234,7 +234,7 @@ voronoi_grid = VertexGrid(**gridprops, nlay=1, idomain=idomain_vor)
 # load raster data files
 fname = "k_aq_SI.tif"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:d233e5c393ab6c029c63860d73818856",
@@ -243,7 +243,7 @@ kaq = flopy.utils.Raster.load(fpath)
 
 fname = "k_clay_SI.tif"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:a08999c37f42b35884468e4ef896d5f9",
@@ -252,7 +252,7 @@ kclay = flopy.utils.Raster.load(fpath)
 
 fname = "top_SI.tif"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:781155bdcc2b9914e1cad6b10de0e9c7",
@@ -261,7 +261,7 @@ top_base = flopy.utils.Raster.load(fpath)
 
 fname = "bottom_SI.tif"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:00b4a39fbf5180e65c0367cdb6f15c93",
@@ -270,7 +270,7 @@ bot = flopy.utils.Raster.load(fpath)
 
 fname = "lake_location_SI.tif"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:38600d6f0eef7c033ede278252dc6343",

@@ -116,7 +116,7 @@ def from_argus_export(fname):
 # Load argus mesh and get disv grid properties
 fname = "argus.exp"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:072a758ca3d35831acb7e1e27e7b8524",

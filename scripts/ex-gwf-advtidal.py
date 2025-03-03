@@ -176,7 +176,7 @@ def build_models():
     ghb_spd = {0: ghb_spd}
     fname = "tides.csv"
     fname = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:425337a0bf24fa72c9e40f4e3d9f698a",
@@ -218,7 +218,7 @@ def build_models():
     ]
     fname = "wellrates.csv"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:6ca7366be279d679b14e8338a195422f",
@@ -252,7 +252,7 @@ def build_models():
     riv_spd = list(zip(rivlay, rivrow, rivcol, rivstg, rivcnd, rivrbt, rivbnd))
     fname = "riverstage.csv"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:83f8b526ec6e6978b1d9dbd6fde231ef",
@@ -290,7 +290,7 @@ def build_models():
             )
         fname = f"recharge{ipak + 1}.csv"
         fpath = pooch.retrieve(
-            url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+            url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
             fname=fname,
             path=data_path,
             known_hash=f"md5:{hashes[ipak]}",

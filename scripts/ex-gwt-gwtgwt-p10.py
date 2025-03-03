@@ -100,7 +100,7 @@ gwt_mt3dms_sim_name = "ex-gwt-mt3dms-p10"
 gwt_mt3dms_data_path = data_path.parent / gwt_mt3dms_sim_name if root else Path.cwd()
 fname = "p10shead.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{gwt_mt3dms_sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{gwt_mt3dms_sim_name}/{fname}",
     fname=fname,
     path=gwt_mt3dms_data_path,
     known_hash="md5:c6591c3c3cfd023ab930b7b1121bfccf",
@@ -140,7 +140,7 @@ wel_mf6_spd = {0: welspd_mf6}
 # Starting concentrations from file:
 fname = "p10cinit.dat"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{gwt_mt3dms_sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{gwt_mt3dms_sim_name}/{fname}",
     fname=fname,
     path=gwt_mt3dms_data_path,
     known_hash="md5:8e2d3ba7af1ec65bb07f6039d1dfb2c8",
@@ -814,7 +814,7 @@ figure_size = (6, 8)
 def get_reference_data_conc():
     fname = "gwt-p10-mf6_conc_lay3_1days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:bbb596110559d00b7f01032998cf35f4",
@@ -823,7 +823,7 @@ def get_reference_data_conc():
 
     fname = "gwt-p10-mf6_conc_lay3_500days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:3b3b9321ae6c801fec7d3562aa44a009",
@@ -832,7 +832,7 @@ def get_reference_data_conc():
 
     fname = "gwt-p10-mf6_conc_lay3_750days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:0d1c2e7682a946e11b56f87c28c0ebd7",
@@ -841,7 +841,7 @@ def get_reference_data_conc():
 
     fname = "gwt-p10-mf6_conc_lay3_1000days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:c5fe612424e5f83fb2ac46cd4fdc8fb6",
@@ -855,7 +855,7 @@ def get_reference_data_conc():
 def get_reference_data_heads():
     fname = "gwt-p10-mf6_head_lay3_1days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:0c5ce894877692b0a018587a2df068d6",
@@ -863,7 +863,7 @@ def get_reference_data_heads():
     head1 = np.loadtxt(fpath)
     fname = "gwt-p10-mf6_head_lay3_500days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:b4b56f9ecad0abafc6c62072cc5f15e9",
@@ -871,7 +871,7 @@ def get_reference_data_heads():
     head500 = np.loadtxt(fpath)
     fname = "gwt-p10-mf6_head_lay3_750days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:1c35fee2f7764c1c28eb84ed98b1300c",
@@ -879,7 +879,7 @@ def get_reference_data_heads():
     head750 = np.loadtxt(fpath)
     fname = "gwt-p10-mf6_head_lay3_1000days.txt"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:b8e67997ca429f6f20e15852fb2fba9f",

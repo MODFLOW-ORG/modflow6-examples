@@ -95,7 +95,7 @@ ticklabels = np.arange(0, 10000, 2000)
 # Load the bottom
 fname = "bottom.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:0fd4b16db652808c7e36a5a2a25da0a2",
@@ -108,7 +108,7 @@ strt = botm + 20.0
 # Load the high recharge rate
 fname = "recharge_high.txt"
 fpath = pooch.retrieve(
-    url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/master/data/{sim_name}/{fname}",
+    url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/master/data/{sim_name}/{fname}",
     fname=fname,
     path=data_path,
     known_hash="md5:8d8f8bb3cec22e7a0cbe6aba95da8f35",

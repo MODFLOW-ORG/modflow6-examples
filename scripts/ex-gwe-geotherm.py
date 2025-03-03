@@ -474,7 +474,7 @@ def build_mf6_flow_model(sim_name, silent=True):
     # Instantiating MODFLOW 6 discretization package
     fname = "Mesh.dat"
     fpath = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:f3d321b7690f9f1f7dcd730c2bfe8e23",
@@ -859,7 +859,7 @@ def plot_temperature(sim, scen, time_):
     # aX_pth = os.path.join('..', 'data', 'ex-gwe-geotherm')
     fname = "spectral_Qin=100_t=50d-X.csv"
     aX_pth = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:c6f08403c9863da315393ad9bf3f0f33",
@@ -868,7 +868,7 @@ def plot_temperature(sim, scen, time_):
 
     fname = "spectral_Qin=100_t=50d-Y.csv"
     aY_pth = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:8901f084096a8868b4d25393162fc780",
@@ -877,7 +877,7 @@ def plot_temperature(sim, scen, time_):
 
     fname = "spectral_Qin=100_t=50d-Z.csv"
     aZ_pth = pooch.retrieve(
-        url=f"https://github.com/MODFLOW-USGS/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
+        url=f"https://github.com/MODFLOW-ORG/modflow6-examples/raw/develop/data/{sim_name}/{fname}",
         fname=fname,
         path=data_path,
         known_hash="md5:c011c72c7e8af10e6bd2fcc5fb069884",
