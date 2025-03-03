@@ -40,8 +40,7 @@
 
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -52,12 +51,12 @@ from modflow_devtools.misc import get_env, timed
 # Example name and base workspace
 sim_name = "ex-gwe-barends"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
 
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -235,7 +234,7 @@ ctp_spd = {0: ctp_left}
 @timed
 def build_mf6_flow_model():
     gwf_name = sim_name
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwf")
+    sim_ws = workspace / sim_name / "mf6gwf"
 
     # Instantiate a MODFLOW 6 simulation
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
@@ -347,7 +346,7 @@ def build_mf6_flow_model():
 def build_mf6_heat_model():
     print(f"Building mf6gwe model...{sim_name}")
     gwename = sim_name
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwe")
+    sim_ws = workspace / sim_name / "mf6gwe"
 
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
@@ -517,7 +516,7 @@ def plot_thermal_bleeding(sim_gwe):
     if plot_show:
         plt.show()
     if plot_save:
-        fpth = os.path.join(figs_path / f"{sim_name}-gridView.png")
+        fpth = figs_path / f"{sim_name}-gridView.png"
         fig.savefig(fpth, dpi=600)
 
     # Next, plot model output
@@ -591,7 +590,7 @@ def plot_thermal_bleeding(sim_gwe):
     if plot_show:
         plt.show()
     if plot_save:
-        fpth = os.path.join(figs_path / f"{sim_name}-200yrs.png")
+        fpth = figs_path / f"{sim_name}-200yrs.png"
         fig2.savefig(fpth, dpi=600)
 
     return

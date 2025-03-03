@@ -21,7 +21,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -40,13 +40,13 @@ gwfname = "gwf-" + sim_name.split("-")[-1]
 gwename = "gwe-" + sim_name.split("-")[-1]
 
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
 
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 sim_ws = workspace / sim_name
 
 # Settings from environment variables
@@ -234,7 +234,7 @@ fpath = pooch.retrieve(
     path=data_path,
     known_hash="md5:d107d2a5e01646a861e73bb3465f0747",
 )
-# fpath = os.path.join(data_path, fname)
+# fpath = data_path / fname
 
 
 # Model timing

@@ -23,8 +23,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -39,11 +38,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 example_name = "ex-gwt-mt3dms-p06"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variable
 write = get_env("WRITE", True)
@@ -160,7 +159,7 @@ tdis_rc.append((perlen, nstp, 1.0))
 
 # +
 def build_models(sim_name, mixelm=0, silent=False):
-    mt3d_ws = os.path.join(workspace, sim_name, "mt3d")
+    mt3d_ws = workspace / sim_name / "mt3d"
     modelname_mf = "p06-mf"
 
     # Instantiate the MODFLOW model
@@ -251,7 +250,7 @@ def build_models(sim_name, mixelm=0, silent=False):
     # MODFLOW 6
     name = "p06-mf6"
     gwfname = "gwf-" + name
-    sim_ws = os.path.join(workspace, sim_name)
+    sim_ws = workspace / sim_name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
     # Instantiating MODFLOW 6 time discretization
@@ -487,16 +486,15 @@ figure_size = (6, 4.5)
 
 
 def plot_results(mt3d, mf6, idx, ax=None):
-    mt3d_out_path = mt3d.model_ws
-    mf6_out_path = mf6.simulation_data.mfpath.get_sim_path()
-    mf6.simulation_data.mfpath.get_sim_path()
+    mt3d_out_path = Path(mt3d.model_ws)
+    mf6_out_path = Path(mf6.simulation_data.mfpath.get_sim_path())
 
     # Get the MT3DMS observation output file
-    fname = os.path.join(mt3d_out_path, "MT3D001.OBS")
-    cvt = mt3d.load_obs(fname) if os.path.isfile(fname) else None
+    fname = mt3d_out_path / "MT3D001.OBS"
+    cvt = mt3d.load_obs(fname) if fname.is_file() else None
 
     # Get the MODFLOW 6 concentration observation output file
-    fname = os.path.join(mf6_out_path, list(mf6.model_names)[1] + ".obs.csv")
+    fname = mf6_out_path / (list(mf6.model_names)[1] + ".obs.csv")
     mf6cobs = flopy.utils.Mf6Obs(fname).data
 
     # Create figure for scenario

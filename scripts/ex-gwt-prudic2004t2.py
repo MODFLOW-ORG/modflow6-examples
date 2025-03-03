@@ -14,8 +14,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -31,13 +30,13 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwt-prudic2004t2"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = pl.Path(f"../data/{sim_name}")
-data_path = data_path if data_path.is_dir() else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = Path(f"../data/{sim_name}")
+data_path = data_path if data_path.is_dir() else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -197,7 +196,7 @@ def build_mf6gwf(sim_folder):
     global idomain
     print(f"Building mf6gwf model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwf")
+    sim_ws = workspace / sim_folder / "mf6gwf"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_data = [(total_time, 1, 1.0)]
     flopy.mf6.ModflowTdis(
@@ -345,7 +344,7 @@ def build_mf6gwf(sim_folder):
 def build_mf6gwt(sim_folder):
     print(f"Building mf6gwt model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwt")
+    sim_ws = workspace / sim_folder / "mf6gwt"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_data = ((total_time, 300, 1.0),)
     flopy.mf6.ModflowTdis(
@@ -556,7 +555,7 @@ def plot_gwf_results(sims):
     sim_mf6gwf, _ = sims
     gwf = sim_mf6gwf.flow
     with styles.USGSMap():
-        sim_ws = sim_mf6gwf.simulation_data.mfpath.get_sim_path()
+        sim_ws = Path(sim_mf6gwf.simulation_data.mfpath.get_sim_path())
 
         head = gwf.output.head().get_data()
         stage = gwf.lak.output.stage().get_data().flatten()
@@ -588,8 +587,7 @@ def plot_gwf_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-head.png"
             fpth = figs_path / fname
             fig.savefig(fpth)
@@ -602,7 +600,7 @@ def plot_gwt_results(sims):
     gwt = sim_mf6gwt.trans
 
     with styles.USGSMap() as fs:
-        sim_ws = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
+        sim_ws = Path(sim_mf6gwt.simulation_data.mfpath.get_sim_path())
 
         conc = gwt.output.concentration().get_data()
         lakconc = gwt.lak.output.concentration().get_data().flatten()
@@ -649,8 +647,7 @@ def plot_gwt_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-conc.png"
             fpth = figs_path / fname
             fig.savefig(fpth)
@@ -708,8 +705,7 @@ def plot_gwt_results(sims):
             if plot_show:
                 plt.show()
             if plot_save:
-                sim_folder = os.path.split(sim_ws)[0]
-                sim_folder = os.path.basename(sim_folder)
+                sim_folder = sim_ws.parent.name
                 fname = f"{sim_folder}-cvt.png"
                 fpth = figs_path / fname
                 fig.savefig(fpth)

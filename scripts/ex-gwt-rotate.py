@@ -7,8 +7,7 @@
 # Import dependencies, define some variables, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -23,11 +22,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwt-rotate"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -193,7 +192,7 @@ def get_cstrt(nlay, ncol, length, x1, x2, a1, a2, b, c1, c2, c3):
 def build_models(sim_folder):
     print(f"Building model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder)
+    sim_ws = workspace / sim_folder
     sim = flopy.mf6.MFSimulation(
         sim_name=name,
         sim_ws=sim_ws,
@@ -317,7 +316,7 @@ figure_size = (6, 4)
 
 def plot_velocity_profile(sim, idx):
     with styles.USGSMap() as fs:
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model("flow")
         gwt = sim.get_model("trans")
         print("Creating velocity profile plot...")
@@ -362,7 +361,7 @@ def plot_velocity_profile(sim, idx):
 
         # plot numerical results
         file_name = gwf.oc.budget_filerecord.get_data()[0][0]
-        fpth = os.path.join(sim_ws, file_name)
+        fpth = sim_ws / file_name
         bobj = flopy.utils.CellBudgetFile(fpth, precision="double")
         kstpkper = bobj.get_kstpkper()
         spdis = bobj.get_data(text="DATA-SPDIS", kstpkper=kstpkper[0])[0]
@@ -394,7 +393,7 @@ def plot_velocity_profile(sim, idx):
 
 def plot_conc(sim, idx):
     with styles.USGSMap() as fs:
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model("flow")
         gwt = sim.get_model("trans")
 
@@ -454,7 +453,7 @@ def make_animated_gif(sim, idx):
 
     print("Creating animation...")
     with styles.USGSMap() as fs:
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model("flow")
         gwt = sim.get_model("trans")
 

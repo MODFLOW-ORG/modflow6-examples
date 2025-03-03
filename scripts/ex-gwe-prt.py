@@ -7,7 +7,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -37,12 +37,12 @@ gwf_name = sim_name + "-gwf"
 gwe_name = sim_name + "-gwe"
 prt_name = sim_name + "-prt"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 sim_ws = workspace / sim_name
 gwf_ws = sim_ws / "gwf"
 gwe_ws = sim_ws / "gwe"
@@ -328,8 +328,8 @@ def build_gwe_sim(name):
     )
 
     pd = [
-        ("GWFHEAD", pl.Path(f"../{gwf_ws.name}/{gwf_name}.hds"), None),
-        ("GWFBUDGET", pl.Path(f"../{gwf_ws.name}/{gwf_name}.cbc"), None),
+        ("GWFHEAD", Path(f"../{gwf_ws.name}/{gwf_name}.hds"), None),
+        ("GWFBUDGET", Path(f"../{gwf_ws.name}/{gwf_name}.cbc"), None),
     ]
     flopy.mf6.ModflowGwefmi(gwe, packagedata=pd)
 
@@ -382,8 +382,8 @@ def build_prt_sim(name):
     )
 
     pd = [
-        ("GWFHEAD", pl.Path(f"../{gwf_ws.name}/{gwf_name}.hds"), None),
-        ("GWFBUDGET", pl.Path(f"../{gwf_ws.name}/{gwf_name}.cbc"), None),
+        ("GWFHEAD", Path(f"../{gwf_ws.name}/{gwf_name}.hds"), None),
+        ("GWFBUDGET", Path(f"../{gwf_ws.name}/{gwf_name}.cbc"), None),
     ]
 
     flopy.mf6.ModflowPrtfmi(prt, packagedata=pd)

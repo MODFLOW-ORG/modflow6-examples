@@ -9,14 +9,9 @@
 
 # +
 # Imports
-import os
-import pathlib as pl
-import sys
-from pprint import pformat
-
-sys.path.append(os.path.join("..", "common"))
-
 import math
+from pathlib import Path
+from pprint import pformat
 
 import flopy
 import git
@@ -32,13 +27,13 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwe-geotherm"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
 
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 
 # Settings from environment variables
@@ -429,7 +424,7 @@ def build_mf6_flow_model(sim_name, silent=True):
     global top, botm
 
     gwfname = "gwf-" + sim_name.split("-")[2]
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwf")
+    sim_ws = workspace / sim_name / "mf6gwf"
 
     # Instantiate a new MF6 simulation
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
@@ -566,7 +561,7 @@ def build_mf6_flow_model(sim_name, silent=True):
 def build_mf6_heat_model(sim_name, dirichlet=0.0, neumann=0.0, silent=False):
     print(f"Building mf6gwt model...{sim_name}")
     gwename = "gwe-" + sim_name.split("-")[2]
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwe")
+    sim_ws = workspace / sim_name / "mf6gwe"
 
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
@@ -793,7 +788,7 @@ def plot_grid(sim):
         if plot_show:
             plt.show()
         if plot_save:
-            fpth = os.path.join(figs_path / f"{simname}-grid.png")
+            fpth = figs_path / f"{simname}-grid.png"
             fig.savefig(fpth, dpi=300)
 
 
@@ -824,7 +819,7 @@ def plot_grid_inset(sim):
         if plot_show:
             plt.show()
         if plot_save:
-            fpth = os.path.join(figs_path / f"{simname}-grid-inset.png")
+            fpth = figs_path / f"{simname}-grid-inset.png"
             fig.savefig(fpth, dpi=300)
 
 
@@ -853,7 +848,7 @@ def plot_head(sim):
         if plot_show:
             plt.show()
         if plot_save:
-            fpth = os.path.join(figs_path / f"{simname}-head.png")
+            fpth = figs_path / f"{simname}-head.png"
             fig.savefig(fpth, dpi=300)
 
 
@@ -947,7 +942,7 @@ def plot_temperature(sim, scen, time_):
         if plot_show:
             plt.show()
         if plot_save:
-            fpth = os.path.join(figs_path / f"{simname}-temp50days.png")
+            fpth = figs_path / f"{simname}-temp50days.png"
             fig.savefig(fpth, dpi=300)
 
 

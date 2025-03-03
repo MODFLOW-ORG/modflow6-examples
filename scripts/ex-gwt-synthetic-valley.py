@@ -7,8 +7,7 @@
 # Import dependencies, define the example name and workspace, read settings from environment variables, and define some general utilities.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -121,13 +120,13 @@ def circle_function(center=(0, 0), radius=1.0, dtheta=10.0):
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwt-synthetic-valley"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = pl.Path(f"../data/{sim_name}")
-data_path = data_path if data_path.is_dir() else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = Path(f"../data/{sim_name}")
+data_path = data_path if data_path.is_dir() else Path.cwd()
 
 # Conversion factors
 ft2m = 1.0 / 3.28081
@@ -206,7 +205,7 @@ wp = np.array(well_points)
 
 # +
 # create the voronoi grid
-temp_path = pl.Path("temp/triangle_data")
+temp_path = Path("temp/triangle_data")
 temp_path.mkdir(parents=True, exist_ok=True)
 tri = Triangle(angle=30, nodes=sg_densify, model_ws=temp_path)
 tri.add_polygon(bp_densify)
@@ -456,7 +455,7 @@ welspd = [
 def build_mf6gwf(sim_folder):
     print(f"Building mf6gwf model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwf")
+    sim_ws = workspace / sim_folder / "mf6gwf"
     sim = flopy.mf6.MFSimulation(
         sim_name=name,
         sim_ws=sim_ws,
@@ -555,7 +554,7 @@ def build_mf6gwf(sim_folder):
 def build_mf6gwt(sim_folder):
     print(f"Building mf6gwt model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwt")
+    sim_ws = workspace / sim_folder / "mf6gwt"
     sim = flopy.mf6.MFSimulation(
         sim_name=name,
         sim_ws=sim_ws,
@@ -810,7 +809,7 @@ def plot_results(sims, idx):
 def plot_river_mapping(sims, idx):
     print("Plotting river mapping...")
     sim_mf6gwf, _, _, _ = sims
-    sim_ws = sim_mf6gwf.simulation_data.mfpath.get_sim_path()
+    sim_ws = Path(sim_mf6gwf.simulation_data.mfpath.get_sim_path())
     dv = 100.0  # m
 
     with styles.USGSMap():
@@ -886,7 +885,7 @@ def plot_river_mapping(sims, idx):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.basename(os.path.split(sim_ws)[0])
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-river-discretization.png"
             fig.savefig(figs_path / fname)
 
@@ -894,7 +893,7 @@ def plot_river_mapping(sims, idx):
 def plot_head_results(sims, idx):
     print("Plotting gwf model results...")
     sim_mf6gwf, _, _, _ = sims
-    sim_ws = sim_mf6gwf.simulation_data.mfpath.get_sim_path()
+    sim_ws = Path(sim_mf6gwf.simulation_data.mfpath.get_sim_path())
     gwf = sim_mf6gwf.flow
 
     xlims = (extent[0], extent[1])
@@ -1026,7 +1025,7 @@ def plot_head_results(sims, idx):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.basename(os.path.split(sim_ws)[0])
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-head.png"
             fig.savefig(figs_path / fname)
 
@@ -1034,7 +1033,7 @@ def plot_head_results(sims, idx):
 def plot_conc_results(sims):
     print("Plotting gwt model results...")
     _, sim_mf6gwt, _, _ = sims
-    sim_ws = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
+    sim_ws = Path(sim_mf6gwt.simulation_data.mfpath.get_sim_path())
     gwt = sim_mf6gwt.trans
     with styles.USGSMap():
         fig = plt.figure(figsize=six_panel_figsize, constrained_layout=True)
@@ -1133,8 +1132,7 @@ def plot_conc_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-conc.png"
             fig.savefig(figs_path / fname)
 

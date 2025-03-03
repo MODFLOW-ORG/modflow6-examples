@@ -9,8 +9,7 @@
 import math
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -30,12 +29,12 @@ from scipy.spatial.distance import cdist
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwe-radial"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -522,7 +521,7 @@ def create_divs_objs(fl, silent=True):
 
 def build_mf6_flow_model(sim_name, left_chd_spd=None, right_chd_spd=None, silent=True):
     gwfname = "gwf-" + sim_name.split("-")[2]
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwf")
+    sim_ws = workspace / sim_name / "mf6gwf"
 
     # Instantiate a new MF6 simulation
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
@@ -658,7 +657,7 @@ def build_mf6_heat_model(
 ):
     print(f"Building mf6gwt model...{sim_name}")
     gwename = "gwe-" + sim_name.split("-")[2]
-    sim_ws = os.path.join(workspace, sim_name[:-2], "mf6gwe" + scen_ext)
+    sim_ws = workspace / sim_name[:-2] / f"mf6gwe{scen_ext}"
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
     # Instantiating MODFLOW 6 groundwater transport model

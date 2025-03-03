@@ -30,7 +30,7 @@
 # and read settings from environment variables.
 
 # +
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -53,11 +53,11 @@ gwf_name = sim_name.replace("ex-prt-", "") + "-gwf"
 prt_name = sim_name.replace("ex-prt-", "") + "-prt"
 mp7_name = sim_name.replace("ex-prt-", "") + "-mp7"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 sim_ws = workspace / sim_name
 gwf_ws = sim_ws / "gwf"
 prt_ws = sim_ws / "prt"
@@ -435,8 +435,8 @@ def build_prt_model():
     flopy.mf6.ModflowPrtfmi(
         prt,
         packagedata=[
-            ("GWFHEAD", pl.Path(f"../{gwf_ws.name}/{headfile}")),
-            ("GWFBUDGET", pl.Path(f"../{gwf_ws.name}/{budgetfile}")),
+            ("GWFHEAD", Path(f"../{gwf_ws.name}/{headfile}")),
+            ("GWFBUDGET", Path(f"../{gwf_ws.name}/{budgetfile}")),
         ],
     )
 

@@ -7,8 +7,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -20,11 +19,11 @@ from modflow_devtools.misc import get_env, timed
 # in the git repository, use the folder structure described in
 # the README. Otherwise just use the current working directory.
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -91,7 +90,7 @@ hclose, rclose, relax = 1e-10, 1e-6, 0.97
 def build_models(sim_folder, inflow):
     print(f"Building model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder)
+    sim_ws = workspace / sim_folder
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = ((perlen, nstp, 1.0),)
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)

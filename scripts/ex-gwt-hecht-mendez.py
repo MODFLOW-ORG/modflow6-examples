@@ -25,8 +25,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -41,12 +40,12 @@ from scipy.special import erf, erfc
 # the README. Otherwise just use the current working directory.
 name = "hecht-mendez"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -378,7 +377,7 @@ def build_mf2k5_flow_model(
     silent=False,
 ):
     print(f"Building mf2005 model...{sim_name}")
-    mt3d_ws = os.path.join(workspace, sim_name, "mt3d")
+    mt3d_ws = workspace / sim_name / "mt3d"
     modelname_mf = "hecht-mendez"
 
     # Instantiate the MODFLOW model
@@ -446,8 +445,8 @@ def build_mf6_flow_model(
     silent=False,
 ):
     print(f"Building mf6gwf model...{sim_name}")
-    gwfname = "gwf-" + name
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwf")
+    gwfname = f"gwf-{name}"
+    sim_ws = workspace / sim_name / "mf6gwf"
     sim = flopy.mf6.MFSimulation(sim_name=gwfname, sim_ws=sim_ws, exe_name="mf6")
 
     # Instantiating MODFLOW 6 time discretization
@@ -571,7 +570,7 @@ def build_mt3d_transport_model(
     print(f"Building mt3dms model...{sim_name}")
 
     modelname_mt = "hecht-mendez_mt"
-    mt3d_ws = os.path.join(workspace, sim_name, "mt3d")
+    mt3d_ws = workspace / sim_name / "mt3d"
     mt = flopy.mt3d.Mt3dms(
         modelname=modelname_mt,
         model_ws=mt3d_ws,
@@ -636,7 +635,7 @@ def build_mf6_transport_model(
     # Instantiating MODFLOW 6 groundwater transport package
     print(f"Building mf6gwt model...{sim_name}")
     gwtname = "gwt-" + name
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwt")
+    sim_ws = workspace / sim_name / "mf6gwt"
     sim = flopy.mf6.MFSimulation(sim_name=gwtname, sim_ws=sim_ws, exe_name="mf6")
 
     # MF6 time discretization is a bit different than corresponding flow simulation
@@ -823,15 +822,13 @@ def plot_results(
     constantheadright=14,
 ):
     if mt3d is not None:
-        mt3d_out_path = mt3d.model_ws
+        mt3d_out_path = Path(mt3d.model_ws)
 
         # Get the MT3DMS concentration output
-        fname_mt3d = os.path.join(mt3d_out_path, "MT3D001.UCN")
+        fname_mt3d = mt3d_out_path / "MT3D001.UCN"
         ucnobj_mt3d = flopy.utils.UcnFile(fname_mt3d)
         times_mt3d = ucnobj_mt3d.get_times()
         conc_mt3d = ucnobj_mt3d.get_alldata()
-
-    mf6_out_path = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
 
     # Get the MF6 concentration output
     gwt = sim_mf6gwt.get_model("gwt-" + name)

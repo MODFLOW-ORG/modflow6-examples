@@ -14,8 +14,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -31,12 +30,12 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-bcf2ss"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -137,7 +136,7 @@ relax = 0.97
 
 # +
 def build_models(name, rewet, wetfct, iwetit, ihdwet, linear_acceleration, newton):
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -347,7 +346,7 @@ def plot_results(silent=True):
 
     with styles.USGSMap():
         name = next(iter(parameters.keys()))
-        sim_ws = os.path.join(workspace, name)
+        sim_ws = workspace / name
         sim = flopy.mf6.MFSimulation.load(
             sim_name=sim_name, sim_ws=sim_ws, verbosity_level=verbosity_level
         )
@@ -447,7 +446,7 @@ def plot_results(silent=True):
 
         # plot simulated newton results
         name = list(parameters.keys())[1]
-        sim_ws = os.path.join(workspace, name)
+        sim_ws = workspace / name
         sim = flopy.mf6.MFSimulation.load(
             sim_name=sim_name, sim_ws=sim_ws, verbosity_level=verbosity_level
         )

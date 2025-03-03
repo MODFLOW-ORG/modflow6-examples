@@ -9,8 +9,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -24,11 +23,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-twri01"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -152,7 +151,7 @@ rclose = 1e-6
 
 # +
 def build_models():
-    sim_ws = os.path.join(workspace, sim_name)
+    sim_ws = workspace / sim_name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -201,7 +200,7 @@ def build_models():
 
 
 def build_mf5model():
-    sim_ws = os.path.join(workspace, sim_name, "mf2005")
+    sim_ws = workspace / sim_name / "mf2005"
     mf = flopy.modflow.Modflow(
         modelname=sim_name, model_ws=sim_ws, exe_name="mf2005dbl"
     )
@@ -272,7 +271,7 @@ figure_size = (6, 6)
 
 def plot_results(sim, mf, silent=True):
     with styles.USGSMap():
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model(sim_name)
 
         # create MODFLOW 6 head object
@@ -280,7 +279,7 @@ def plot_results(sim, mf, silent=True):
 
         # create MODFLOW-2005 head object
         file_name = gwf.oc.head_filerecord.get_data()[0][0]
-        fpth = os.path.join(sim_ws, "mf2005", file_name)
+        fpth = sim_ws / "mf2005" / file_name
         hobj0 = flopy.utils.HeadFile(fpth)
 
         # create MODFLOW 6 cell-by-cell budget object
@@ -288,7 +287,7 @@ def plot_results(sim, mf, silent=True):
 
         # create MODFLOW-2005 cell-by-cell budget object
         file_name = gwf.oc.budget_filerecord.get_data()[0][0]
-        fpth = os.path.join(sim_ws, "mf2005", file_name)
+        fpth = sim_ws / "mf2005" / file_name
         cobj0 = flopy.utils.CellBudgetFile(fpth, precision="double")
 
         # extract heads

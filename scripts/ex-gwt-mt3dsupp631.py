@@ -13,8 +13,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -28,11 +27,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 example_name = "ex-gwt-mt3dsupp631"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -78,7 +77,7 @@ obs_xloc = 8.0  # Observation x location ($m$)
 def build_mf6gwf(sim_folder):
     print(f"Building mf6gwf model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwf")
+    sim_ws = workspace / sim_folder / "mf6gwf"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = (
         (source_duration, 1, 1.0),
@@ -131,7 +130,7 @@ def build_mf6gwf(sim_folder):
 def build_mf6gwt(sim_folder):
     print(f"Building mf6gwt model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwt")
+    sim_ws = workspace / sim_folder / "mf6gwt"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     pertim1 = source_duration
     pertim2 = total_time - source_duration
@@ -183,7 +182,7 @@ def build_mf6gwt(sim_folder):
 def build_mf2005(sim_folder):
     print(f"Building mf2005 model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf2005")
+    sim_ws = workspace / sim_folder / "mf2005"
     mf = flopy.modflow.Modflow(modelname=name, model_ws=sim_ws, exe_name="mf2005")
     pertim1 = source_duration
     pertim2 = total_time - source_duration
@@ -216,7 +215,7 @@ def build_mf2005(sim_folder):
 def build_mt3dms(sim_folder, modflowmodel):
     print(f"Building mt3dms model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mt3d")
+    sim_ws = workspace / sim_folder / "mt3d"
     mt = flopy.mt3d.Mt3dms(
         modelname=name,
         model_ws=sim_ws,
@@ -298,8 +297,8 @@ def plot_results(sims, idx):
             label="MODFLOW 6 GWT",
         )
 
-        sim_ws = sim_mt3dms.model_ws
-        fname = os.path.join(sim_ws, "MT3D001.OBS")
+        sim_ws = Path(sim_mt3dms.model_ws)
+        fname = sim_ws / "MT3D001.OBS"
         mt3dms_ra = sim_mt3dms.load_obs(fname)
         colname = mt3dms_ra.dtype.names[2]
         axs.plot(
@@ -316,8 +315,7 @@ def plot_results(sims, idx):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}.png"
             fpth = figs_path / fname
             fig.savefig(fpth)

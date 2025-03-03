@@ -14,8 +14,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -30,11 +29,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 example_name = "ex-gwt-saltlake"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -100,7 +99,7 @@ hclose, rclose, relax = 1e-8, 1e-8, 0.97
 def build_models(sim_folder):
     print(f"Building model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder)
+    sim_ws = workspace / sim_folder
     sim = flopy.mf6.MFSimulation(
         sim_name=name,
         sim_ws=sim_ws,
@@ -251,7 +250,7 @@ figure_size = (6, 8)
 def plot_conc(sim, idx):
     with styles.USGSMap():
         sim_name = example_name
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model("flow")
         gwt = sim.get_model("trans")
 
@@ -319,7 +318,7 @@ def make_animated_gif(sim, idx):
 
     with styles.USGSMap():
         sim_name = example_name
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model("flow")
         gwt = sim.get_model("trans")
 

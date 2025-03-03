@@ -7,8 +7,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import flopy.utils.binaryfile as bf
@@ -24,11 +23,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 example_name = "ex-gwf-lgr"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -530,7 +529,7 @@ def build_models(sim_name, silent=False):
     # Instantiate the MODFLOW 6 simulation
     name = "lgr"
     gwfname = "gwf-" + name
-    sim_ws = os.path.join(workspace, sim_name)
+    sim_ws = workspace / sim_name
     sim = flopy.mf6.MFSimulation(
         sim_name=sim_name,
         version="mf6",
@@ -860,11 +859,11 @@ def plot_results(mf6, idx):
     sim_name = mf6.name
     with styles.USGSPlot():
         # Start by retrieving some output
-        mf6_out_pth = mf6.simulation_data.mfpath.get_sim_path()
+        mf6_out_pth = Path(mf6.simulation_data.mfpath.get_sim_path())
         sfr_parent_bud_file = next(iter(mf6.model_names)) + ".sfr.bud"
         sfr_child_bud_file = list(mf6.model_names)[1] + ".sfr.bud"
-        sfr_parent_out = os.path.join(mf6_out_pth, sfr_parent_bud_file)
-        sfr_child_out = os.path.join(mf6_out_pth, sfr_child_bud_file)
+        sfr_parent_out = mf6_out_pth / sfr_parent_bud_file
+        sfr_child_out = mf6_out_pth / sfr_child_bud_file
         modobjp = bf.CellBudgetFile(sfr_parent_out, precision="double")
         modobjc = bf.CellBudgetFile(sfr_child_out, precision="double")
 

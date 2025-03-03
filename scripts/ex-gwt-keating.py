@@ -10,8 +10,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -27,12 +26,12 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwt-keating"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -117,7 +116,7 @@ rchspd[1] = [[(0, 0, j), rrate, 0.0] for j in rcol]
 def build_mf6gwf():
     print(f"Building mf6gwf model...{sim_name}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwf")
+    sim_ws = workspace / sim_name / "mf6gwf"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = ((period1, 1, 1.0), (period2, 1, 1.0))
     flopy.mf6.ModflowTdis(
@@ -204,7 +203,7 @@ def build_mf6gwf():
 def build_mf6gwt():
     print(f"Building mf6gwt model...{sim_name}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_name, "mf6gwt")
+    sim_ws = workspace / sim_name / "mf6gwt"
     sim = flopy.mf6.MFSimulation(
         sim_name=name,
         sim_ws=sim_ws,
@@ -342,7 +341,7 @@ def plot_head_results(sims):
     botm = gwf.dis.botm.array
 
     with styles.USGSMap():
-        sim_ws = sim_mf6gwf.simulation_data.mfpath.get_sim_path()
+        sim_ws = Path(sim_mf6gwf.simulation_data.mfpath.get_sim_path())
         head = gwf.output.head().get_data()
         head = np.where(head > botm, head, np.nan)
         fig, ax = plt.subplots(1, 1, figsize=figure_size, dpi=300, tight_layout=True)
@@ -362,8 +361,7 @@ def plot_head_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-head.png"
             fpth = figs_path / fname
             fig.savefig(fpth)
@@ -379,7 +377,7 @@ def plot_conc_results(sims):
     with styles.USGSMap():
         head = gwf.output.head().get_data()
         head = np.where(head > botm, head, np.nan)
-        sim_ws = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
+        sim_ws = Path(sim_mf6gwt.simulation_data.mfpath.get_sim_path())
         cobj = gwt.output.concentration()
         conc_times = cobj.get_times()
         conc_times = np.array(conc_times)
@@ -426,8 +424,7 @@ def plot_conc_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-conc.png"
             fpth = figs_path / fname
             fig.savefig(fpth)
@@ -499,7 +496,7 @@ def plot_cvt_results(sims):
     gwt = sim_mf6gwt.trans
 
     with styles.USGSMap():
-        sim_ws = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
+        sim_ws = Path(sim_mf6gwt.simulation_data.mfpath.get_sim_path())
         mf6gwt_ra = gwt.obs.output.obs().data
         dt = [("totim", "f8"), ("obs", "f8")]
 
@@ -562,8 +559,7 @@ def plot_cvt_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-cvt.png"
             fpth = figs_path / fname
             fig.savefig(fpth)

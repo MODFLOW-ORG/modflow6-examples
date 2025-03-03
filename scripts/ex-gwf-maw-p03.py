@@ -7,8 +7,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -22,11 +21,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-maw-p03"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -232,7 +231,7 @@ def build_models(name, simulation="regional"):
 
 
 def build_regional(name):
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -282,7 +281,7 @@ def build_regional(name):
 def build_local(name, simulation):
     # get regional heads for constant head boundaries
     pth = next(iter(parameters.keys()))
-    fpth = os.path.join(workspace, pth, f"{sim_name}.hds")
+    fpth = workspace / pth / f"{sim_name}.hds"
     try:
         h = flopy.utils.HeadFile(fpth).get_data()
     except:
@@ -308,7 +307,7 @@ def build_local(name, simulation):
                 chd_spd.append([k, il, 0, hi1])
                 chd_spd.append([k, il, ncol - 1, hi2])
 
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -424,10 +423,10 @@ def plot_maw_results(silent=True):
     with styles.USGSPlot():
         # load the observations
         name = list(parameters.keys())[1]
-        fpth = os.path.join(workspace, name, f"{sim_name}.maw.obs.csv")
+        fpth = workspace / name / f"{sim_name}.maw.obs.csv"
         maw = flopy.utils.Mf6Obs(fpth).data
         name = list(parameters.keys())[2]
-        fpth = os.path.join(workspace, name, f"{sim_name}.gwf.obs.csv")
+        fpth = workspace / name / f"{sim_name}.gwf.obs.csv"
         gwf = flopy.utils.Mf6Obs(fpth).data
 
         # process heads
@@ -530,7 +529,7 @@ def plot_regional_grid(silent=True):
     else:
         verbosity = 1
     name = next(iter(parameters.keys()))
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     sim = flopy.mf6.MFSimulation.load(
         sim_name=sim_name, sim_ws=sim_ws, verbosity_level=verbosity
     )
@@ -642,7 +641,7 @@ def plot_local_grid(silent=True):
     else:
         verbosity = 1
     name = list(parameters.keys())[1]
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     sim = flopy.mf6.MFSimulation.load(
         sim_name=sim_name, sim_ws=sim_ws, verbosity_level=verbosity
     )

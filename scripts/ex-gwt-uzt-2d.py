@@ -8,8 +8,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -23,11 +22,11 @@ from modflow_devtools.misc import get_env, timed
 # in the git repository, use the folder structure described in
 # the README. Otherwise just use the current working directory.
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -287,7 +286,7 @@ def build_models(
     silent=False,
 ):
     print(f"Building mf-nwt model...{sim_name}")
-    model_ws = os.path.join(workspace, sim_name, "mt3d")
+    model_ws = workspace / sim_name / "mt3d"
     modelname_mf = "uzt-2d-mf"
 
     # Instantiate the MODFLOW model
@@ -446,7 +445,7 @@ def build_models(
 
     name = "uzt-2d-mf6"
     gwfname = "gwf-" + name
-    sim_ws = os.path.join(workspace, sim_name)
+    sim_ws = workspace / sim_name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
     # How much output to write?
@@ -779,12 +778,10 @@ figure_size = (6, 4)
 
 def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
     print("Plotting model results...")
-    mt3d_out_path = mt3d.model_ws
-    mf6_out_path = mf6.simulation_data.mfpath.get_sim_path()
-    mf6.simulation_data.mfpath.get_sim_path()
+    mt3d_out_path = Path(mt3d.model_ws)
 
     # Get the MF-NWT heads
-    fname_mfnwt = os.path.join(mt3d_out_path, "uzt-2d-mf.hds")
+    fname_mfnwt = mt3d_out_path / "uzt-2d-mf.hds"
     hds_mfnwt = flopy.utils.HeadFile(fname_mfnwt)
     hds = hds_mfnwt.get_alldata()
     # Make list of vertices for plotting the saturated zone as a polygon
@@ -804,7 +801,7 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
     poly_pts = np.array(satzn)
 
     # Get the MT3DMS concentration output
-    fname_mt3d = os.path.join(mt3d_out_path, "MT3D001.UCN")
+    fname_mt3d = mt3d_out_path / "MT3D001.UCN"
     ucnobj_mt3d = flopy.utils.UcnFile(fname_mt3d)
     times_mt3d = ucnobj_mt3d.get_times()
     conc_mt3d = ucnobj_mt3d.get_alldata()

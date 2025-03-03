@@ -9,8 +9,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -25,12 +24,12 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-csub-p02"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-tbls_path = root / "tables" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+tbls_path = root / "tables" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -123,9 +122,9 @@ def build_models(
     kv=2e-6,
     ndelaycells=19,
 ):
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     if subdir_name is not None:
-        sim_ws = os.path.join(sim_ws, subdir_name)
+        sim_ws = sim_ws / subdir_name
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -435,7 +434,7 @@ def plot_effstress(sim, silent=True):
 
         # get head-based csub observations
         name0 = name.replace("-p02b", "-p02a")
-        ws0 = os.path.join(workspace, name0)
+        ws0 = workspace / name0
         sim0 = flopy.mf6.MFSimulation().load(sim_ws=ws0, verbosity_level=0)
         gwf0 = sim0.get_model(name0)
         cobs0 = gwf0.csub.output.obs().data
@@ -509,17 +508,9 @@ def get_subdirs(sim):
     """Get subdirectory names"""
     name = sim.name
     # get the subdirectory names
-    pth = os.path.join(workspace, name)
-    hb_dirs = [
-        name
-        for name in sorted(os.listdir(pth))
-        if os.path.isdir(os.path.join(pth, name)) and name.startswith("hb-")
-    ]
-    es_dirs = [
-        name
-        for name in sorted(os.listdir(pth))
-        if os.path.isdir(os.path.join(pth, name)) and name.startswith("es-")
-    ]
+    pth = workspace / name
+    hb_dirs = sorted(subdir.name for subdir in pth.glob("hb-*") if subdir.is_dir)
+    es_dirs = sorted(subdir.name for subdir in pth.glob("es-*") if subdir.is_dir)
     return hb_dirs, es_dirs
 
 
@@ -576,12 +567,12 @@ def plot_comp_q_comparison(sim, silent=True):
         plt.subplots_adjust(wspace=0.36)
 
         for idx, (hb_dir, es_dir) in enumerate(zip(hb_dirs, es_dirs)):
-            sim_ws = os.path.join(workspace, name, hb_dir)
+            sim_ws = workspace / name / hb_dir
             s = flopy.mf6.MFSimulation().load(sim_ws=sim_ws, verbosity_level=0)
             g = s.get_model(name)
             hb_obs = g.csub.output.obs().data
 
-            ws0 = os.path.join(workspace, name, es_dir)
+            ws0 = workspace / name / es_dir
             s0 = flopy.mf6.MFSimulation().load(sim_ws=ws0, verbosity_level=0)
             g0 = s0.get_model(name)
             es_obs = g0.csub.output.obs().data
@@ -679,23 +670,23 @@ def plot_head_comparison(sim, silent=True):
             axes.append(ax)
 
         for idx, (hb_dir, es_dir) in enumerate(zip(hb_dirs, es_dirs)):
-            sim_ws = os.path.join(workspace, name, hb_dir)
+            sim_ws = workspace / name / hb_dir
             s = flopy.mf6.MFSimulation().load(sim_ws=sim_ws, verbosity_level=0)
             g = s.get_model(name)
             hb_obs = g.csub.output.obs().data
             hb_arr = fill_heads(hb_obs, ndcells)
 
-            ws0 = os.path.join(workspace, name, es_dir)
+            ws0 = workspace / name / es_dir
             s0 = flopy.mf6.MFSimulation().load(sim_ws=ws0, verbosity_level=0)
             g0 = s0.get_model(name)
             es_obs = g0.csub.output.obs().data
             es_arr = fill_heads(es_obs, ndcells)
             #
-            # pth = os.path.join(ws, name, hb_dir, "{}.csub.obs.csv".format(name))
+            # pth = Path(ws) / name / hb_dir / f"{name}.csub.obs.csv"
             # hb_obs = np.genfromtxt(pth, names=True, delimiter=",")
             # hb_arr = fill_heads(hb_obs, ndcells)
             #
-            # pth = os.path.join(ws, name, es_dir, "{}.csub.obs.csv".format(name))
+            # pth = Path(ws) / name / es_dir / f"{name}.csub.obs.csv"
             # es_obs = np.genfromtxt(pth, names=True, delimiter=",")
             # es_arr = fill_heads(es_obs, ndcells)
 

@@ -10,8 +10,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -28,12 +27,12 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-sfr-p01b"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -3748,7 +3747,7 @@ rclose = 1e-6
 
 # +
 def build_models():
-    sim_ws = os.path.join(workspace, sim_name)
+    sim_ws = workspace / sim_name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -4434,8 +4433,8 @@ def plot_mvr_results(idx, gwf, silent=True):
 
 def plot_uzfcolumn_results(idx, gwf, silent=True):
     with styles.USGSPlot():
-        sim_ws = os.path.join(workspace, sim_name)
-        fname = os.path.join(sim_ws, "obs_uzf_column.csv")
+        sim_ws = workspace / sim_name
+        fname = sim_ws / "obs_uzf_column.csv"
         uzf_dat = pd.read_csv(fname, header=0)
         uzf_dat["time_days"] = uzf_dat["time"] / 86400
         x = uzf_dat["time_days"]

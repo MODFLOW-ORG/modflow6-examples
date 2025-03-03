@@ -11,8 +11,7 @@
 
 # +
 import datetime
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -30,13 +29,13 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-csub-p03"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-tbls_path = root / "tables" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+tbls_path = root / "tables" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -405,9 +404,9 @@ def build_models(
     ssv=1e-1,
     sse=1e-3,
 ):
-    sim_ws = os.path.join(workspace, name)
+    sim_ws = workspace / name
     if subdir_name is not None:
-        sim_ws = os.path.join(sim_ws, subdir_name)
+        sim_ws = sim_ws / subdir_name
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -1035,7 +1034,7 @@ def plot_boundary_heads(silent=True):
             return v
 
         name = next(iter(parameters.keys()))
-        pth = os.path.join(workspace, name, f"{name}.gwf.obs.csv")
+        pth = workspace / name / f"{name}.gwf.obs.csv"
         hdata = process_dtw_obs(pth)
 
         pheads = ("HD01", "HD12", "HD14")
@@ -1079,11 +1078,11 @@ def plot_boundary_heads(silent=True):
 def plot_head_es_comparison(silent=True):
     with styles.USGSPlot() as fs:
         name = next(iter(parameters.keys()))
-        pth = os.path.join(workspace, name, f"{name}.csub.obs.csv")
+        pth = workspace / name / f"{name}.csub.obs.csv"
         hb = process_csub_obs(pth)
 
         name = list(parameters.keys())[1]
-        pth = os.path.join(workspace, name, f"{name}.csub.obs.csv")
+        pth = workspace / name / f"{name}.csub.obs.csv"
         es = process_csub_obs(pth)
 
         ymin = (2.0, 1, 1, 1, 0.1, 0.1)
@@ -1153,7 +1152,7 @@ def plot_head_es_comparison(silent=True):
 def plot_calibration(silent=True):
     with styles.USGSPlot():
         name = list(parameters.keys())[1]
-        fpath = os.path.join(workspace, name, f"{name}.csub.obs.csv")
+        fpath = workspace / name / f"{name}.csub.obs.csv"
         df_sim = get_sim_dataframe(fpath)
         for key in pcomp:
             df_sim[key] = df_sim[list(df_sim.filter(regex=key))].sum(axis=1)
@@ -1429,7 +1428,7 @@ def plot_calibration(silent=True):
 def plot_vertical_head(silent=True):
     with styles.USGSPlot() as fs:
         name = list(parameters.keys())[1]
-        pth = os.path.join(workspace, name, f"{name}.gwf.obs.csv")
+        pth = workspace / name / f"{name}.gwf.obs.csv"
         df_heads, col_list = process_sim_csv(
             pth, origin_str="1908-05-09 00:00:00.000000"
         )

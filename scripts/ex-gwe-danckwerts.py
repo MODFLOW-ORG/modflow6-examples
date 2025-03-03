@@ -11,8 +11,7 @@
 
 # +
 import math
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -36,13 +35,13 @@ gwfname = "gwf-" + sim_name.replace("ex-gwe-", "")
 gwename = "gwe-" + sim_name.replace("ex-gwe-", "")
 
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
 
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 sim_ws = workspace / sim_name
 
 # Settings from environment variables
@@ -515,29 +514,24 @@ def run_model(sim, silent=True):
 def plot_sim_vs_analytical_sln(sim):
     print("comparing simulated results to analytical solution...")
 
-    ws = sim.sim_path  # exdirs[sim.idxsim]
+    ws = Path(sim.sim_path)  # exdirs[sim.idxsim]
 
     # check some output...
-    wc_fl = gwfname + ".uzfwc.bin"
-    wcobj = flopy.utils.HeadFile(os.path.join(ws, wc_fl), text="water-content")
+    wcobj = flopy.utils.HeadFile(ws / f"{gwfname}.uzfwc.bin", text="water-content")
     wc = wcobj.get_alldata()
 
     # temperature output
-    fl2 = gwename + ".uze.bin"
-    uzeobj = flopy.utils.HeadFile(os.path.join(ws, fl2), text="TEMPERATURE")
+    uzeobj = flopy.utils.HeadFile(ws / f"{gwename}.uze.bin", text="TEMPERATURE")
     temps = uzeobj.get_alldata()
 
     # Cell flows output
-    qfile = gwename + ".cbc"
-    gweflowsobj = flopy.utils.CellBudgetFile(os.path.join(ws, qfile))
+    gweflowsobj = flopy.utils.CellBudgetFile(ws / f"{gwename}.cbc")
 
     # Binary grid file needed for post-processing
-    fgrb = gwfname + ".dis.grb"
-    grb_file = os.path.join(ws, fgrb)
+    grb_file = ws / f"{gwfname}.dis.grb"
 
     # UZE flows
-    fuzebud = gwename + ".uze.bud"
-    uzeflowsobj = flopy.utils.CellBudgetFile(os.path.join(ws, fuzebud))
+    uzeflowsobj = flopy.utils.CellBudgetFile(ws / f"{gwename}.uze.bud")
     flowsadv = uzeflowsobj.get_data(text="FLOW-JA-FACE")
 
     t = np.linspace(0.0, 100.0, 101)

@@ -11,8 +11,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import flopy.utils.cvfdutil
@@ -31,12 +30,12 @@ from shapely.geometry import Polygon
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwf-disvmesh"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
-data_path = root / "data" / sim_name if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
+data_path = root / "data" / sim_name if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -145,7 +144,7 @@ rclose = 1e-6
 
 # +
 def build_models(sim_name):
-    sim_ws = os.path.join(workspace, sim_name)
+    sim_ws = workspace / sim_name
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
     flopy.mf6.ModflowIms(
@@ -241,7 +240,7 @@ figure_size = (5, 5)
 
 def plot_grid(idx, sim):
     with styles.USGSMap():
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model(sim_name)
 
         fig = plt.figure(figsize=figure_size)
@@ -263,7 +262,7 @@ def plot_grid(idx, sim):
 
 def plot_head(idx, sim):
     with styles.USGSMap():
-        sim_ws = os.path.join(workspace, sim_name)
+        sim_ws = workspace / sim_name
         gwf = sim.get_model(sim_name)
 
         fig = plt.figure(figsize=(7.5, 5))

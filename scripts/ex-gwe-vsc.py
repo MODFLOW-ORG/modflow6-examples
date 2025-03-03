@@ -16,7 +16,7 @@
 # settings from environment variables.
 
 # +
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -35,12 +35,12 @@ from modflow_devtools.misc import get_env, timed
 sim_name = "ex-gwe-vsc"
 
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
 
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 sim_ws = workspace / sim_name
 
 # Settings from environment variables

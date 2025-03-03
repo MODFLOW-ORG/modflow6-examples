@@ -12,8 +12,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 
 import flopy
 import git
@@ -28,11 +27,11 @@ from scipy.special import erfc
 # the README. Otherwise just use the current working directory.
 example_name = "ex-gwt-moc3d-p02"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -133,7 +132,7 @@ class Wexler3d:
 def build_mf6gwf(sim_folder):
     print(f"Building mf6gwf model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwf")
+    sim_ws = workspace / sim_folder / "mf6gwf"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = ((total_time, 1, 1.0),)
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
@@ -182,7 +181,7 @@ def build_mf6gwf(sim_folder):
 def build_mf6gwt(sim_folder):
     print(f"Building mf6gwt model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwt")
+    sim_ws = workspace / sim_folder / "mf6gwt"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = ((total_time, 400, 1.0),)
     flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
@@ -309,9 +308,8 @@ def plot_results(sims):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_ws = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_ws = Path(sim_mf6gwt.simulation_data.mfpath.get_sim_path())
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-map.png"
             fpth = figs_path / fname
             fig.savefig(fpth)

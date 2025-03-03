@@ -10,8 +10,7 @@
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
 # +
-import os
-import pathlib as pl
+from pathlib import Path
 from pprint import pformat
 
 import flopy
@@ -25,11 +24,11 @@ from modflow_devtools.misc import get_env, timed
 # the README. Otherwise just use the current working directory.
 example_name = "ex-gwt-mt3dms-p02"
 try:
-    root = pl.Path(git.Repo(".", search_parent_directories=True).working_dir)
+    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
     root = None
-workspace = root / "examples" if root else pl.Path.cwd()
-figs_path = root / "figures" if root else pl.Path.cwd()
+workspace = root / "examples" if root else Path.cwd()
+figs_path = root / "figures" if root else Path.cwd()
 
 # Settings from an environment variables
 write = get_env("WRITE", True)
@@ -119,7 +118,7 @@ system_length = ncol * delr
 def build_mf6gwf(sim_folder):
     print(f"Building mf6gwf model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwf")
+    sim_ws = workspace / sim_folder / "mf6gwf"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = (
         (period1, int(period1 / delta_time), 1.0),
@@ -181,7 +180,7 @@ def build_mf6gwt(
 ):
     print(f"Building mf6gwt model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mf6gwt")
+    sim_ws = workspace / sim_folder / "mf6gwt"
     sim = flopy.mf6.MFSimulation(sim_name=name, sim_ws=sim_ws, exe_name="mf6")
     tdis_ds = (
         (period1, int(period1 / delta_time), 1.0),
@@ -268,7 +267,7 @@ def build_mf6gwt(
 def build_mf2005(sim_folder):
     print(f"Building mf2005 model...{sim_folder}")
     name = "flow"
-    sim_ws = os.path.join(workspace, sim_folder, "mf2005")
+    sim_ws = workspace / sim_folder / "mf2005"
     mf = flopy.modflow.Modflow(modelname=name, model_ws=sim_ws, exe_name="mf2005")
     perlen = [period1, period2]
     dis = flopy.modflow.ModflowDis(
@@ -309,7 +308,7 @@ def build_mt3dms(
 ):
     print(f"Building mt3dms model...{sim_folder}")
     name = "trans"
-    sim_ws = os.path.join(workspace, sim_folder, "mt3d")
+    sim_ws = workspace / sim_folder / "mt3d"
     mt = flopy.mt3d.Mt3dms(
         modelname=name,
         model_ws=sim_ws,
@@ -394,12 +393,12 @@ def plot_results_ct(sims, idx, **kwargs):
     _, sim_mf6gwt, _, sim_mt3dms = sims
 
     with styles.USGSPlot():
-        sim_ws = sim_mf6gwt.simulation_data.mfpath.get_sim_path()
+        sim_ws = Path(sim_mf6gwt.simulation_data.mfpath.get_sim_path())
         mf6gwt_ra = sim_mf6gwt.get_model("trans").obs.output.obs().data
         fig, axs = plt.subplots(1, 1, figsize=figure_size, dpi=300, tight_layout=True)
 
-        sim_ws = sim_mt3dms.model_ws
-        fname = os.path.join(sim_ws, "MT3D001.OBS")
+        sim_ws = Path(sim_mt3dms.model_ws)
+        fname = sim_ws / "MT3D001.OBS"
         mt_ra = sim_mt3dms.load_obs(fname)
         axs.plot(
             mt_ra["time"],
@@ -431,8 +430,7 @@ def plot_results_ct(sims, idx, **kwargs):
         if plot_show:
             plt.show()
         if plot_save:
-            sim_folder = os.path.split(sim_ws)[0]
-            sim_folder = os.path.basename(sim_folder)
+            sim_folder = sim_ws.parent.name
             fname = f"{sim_folder}-ct.png"
             fpth = figs_path / fname
             fig.savefig(fpth)
@@ -444,10 +442,10 @@ def plot_results():
         case_colors = ["blue", "green", "red", "yellow"]
         pkeys = list(parameters.keys())
         for icase, sim_name in enumerate(pkeys[2:]):
-            sim_ws = os.path.join(workspace, sim_name)
+            sim_ws = workspace / sim_name
             beta = parameters[sim_name]["beta"]
 
-            fname = os.path.join(sim_ws, "mf6gwt", "trans.obs.csv")
+            fname = sim_ws / "mf6gwt" / "trans.obs.csv"
             mf6gwt_ra = flopy.utils.Mf6Obs(fname).data
             mf6conc = mf6gwt_ra["X008"] / source_concentration
             iskip = 20
@@ -461,7 +459,7 @@ def plot_results():
                 linestyle="None",
             )
 
-            fname = os.path.join(sim_ws, "mt3d", "MT3D001.OBS")
+            fname = sim_ws / "mt3d" / "MT3D001.OBS"
             mt3dms_ra = flopy.mt3d.Mt3dms.load_obs(fname)
             axs.plot(
                 mt3dms_ra["time"],
