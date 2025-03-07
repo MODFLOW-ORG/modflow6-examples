@@ -253,3 +253,222 @@ def bhe(Finj,
 
 
     return temp + T0
+
+# ### MODFLOW
+# example 
+
+# moderately advective system, with a square model region
+center = (40, 40)
+Lx = 2 * center[0]
+Ly = 2 * center[1]
+
+crds = np.array([[-5.5, -0.5, 4.5, -2.5, 2.5,],
+                [2.5, 0.5, -1.5, 4.5, 2.5,]])
+
+delr = 1.0
+delc = 1.0
+
+# place the coordinates in the center of the field so they coincide with the 1x1 m cell centriods
+xc = crds[0] + center[0] # + delr / 2
+yc = crds[1] + center[1] # + delc / 2
+
+# create output mesh for analytical contours
+xg, yg = np.meshgrid(np.linspace(0, Lx, 100), np.linspace(0, Ly, 100))
+
+# time-varying energy loads (W/m) (loosely based on the energy demands in Al-Khoury et al, 2021, fig. 8)
+loads = -np.vstack([np.repeat(50, len(xc)),    # january-february
+                   np.repeat(37.5, len(xc)),  # march-april
+                   np.repeat(0.0, len(xc)),  # may-june
+                   np.repeat(-50.0, len(xc)), # july-august
+                   np.repeat(-10.0, len(xc)), # september-october
+                   np.repeat(45, len(xc)),  # november-december
+                  ])
+nyear = 3 # repeat three years
+loads = np.vstack([loads] * nyear)
+time = np.linspace(0, nyear * 365 - 60, nyear * 6) * 86400 # start time of injection phase, first one should equal 0.0
+Finj_tv = np.column_stack([time, loads])
+
+
+v = 2 * 6e-7 # 10 cm/d
+# Finj = [100] * len(xc) # W / m
+n = 0.2
+rho_s = 2650
+c_s = 900
+k_s = 2.5
+rho_w = 1000
+c_w = 4180
+k_w = 0.56
+al = 0
+ah = 0
+T0 = 0 # background temperature
+
+obs = (50 + delr / 2, 40 + delc / 2) # x-y coordinates of observation point
+obs_time = np.linspace(0.0, nyear * 365, 100) * 86400 # observation times
+
+# plot energy loading
+plt.bar(time/86400, loads[:,1], width = 60, align = 'center', edgecolor='black')
+plt.xlabel('Time (d)')
+plt.ylabel('Injection rate (W/m)')
+plt.grid(linewidth=0.2)
+
+
+# MODFLOW input
+nrow = int(Ly / delc)
+ncol = int(Lx / delr)
+nlay = 1.0
+top = 1.0
+botm = 0.0
+
+# boundary conditions
+k = 10 / 86400
+grad = v * n / k 
+hL = 10
+hR = hL - (Lx - delr) * grad
+
+nstp = 10 # steps per stress-period
+tsmlt = 1.2
+
+flow_ws = './model_tr/flow'
+heat_ws = './model_tr/heat'
+
+# flow
+sim = flopy.mf6.MFSimulation(sim_name='beo_flow', sim_ws = flow_ws)
+tdis = flopy.mf6.ModflowTdis(sim, nper=1,  perioddata=[(1.0, 1, 1.0)])   
+ims = flopy.mf6.ModflowIms(sim, complexity='SIMPLE', inner_dvclose=1e-6, rcloserecord=[1e-6, 'STRICT'])
+
+gwf = flopy.mf6.ModflowGwf(sim, modelname='flow', save_flows=True)
+
+
+dis = flopy.mf6.ModflowGwfdis(gwf, nrow=nrow, ncol=ncol, nlay=nlay, top=top, botm=botm, delr=delr, delc=delc)
+npf = flopy.mf6.ModflowGwfnpf(gwf, k=k, icelltype=0, save_specific_discharge=True, save_saturation=True)
+sto = flopy.mf6.ModflowGwfsto(gwf, steady_state={0: True})
+
+ic = flopy.mf6.ModflowGwfic(gwf, strt=hL)
+
+chdrec = []
+for j in [0, ncol - 1]:
+    if j == 0:
+        hchd = hL
+    else:
+        hchd = hR
+        
+    for i in range(nrow):
+        chdrec.append(
+            [(0, i, j), hchd, T0]
+        )
+
+chd_pname='CHD_0'
+chd = flopy.mf6.ModflowGwfchd(gwf, stress_period_data=chdrec, auxiliary='TEMPERATURE', pname=chd_pname)
+oc = flopy.mf6.ModflowGwfoc(gwf,
+                            budget_filerecord='flow.bud',
+                            head_filerecord='flow.hds',
+                            saverecord=[('BUDGET', 'ALL'), ('HEAD', 'ALL')],
+                            printrecord=[('BUDGET', 'ALL')]
+                            )
+
+sim.write_simulation()
+
+success, pbuff = sim.run_simulation()
+assert success, pbuff
+
+# heat transport
+sim = flopy.mf6.MFSimulation(sim_name='beo_heat', sim_ws = heat_ws)
+
+time_mf = np.repeat(np.diff(time)[0], len(time))
+tr_periods = [
+    (ti, nstp, tsmlt) for ti in time_mf
+]
+nper = len(tr_periods)
+tdis = flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tr_periods)   
+ims = flopy.mf6.ModflowIms(sim, complexity='SIMPLE', inner_dvclose=0.001, linear_acceleration='BICGSTAB')
+
+gwe = flopy.mf6.ModflowGwe(sim, modelname='heat', save_flows=True)
+dis = flopy.mf6.ModflowGwedis(gwe, nrow=nrow, ncol=ncol, nlay=nlay, top=top, botm=botm, delr=delr, delc=delc)
+if v > 0:
+    adv = flopy.mf6.ModflowGweadv(gwe, scheme='tvd')
+cnd = flopy.mf6.ModflowGwecnd(gwe, alh=al, ath1=ah, ktw=k_w, kts=k_s)
+est = flopy.mf6.ModflowGweest(gwe, density_water=rho_w, heat_capacity_water=c_w, porosity=n, heat_capacity_solid=c_s, density_solid=rho_s)
+
+ic = flopy.mf6.ModflowGweic(gwe, strt=T0)
+
+eslrec = {}
+for iper in range(nper):
+    eslrec_tr = []
+    for i in range(len(xc)):
+        cid = gwe.modelgrid.intersect(xc[i], yc[i])
+        eslrec_tr.append(
+            [(0,) + cid, Finj_tv[iper, i + 1]]
+        )
+    eslrec[iper] = eslrec_tr
+
+esl = flopy.mf6.ModflowGweesl(gwe, stress_period_data=eslrec)
+ssm = flopy.mf6.ModflowGwessm(gwe, sources=[chd_pname, 'AUX', 'TEMPERATURE'])
+
+oc = flopy.mf6.ModflowGweoc(gwe, 
+                            budget_filerecord='heat.bud',
+                            temperature_filerecord='heat.ucn',
+                            saverecord=[('BUDGET', 'ALL'), ('TEMPERATURE', 'ALL')],
+                            printrecord=[('BUDGET', 'ALL')]
+                            )
+fmi = flopy.mf6.ModflowGwefmi(gwe,
+                              packagedata=[
+                                  ('GWFHEAD', '../flow/flow.hds'),
+                                  ('GWFBUDGET', '../flow/flow.bud')
+                              ]
+                              )
+sim.write_simulation()
+
+success, pbuff = sim.run_simulation()
+assert success, pbuff
+
+# output
+output_kper = 8
+temp = gwe.output.temperature()
+temp_t = temp.get_data(kstpkper=(nstp-1, output_kper))
+
+obs_ij = gwe.modelgrid.intersect(obs[0], obs[1])
+obs_temp = temp.get_ts((0,) + obs_ij)
+
+t = temp.get_times()[nstp * output_kper + (nstp - 1)]
+
+# analytical temperature field and time series for time-varying loads
+temp_analy = bhe(Finj_tv, xg, yg, t, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+
+# analytical temp time series
+temp_obs = bhe(Finj_tv, obs[0], obs[1], obs_time, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+
+fig, ax = plt.subplots(1, 1, figsize=(10,6))
+csa = ax.contour(xg, yg, temp_analy, levels=np.arange(-20, 20, 1) + T0, colors='black', linewidths=0.5, negative_linestyles='solid')
+# plt.clabel(csa, fmt='%.2f', fontsize=8)
+
+pmv = flopy.plot.PlotMapView(gwe, ax=ax)
+cs = pmv.contour_array(temp_t, levels=np.arange(-20, 20, 1) + T0, colors='red', linewidths=0.5, negative_linestyles='dashed', linestyles='dashed')
+plt.clabel(cs, fmt='%.2f', fontsize=8, colors='black')
+#pmv.plot_grid(linewidth=0.2)
+ax.set_xlabel('x (m)')
+ax.set_ylabel('y (m)')
+ax.scatter(obs[0], obs[1], marker='x', color='green')
+ax.scatter(xc, yc, marker='.', color='black')
+ax.set_axisbelow(True)
+ax.grid()
+ax.set_aspect('equal')
+plt.title(f't = {t/86400:.2f} d\n {delr} m spacing, v = {v * 86400:.2f} m/d')
+ax.set_xlim(30, 65)
+ax.set_ylim(30, 55)
+
+h1, _ = csa.legend_elements()
+h2, _ = cs.legend_elements()
+ax.legend([h1[0], h2[0]], ['Analytical', 'MODFLOW'])
+
+# plt.savefig('./figures/contours_transient_v2.png', dpi=300)
+
+plt.figure(figsize=(10,4))
+plt.plot(obs_time / 86400, temp_obs, label = 'Analytical', color='black')
+plt.plot(obs_temp[:,0] / 86400, obs_temp[:,1], label = 'MODFLOW', color='red', linestyle='dashed')
+plt.xlabel('Time (d)')
+plt.ylabel(r'$\Delta$T (°C)')
+plt.grid()
+plt.legend()
+plt.title(f'(x,y) = {obs}\n{delr} m spacing, v = {v * 86400:.2f} m/d')
+
+# plt.savefig('./figures/ts_transient_v2.png', dpi=300)
