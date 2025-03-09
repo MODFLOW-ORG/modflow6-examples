@@ -1,3 +1,4 @@
 git+https://github.com/modflowpy/flopy.git@develop
 git+https://github.com/MODFLOW-ORG/modflowapi.git@develop
-git+https://github.com/MODFLOW-ORG/modflow-devtools.git@develop
+# git+https://github.com/MODFLOW-ORG/modflow-devtools.git@develop
+modflow-devtools[dfn] @ git+https://github.com/MODFLOW-USGS/modflow-devtools.git
