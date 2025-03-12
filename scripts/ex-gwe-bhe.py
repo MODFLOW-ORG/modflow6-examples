@@ -1,13 +1,14 @@
-# ## Thermal Loading of Borehole Heat Exchangers
+# ## Thermal loading of borehole heat exchangers
 #
-# This example simulates transient thermal energy loading of multiple borehole 
-# heat exchangers in a uniform flow field and compares the results to an analytical solution.
+# This example simulates transient thermal energy loading of multiple borehole heat exchangers (BHE's) in a uniform flow field and compares the results to an analytical solution.
 #
 
-# ### Initial Setup
+
+# ### Initial setup
 #
-# Import dependencies, define the example name and workspace,
-# and read settings from environment variables.
+# Import dependencies, define the example name and workspace, and read settings from environment variables.
+
+# +
 from pathlib import Path
 
 import flopy
@@ -26,6 +27,7 @@ except:
 
 workspace = root / "examples" if root else Path.cwd()
 figs_path = root / "figures" if root else Path.cwd()
+sim_ws = workspace / sim_name
 
 # Settings from environment variables
 write = get_env("WRITE", True)
@@ -33,19 +35,28 @@ run = get_env("RUN", True)
 plot = get_env("PLOT", True)
 plot_show = get_env("PLOT_SHOW", True)
 plot_save = get_env("PLOT_SAVE", True)
+
+
 # -
+
+# ### Define analytical solution
+#
+# This uses the POINT2 algorithm for from [Wexler (1992)](https://doi.org/10.3133/twri03B7) (equation 76) with Gauss-Legendre quadrature as implemented in AdePy (https://github.com/cneyens/adepy/blob/v0.1.0/adepy/uniform/twoD.py). The `bhe()` function transforms the heat transport parameters to solute transport parameters and wraps the `point2()` function to allow for superposition of multiple BHE's and transient energy loading.
 
 
 # +
-# ### Define analytical solution
-# using the POINT2 algorithm from Wexler (1992) (equation 76) with Gauss-Legendre quadrature
-# as implemented in AdePy (https://github.com/cneyens/adepy/blob/v0.1.0/adepy/uniform/twoD.py)
-# The bhe() function transforms the heat transport parameters to solute transport parameters 
-# and wraps the point2() function to allow for superposition of multiple BHE's and transient energy loading. 
-#
-
+# @njit # speed-up with numba
 def integrand_point2(tau, x, y, v, Dx, Dy, xc, yc, lamb):
-    return 1 / tau * np.exp(-(v**2 / (4 * Dx) + lamb) * tau - (x - xc)**2 / (4 * Dx * tau) - (y - yc)**2 / (4 * Dy * tau))
+    return (
+        1
+        / tau
+        * np.exp(
+            -(v**2 / (4 * Dx) + lamb) * tau
+            - (x - xc) ** 2 / (4 * Dx * tau)
+            - (y - yc) ** 2 / (4 * Dy * tau)
+        )
+    )
+
 
 def point2(c0, x, y, t, v, n, al, ah, Qa, xc, yc, Dm=0, lamb=0, R=1.0, order=100):
     """Compute the 2D concentration field of a dissolved solute from a continuous point source in an infinite aquifer
@@ -53,7 +64,7 @@ def point2(c0, x, y, t, v, n, al, ah, Qa, xc, yc, Dm=0, lamb=0, R=1.0, order=100
 
     Source: [wexler_1992]_ - POINT2 algorithm (equation 76).
     Source code is lifted from the AdePy package, v0.1.0: https://github.com/cneyens/adepy/blob/v0.1.0/adepy/uniform/twoD.py
-    
+
     The two-dimensional advection-dispersion equation is solved for concentration at specified `x` and `y` location(s) and
     output time(s) `t`. A point source is continuously injecting a known concentration `c0` at known injection rate `Qa` in the infinite aquifer
     with specified uniform background flow in the x-direction. It is assumed that the injection rate does not significantly alter the flow
@@ -123,43 +134,112 @@ def point2(c0, x, y, t, v, n, al, ah, Qa, xc, yc, Dm=0, lamb=0, R=1.0, order=100
     Qa = Qa / R
 
     if len(t) > 1 and (len(x) > 1 or len(y) > 1):
-        raise ValueError('If multiple values for t are specified, only one x and y value are allowed')
+        raise ValueError(
+            "If multiple values for t are specified, only one x and y value are allowed"
+        )
 
     root, weights = roots_legendre(order)
 
     def integrate(t, x, y):
-        F = integrand_point2(root*(t-0)/2 + (0+t)/2, x, y, v, Dx, Dy, xc, yc, lamb).dot(weights) * (t - 0)/2
+        F = (
+            integrand_point2(
+                root * (t - 0) / 2 + (0 + t) / 2, x, y, v, Dx, Dy, xc, yc, lamb
+            ).dot(weights)
+            * (t - 0)
+            / 2
+        )
         return F
-    
+
     integrate_vec = np.vectorize(integrate)
 
     term = integrate_vec(t, x, y)
     term0 = Qa / (4 * n * np.pi * np.sqrt(Dx * Dy)) * np.exp(v * (x - xc) / (2 * Dx))
-    
+
     return c0 * term0 * term
 
 
-def bhe(Finj,
-        x,
-        y,
-        t,
-        xc,
-        yc,
-        v,
-        n,
-        rho_s,
-        c_s,
-        k_s,
-        rho_w=1000,
-        c_w=4180,
-        k_w=0.56,
-        al=0,
-        ah=0,
-        T0=0,
-        order=100,
-        ):
-    
-    
+def bhe(
+    Finj,
+    x,
+    y,
+    t,
+    xc,
+    yc,
+    v,
+    n,
+    rho_s,
+    c_s,
+    k_s,
+    rho_w=1000.0,
+    c_w=4184.0,
+    k_w=0.59,
+    al=0.0,
+    ah=0.0,
+    T0=0.0,
+    order=100,
+):
+    """Simulate the effect of multiple Borehole Heat Exchangers (BHE) with time-varying thermal loads in a 2D infinite aquifer
+    with uniform background flow.
+
+    The contributions to the 2D aqueous temperature field for each BHE are calculated using the POINT2 algorithm from [wexler_1992]_ and converting
+    thermal transport parameters to solute transport parameters. Multiple BHE's and time-varying thermal loading are allowed through superposition.
+    The aquifer is assumed infinite in the x- and y-directions with uniform background flow in the x-direction. The BHE's are fully screened across
+    the aquifer's thickness and the thermal loads are evenly distributed along the borehole length.
+
+
+    Parameters
+    ----------
+    Finj : Numpy 2D-array
+        Numpy 2D-array with the first column containing the start time of each loading phase [T] for `nrow` phases. The other columns contain the
+        thermal loads for each BHE per unit aquifer length [E/T/L].
+    x : float or 1D or 2D array of floats
+        x-location(s) to compute output at [L].
+    y : float or 1D or 2D array of floats
+        y-location(s) to compute output at [L].
+    t : float or 1D or 2D array of floats
+        Time(s) to compute output at [T].
+    xc : float or 1D array of floats
+        x-coordinate(s) of the BHE's [L].
+    yc : float or 1D array of floats
+        y-coordinate(s) of the BHE's [L].
+    v : float
+        Average linear groundwater flow velocity of the uniform background flow in the x-direction [L/T].
+    n : float
+        Aquifer porosity. Should be between 0 and 1 [-].
+    rho_s : float
+        Density of the solid aquifer material [M/L**3].
+    c_s : float
+        Specific heat capacity of the solid aquifer material [E/M/Θ].
+    k_s : float
+        Thermal conductivity of the solid aquifer material [E/T/L/Θ].
+    rho_w : float, optional
+        Density of the groundwater [M/L**3], by default 1000.0 kg/m**3.
+    c_w : float, optional
+        Specific heat capacity of the groundwater [E/M/Θ], by default 4184.0 J/kg/°C.
+    k_w : float, optional
+        Thermal conductivity of the groundwater [E/T/L/Θ], defaults to 0.59 W/m/°C.
+    al : float
+        Longitudinal dispersivity [L]. Defaults to 0.0 m.
+    ah : float
+        Horizontal transverse dispersivity [L]. Defaults to 0.0 m.
+    T0 : float, optional
+        Initial aqueous background temperature of the aquifer [Θ]. Defaults to 0.0 °C (computed temperatures then represent changes in temperature).
+    order : int, optional
+        Order of the Gauss-Legendre polynomial used in the integration of the POINT2 algorithm. Defaults to 100.
+
+    Returns
+    -------
+    ndarray
+        Numpy array with computed temperatures at location(s) `x` and `y` and time(s) `t`.
+
+    References
+    ----------
+    .. [wexler_1992] Wexler, E.J., 1992. Analytical solutions for one-, two-, and three-dimensional
+        solute transport in ground-water systems with uniform flow, USGS Techniques of Water-Resources
+        Investigations 03-B7, 190 pp., https://doi.org/10.3133/twri03B7
+
+    """
+
     Finj = np.atleast_2d(Finj)
     x = np.atleast_1d(x)
     y = np.atleast_1d(y)
@@ -167,308 +247,588 @@ def bhe(Finj,
     xc = np.atleast_1d(xc)
     yc = np.atleast_1d(yc)
 
-    inj_time = Finj[:,0]
-    Finj = Finj[:,1:]
-    nbeo = Finj.shape[1]
+    inj_time = Finj[:, 0]
+    Finj = Finj[:, 1:]
+    nbhe = Finj.shape[1]
 
-    if not len(xc) == len(yc) == nbeo:
-        raise ValueError('xc should yc have the same length, equal to the number of BEO wells.')
-    
+    if not len(xc) == len(yc) == nbhe:
+        raise ValueError(
+            "xc should yc have the same length, equal to the number of BHE's."
+        )
+
     # Compute corresponding solute transport parameters
     kd = c_s / (c_w * rho_w)
     k0 = n * k_w + (1 - n) * k_s
     Dm = k0 / (n * rho_w * c_w)
     rho_b = (1 - n) * rho_s
     R = 1 + kd * rho_b / n
-      
+
     # define mass injection rates
-    Finj = Finj / (rho_w * c_w) # W/m / (kg/m3 * J/kg/Kelvin) = J/s/m / (kg/m3 * J/kg/Kelvin) = m2/s * kelvin
-    Qa = 1.0 # [L**2/T], unity
-    
-    # function to calculate the temperature changes for all wells at a given time
+    Finj = Finj / (
+        rho_w * c_w
+    )  # W/m / (kg/m3 * J/kg/Kelvin) = J/s/m / (kg/m3 * J/kg/Kelvin) = m2/s * kelvin
+    Qa = 1.0  # [L**2/T], unity
+
+    # function to calculate the temperature changes for all BHE's at a given time
     def calculate_temp(inj, ti):
         for i in range(len(inj)):
             if i == 0:
-                c = point2(c0=inj[i], 
-                        x=x, 
-                        y=y, 
-                        t=ti, 
-                        v=v, 
-                        n=n, 
-                        al=al, 
-                        ah=ah, 
-                        Qa=Qa, 
-                        xc=xc[i], 
-                        yc=yc[i],
-                        Dm=Dm,
-                        R=R,
-                        order=order,
-                        )
+                c = point2(
+                    c0=inj[i],
+                    x=x,
+                    y=y,
+                    t=ti,
+                    v=v,
+                    n=n,
+                    al=al,
+                    ah=ah,
+                    Qa=Qa,
+                    xc=xc[i],
+                    yc=yc[i],
+                    Dm=Dm,
+                    R=R,
+                    order=order,
+                )
             else:
-                c += point2(c0=inj[i], 
-                        x=x, 
-                        y=y, 
-                        t=ti, 
-                        v=v, 
-                        n=n, 
-                        al=al, 
-                        ah=ah, 
-                        Qa=Qa, 
-                        xc=xc[i], 
-                        yc=yc[i],
-                        Dm=Dm,
-                        R=R,
-                        order=order
-                        )
-        
+                c += point2(
+                    c0=inj[i],
+                    x=x,
+                    y=y,
+                    t=ti,
+                    v=v,
+                    n=n,
+                    al=al,
+                    ah=ah,
+                    Qa=Qa,
+                    xc=xc[i],
+                    yc=yc[i],
+                    Dm=Dm,
+                    R=R,
+                    order=order,
+                )
+
         return c
-    
+
     # calculate
-    if len(t) == 1: # snapshot model
-        inj_time = inj_time[inj_time <= t] # drop loading times after requested simulation time for speed-up
+    if len(t) == 1:  # snapshot model
+        inj_time = inj_time[
+            inj_time <= t
+        ]  # drop loading times after requested simulation time for speed-up
         if len(inj_time) == 0:
-            raise ValueError('No loading times prior to t.')
-        
+            raise ValueError("No loading times prior to t.")
+
         for ix, tinj in enumerate(inj_time):
             if ix == 0:
-                temp = calculate_temp(Finj[ix], t - tinj)
+                temp = np.nan_to_num(calculate_temp(Finj[ix], t - tinj), nan=0.0)
             else:
-                temp += calculate_temp(Finj[ix] - Finj[ix - 1], t - tinj)
+                temp += np.nan_to_num(
+                    calculate_temp(Finj[ix] - Finj[ix - 1], t - tinj), nan=0.0
+                )
 
-    elif (len(x) > 1 or len(y) > 1):
-        raise ValueError('If multiple values for t are specified, only one x and y value are allowed') # from point2()
+    elif len(x) > 1 or len(y) > 1:
+        raise ValueError(
+            "If multiple values for t are specified, only one x and y value are allowed"
+        )  # from point2()
 
-    else: # time series at one location
-        inj_time = inj_time[inj_time <= np.max(t)] # drop loading times after maximum requested simulation time for speed-up
+    else:  # time series at one location
+        inj_time = inj_time[
+            inj_time <= np.max(t)
+        ]  # drop loading times after maximum requested simulation time for speed-up
         if len(inj_time) == 0:
-            raise ValueError('No loading times prior to t.')
-        
+            raise ValueError("No loading times prior to t.")
+
         for ix, tinj in enumerate(inj_time):
             tix = t > tinj
             nt = len(t[tix])
             if ix == 0:
-                temp = calculate_temp(Finj[ix], t - tinj)
+                temp = np.nan_to_num(calculate_temp(Finj[ix], t - tinj), nan=0.0)
             elif nt > 0:
-                temp[tix] = temp[tix] + calculate_temp(Finj[ix] - Finj[ix - 1], t[tix] - tinj)
-
+                temp[tix] = temp[tix] + np.nan_to_num(
+                    calculate_temp(Finj[ix] - Finj[ix - 1], t[tix] - tinj), nan=0.0
+                )
 
     return temp + T0
 
-# ### MODFLOW
-# example 
 
-# moderately advective system, with a square model region
-center = (40, 40)
-Lx = 2 * center[0]
-Ly = 2 * center[1]
+# -
 
-crds = np.array([[-5.5, -0.5, 4.5, -2.5, 2.5,],
-                [2.5, 0.5, -1.5, 4.5, 2.5,]])
+# ### Define parameters
+#
+# Define model units, parameters and other settings.
 
-delr = 1.0
-delc = 1.0
+# +
+# Model units
+length_units = "meters"
+time_units = "seconds"
 
-# place the coordinates in the center of the field so they coincide with the 1x1 m cell centriods
-xc = crds[0] + center[0] # + delr / 2
-yc = crds[1] + center[1] # + delc / 2
+# Model parameters
+Lx = 80.0  # Length of simulation in X direction ($m$)
+Ly = 80.0  # Length of simulation in Y direction ($m$)
+delc = 1.0  # Width along the column ($m$)
+delr = 1.0  # Width along the row ($m$)
+nrow = int(Ly / delc)  # Number of rows in the simulation ($-$)
+ncol = int(Lx / delr)  # Number of columns in the simulation ($-$)
+nlay = 1  # Total number of layers ($-$)
+top = 1.0  # Aquifer top elevation ($m$)
+botm = 0.0  # Aquifer bottom elevation ($m$)
+k = 10 / 86400  # Aquifer hydraulic conductivity ($m/s$)
+n = 0.2  # Aquifer porosity ($-$)
+scheme = "TVD"  # Advection solution scheme ($-$)
+k_w = 0.59  # Thermal conductivity of the fluid ($\dfrac{W}{m \cdot ^{\circ}C}$)
+k_s = (
+    2.5  # Thermal conductivity of the aquifer material ($\dfrac{W}{m \cdot ^{\circ}C}$)
+)
+rho_w = 1000.0  # Density of water ($\frac{kg}{m^3}$) # 3282.296651
+c_w = 4184.0  # Mass-based heat capacity of the fluid ($\dfrac{J}{kg \cdot ^{\circ}C}$)
+rho_s = 2650.0  # Density of the solid aquifer material ($\dfrac{kg}{m^3}$)
+c_s = 900.0  # Mass-based heat capacity of the solid material ($\dfrac{J}{kg \cdot $^{\circ}C}$)
+al = 0.0  # Longitudinal dispersivity ($m$)
+ah = 0.0  # Horizontal transverse dispersivity ($m$)
+T0 = 0  # Initial temperature of the active domain ($^{\circ}C$)
+v = 0.1 / 86400  # Groundwater flow velocity ($m/s$)
+grad = v * n / k  # Hydraulic background gradient ($m/m$)
 
-# create output mesh for analytical contours
-xg, yg = np.meshgrid(np.linspace(0, Lx, 100), np.linspace(0, Ly, 100))
+# Arbitrary BHE coordinates placed in the center of the system and coinciding with the 1x1 m cell centroids
+crds = np.array(
+    [
+        [
+            -5.5,
+            -0.5,
+            4.5,
+            -2.5,
+            2.5,
+        ],
+        [
+            2.5,
+            0.5,
+            -1.5,
+            4.5,
+            2.5,
+        ],
+    ]
+)
+xc = crds[0] + 0.5 * Lx
+yc = crds[1] + 0.5 * Ly
 
-# time-varying energy loads (W/m) (loosely based on the energy demands in Al-Khoury et al, 2021, fig. 8)
-loads = -np.vstack([np.repeat(50, len(xc)),    # january-february
-                   np.repeat(37.5, len(xc)),  # march-april
-                   np.repeat(0.0, len(xc)),  # may-june
-                   np.repeat(-50.0, len(xc)), # july-august
-                   np.repeat(-10.0, len(xc)), # september-october
-                   np.repeat(45, len(xc)),  # november-december
-                  ])
-nyear = 3 # repeat three years
+# Time-varying energy loads (W/m) (loosely based on the energy demands in Al-Khoury et al, 2021, fig. 8)
+# equal loads for each BHE
+# repeat for three years
+loads = -np.vstack(
+    [
+        np.repeat(50, len(xc)),  # january-february
+        np.repeat(37.5, len(xc)),  # march-april
+        np.repeat(0.0, len(xc)),  # may-june
+        np.repeat(-50.0, len(xc)),  # july-august
+        np.repeat(-10.0, len(xc)),  # september-october
+        np.repeat(45, len(xc)),  # november-december
+    ]
+)
+nphase = loads.shape[0]  # number of annual loading phases
+nyear = 3
 loads = np.vstack([loads] * nyear)
-time = np.linspace(0, nyear * 365 - 60, nyear * 6) * 86400 # start time of injection phase, first one should equal 0.0
-Finj_tv = np.column_stack([time, loads])
+time = (
+    np.linspace(0, nyear * 365, nyear * nphase + 1) * 86400
+)  # start time of injection phase, first one should equal 0.0
+Finj = np.column_stack([time[:-1], loads])  # used in the analytical solution
 
-
-v = 2 * 6e-7 # 10 cm/d
-# Finj = [100] * len(xc) # W / m
-n = 0.2
-rho_s = 2650
-c_s = 900
-k_s = 2.5
-rho_w = 1000
-c_w = 4180
-k_w = 0.56
-al = 0
-ah = 0
-T0 = 0 # background temperature
-
-obs = (50 + delr / 2, 40 + delc / 2) # x-y coordinates of observation point
-obs_time = np.linspace(0.0, nyear * 365, 100) * 86400 # observation times
-
-# plot energy loading
-plt.bar(time/86400, loads[:,1], width = 60, align = 'center', edgecolor='black')
-plt.xlabel('Time (d)')
-plt.ylabel('Injection rate (W/m)')
-plt.grid(linewidth=0.2)
-
-
-# MODFLOW input
-nrow = int(Ly / delc)
-ncol = int(Lx / delr)
-nlay = 1.0
-top = 1.0
-botm = 0.0
-
-# boundary conditions
-k = 10 / 86400
-grad = v * n / k 
-hL = 10
+# uniform flow using constant-heads
+hL = 10.0
 hR = hL - (Lx - delr) * grad
+chd_pname = "CHD_0"  # CHD package name
 
-nstp = 10 # steps per stress-period
-tsmlt = 1.2
+# stress-period set-up
+# The flow simulation has 1 steady-state stress-period
+# The energy transport simulation uses 10 time steps for each stress-period
+nper = nyear * nphase  # Number of simulated stress periods ($-$)
+nstp = 10  # Number of time steps per stress period ($-$)
+tsmlt = 1.2  # Time step multiplier ($-$)
+tdis_rc = [(t, nstp, tsmlt) for t in np.ediff1d(time)]  # using lagged differences
 
-flow_ws = './model_tr/flow'
-heat_ws = './model_tr/heat'
+# Solver parameters
+inner_dvclose = 1e-6
+rcloserecord = [1e-6, "STRICT"]
+inner_dvclose_heat = 0.001
 
-# flow
-sim = flopy.mf6.MFSimulation(sim_name='beo_flow', sim_ws = flow_ws)
-tdis = flopy.mf6.ModflowTdis(sim, nper=1,  perioddata=[(1.0, 1, 1.0)])   
-ims = flopy.mf6.ModflowIms(sim, complexity='SIMPLE', inner_dvclose=1e-6, rcloserecord=[1e-6, 'STRICT'])
+# Arbitrary observation location
+obs = (
+    50 + delr / 2,
+    40 + delc / 2,
+)  # x-y coordinates of observation point at cell centroid
+obs_time = (
+    np.linspace(0.0, nyear * 365, 100) * 86400
+)  # observation times for analytical solution
 
-gwf = flopy.mf6.ModflowGwf(sim, modelname='flow', save_flows=True)
+# Output time and mesh for plotting analytical contours
+xg, yg = np.meshgrid(np.linspace(0, Lx, 100), np.linspace(0, Ly, 100))
+output_kper = 8  # after 1.5 years
+
+# -
 
 
-dis = flopy.mf6.ModflowGwfdis(gwf, nrow=nrow, ncol=ncol, nlay=nlay, top=top, botm=botm, delr=delr, delc=delc)
-npf = flopy.mf6.ModflowGwfnpf(gwf, k=k, icelltype=0, save_specific_discharge=True, save_saturation=True)
-sto = flopy.mf6.ModflowGwfsto(gwf, steady_state={0: True})
+def build_mf6_flow_model():
+    print(f"Building mf6gwf model...{sim_name}")
+    gwf_name = sim_name
+    sim_ws_flow = sim_ws / "mf6gwf"
 
-ic = flopy.mf6.ModflowGwfic(gwf, strt=hL)
+    # Instantiate a MODFLOW 6 simulation
+    sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws_flow, exe_name="mf6")
 
-chdrec = []
-for j in [0, ncol - 1]:
-    if j == 0:
-        hchd = hL
-    else:
-        hchd = hR
-        
-    for i in range(nrow):
-        chdrec.append(
-            [(0, i, j), hchd, T0]
-        )
+    # Instantiate time discretization package
+    flopy.mf6.ModflowTdis(
+        sim,
+        nper=1,  # just one steady state stress period for gwf
+        perioddata=[(1.0, 1, 1.0)],
+        time_units=time_units,
+    )
 
-chd_pname='CHD_0'
-chd = flopy.mf6.ModflowGwfchd(gwf, stress_period_data=chdrec, auxiliary='TEMPERATURE', pname=chd_pname)
-oc = flopy.mf6.ModflowGwfoc(gwf,
-                            budget_filerecord='flow.bud',
-                            head_filerecord='flow.hds',
-                            saverecord=[('BUDGET', 'ALL'), ('HEAD', 'ALL')],
-                            printrecord=[('BUDGET', 'ALL')]
-                            )
+    # Instantiate Iterative model solution package
+    flopy.mf6.ModflowIms(
+        sim,
+        complexity="SIMPLE",
+        inner_dvclose=inner_dvclose,
+        rcloserecord=rcloserecord,
+    )
 
-sim.write_simulation()
+    # Instantiate a groundwater flow model
+    gwf = flopy.mf6.ModflowGwf(sim, modelname=gwf_name, save_flows=True)
 
-success, pbuff = sim.run_simulation()
-assert success, pbuff
+    # Instantiate an structured discretization package
+    flopy.mf6.ModflowGwfdis(
+        gwf,
+        length_units=length_units,
+        nlay=nlay,
+        nrow=nrow,
+        ncol=ncol,
+        delr=delr,
+        delc=delc,
+        top=top,
+        botm=botm,
+        filename=f"{gwf_name}.dis",
+    )
 
-# heat transport
-sim = flopy.mf6.MFSimulation(sim_name='beo_heat', sim_ws = heat_ws)
+    # Instantiate node-property flow (NPF) package
+    flopy.mf6.ModflowGwfnpf(
+        gwf,
+        save_saturation=True,
+        save_specific_discharge=True,
+        icelltype=0,
+        k=k,
+        filename=f"{gwf_name}.npf",
+    )
 
-time_mf = np.repeat(np.diff(time)[0], len(time))
-tr_periods = [
-    (ti, nstp, tsmlt) for ti in time_mf
-]
-nper = len(tr_periods)
-tdis = flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tr_periods)   
-ims = flopy.mf6.ModflowIms(sim, complexity='SIMPLE', inner_dvclose=0.001, linear_acceleration='BICGSTAB')
+    # Instantiate initial conditions package for the GWF model
+    flopy.mf6.ModflowGwfic(gwf, strt=hL, filename=f"{gwf_name}.ic")
 
-gwe = flopy.mf6.ModflowGwe(sim, modelname='heat', save_flows=True)
-dis = flopy.mf6.ModflowGwedis(gwe, nrow=nrow, ncol=ncol, nlay=nlay, top=top, botm=botm, delr=delr, delc=delc)
-if v > 0:
-    adv = flopy.mf6.ModflowGweadv(gwe, scheme='tvd')
-cnd = flopy.mf6.ModflowGwecnd(gwe, alh=al, ath1=ah, ktw=k_w, kts=k_s)
-est = flopy.mf6.ModflowGweest(gwe, density_water=rho_w, heat_capacity_water=c_w, porosity=n, heat_capacity_solid=c_s, density_solid=rho_s)
+    # Instantiating MODFLOW 6 storage package
+    # (steady flow conditions, so no actual storage,
+    # using to print values in .lst file)
+    flopy.mf6.ModflowGwfsto(
+        gwf,
+        ss=0,
+        sy=0,
+        steady_state={0: True},
+        filename=f"{gwf_name}.sto",
+    )
 
-ic = flopy.mf6.ModflowGweic(gwe, strt=T0)
+    # Instantiate CHD package for creating a uniform background flow
+    chdrec = []
+    for j in [0, ncol - 1]:
+        if j == 0:
+            hchd = hL
+        else:
+            hchd = hR
 
-eslrec = {}
-for iper in range(nper):
-    eslrec_tr = []
-    for i in range(len(xc)):
-        cid = gwe.modelgrid.intersect(xc[i], yc[i])
-        eslrec_tr.append(
-            [(0,) + cid, Finj_tv[iper, i + 1]]
-        )
-    eslrec[iper] = eslrec_tr
+        for i in range(nrow):
+            chdrec.append([(0, i, j), hchd, T0])
 
-esl = flopy.mf6.ModflowGweesl(gwe, stress_period_data=eslrec)
-ssm = flopy.mf6.ModflowGwessm(gwe, sources=[chd_pname, 'AUX', 'TEMPERATURE'])
+    flopy.mf6.ModflowGwfchd(
+        gwf, stress_period_data=chdrec, auxiliary="TEMPERATURE", pname=chd_pname
+    )
 
-oc = flopy.mf6.ModflowGweoc(gwe, 
-                            budget_filerecord='heat.bud',
-                            temperature_filerecord='heat.ucn',
-                            saverecord=[('BUDGET', 'ALL'), ('TEMPERATURE', 'ALL')],
-                            printrecord=[('BUDGET', 'ALL')]
-                            )
-fmi = flopy.mf6.ModflowGwefmi(gwe,
-                              packagedata=[
-                                  ('GWFHEAD', '../flow/flow.hds'),
-                                  ('GWFBUDGET', '../flow/flow.bud')
-                              ]
-                              )
-sim.write_simulation()
+    # Instantiating MODFLOW 6 output control package (flow model)
+    head_filerecord = f"{sim_name}.hds"
+    budget_filerecord = f"{sim_name}.cbc"
+    flopy.mf6.ModflowGwfoc(
+        gwf,
+        head_filerecord=head_filerecord,
+        budget_filerecord=budget_filerecord,
+        saverecord=[("HEAD", "LAST"), ("BUDGET", "LAST")],
+    )
 
-success, pbuff = sim.run_simulation()
-assert success, pbuff
+    return sim
 
-# output
-output_kper = 8
-temp = gwe.output.temperature()
-temp_t = temp.get_data(kstpkper=(nstp-1, output_kper))
 
-obs_ij = gwe.modelgrid.intersect(obs[0], obs[1])
-obs_temp = temp.get_ts((0,) + obs_ij)
+def build_mf6_heat_model():
+    print(f"Building mf6gwe model...{sim_name}")
+    gwename = sim_name
+    sim_ws_heat = sim_ws / "mf6gwe"
 
-t = temp.get_times()[nstp * output_kper + (nstp - 1)]
+    sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws_heat, exe_name="mf6")
 
-# analytical temperature field and time series for time-varying loads
-temp_analy = bhe(Finj_tv, xg, yg, t, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+    # Instantiating MODFLOW 6 groundwater energy transport model
+    gwe = flopy.mf6.ModflowGwe(
+        sim,
+        modelname=gwename,
+        save_flows=True,
+    )
 
-# analytical temp time series
-temp_obs = bhe(Finj_tv, obs[0], obs[1], obs_time, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+    # Instantiate Iterative model solution package
+    flopy.mf6.ModflowIms(
+        sim,
+        linear_acceleration="bicgstab",
+        complexity="SIMPLE",
+        inner_dvclose=inner_dvclose_heat,
+    )
 
-fig, ax = plt.subplots(1, 1, figsize=(10,6))
-csa = ax.contour(xg, yg, temp_analy, levels=np.arange(-20, 20, 1) + T0, colors='black', linewidths=0.5, negative_linestyles='solid')
-# plt.clabel(csa, fmt='%.2f', fontsize=8)
+    # MF6 time discretization differs from corresponding flow simulation
+    flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_rc, time_units=time_units)
 
-pmv = flopy.plot.PlotMapView(gwe, ax=ax)
-cs = pmv.contour_array(temp_t, levels=np.arange(-20, 20, 1) + T0, colors='red', linewidths=0.5, negative_linestyles='dashed', linestyles='dashed')
-plt.clabel(cs, fmt='%.2f', fontsize=8, colors='black')
-#pmv.plot_grid(linewidth=0.2)
-ax.set_xlabel('x (m)')
-ax.set_ylabel('y (m)')
-ax.scatter(obs[0], obs[1], marker='x', color='green')
-ax.scatter(xc, yc, marker='.', color='black')
-ax.set_axisbelow(True)
-ax.grid()
-ax.set_aspect('equal')
-plt.title(f't = {t/86400:.2f} d\n {delr} m spacing, v = {v * 86400:.2f} m/d')
-ax.set_xlim(30, 65)
-ax.set_ylim(30, 55)
+    # Instantiate an structured discretization package
+    flopy.mf6.ModflowGwedis(
+        gwe,
+        length_units=length_units,
+        nlay=nlay,
+        nrow=nrow,
+        ncol=ncol,
+        delr=delr,
+        delc=delc,
+        top=top,
+        botm=botm,
+        filename=f"{gwename}.dis",
+    )
 
-h1, _ = csa.legend_elements()
-h2, _ = cs.legend_elements()
-ax.legend([h1[0], h2[0]], ['Analytical', 'MODFLOW'])
+    # Instantiating MODFLOW 6 heat transport initial temperature
+    flopy.mf6.ModflowGweic(gwe, strt=T0, filename=f"{gwename}.ic")
 
-# plt.savefig('./figures/contours_transient_v2.png', dpi=300)
+    # Instantiating MODFLOW 6 heat transport advection package
+    flopy.mf6.ModflowGweadv(gwe, scheme=scheme, filename=f"{gwename}.adv")
 
-plt.figure(figsize=(10,4))
-plt.plot(obs_time / 86400, temp_obs, label = 'Analytical', color='black')
-plt.plot(obs_temp[:,0] / 86400, obs_temp[:,1], label = 'MODFLOW', color='red', linestyle='dashed')
-plt.xlabel('Time (d)')
-plt.ylabel(r'$\Delta$T (°C)')
-plt.grid()
-plt.legend()
-plt.title(f'(x,y) = {obs}\n{delr} m spacing, v = {v * 86400:.2f} m/d')
+    # Instantiating MODFLOW 6 heat transport conduction and dispersion package
+    flopy.mf6.ModflowGwecnd(
+        gwe, alh=al, ath1=ah, ktw=k_w, kts=k_s, filename=f"{gwename}.cnd"
+    )
 
-# plt.savefig('./figures/ts_transient_v2.png', dpi=300)
+    # Instantiating MODFLOW 6 energy storage and transport package
+    flopy.mf6.ModflowGweest(
+        gwe,
+        density_water=rho_w,
+        heat_capacity_water=c_w,
+        porosity=n,
+        heat_capacity_solid=c_s,
+        density_solid=rho_s,
+        filename=f"{gwename}.est",
+    )
+
+    # Instantiating MODFLOW 6 source/sink mixing package
+    sourcerecarray = [(chd_pname, "AUX", "TEMPERATURE")]  # optional when T0 = 0
+    flopy.mf6.ModflowGwessm(gwe, sources=sourcerecarray)
+
+    # Instantiating MODFLOW 6 energy source loading package representing the BHE's
+    eslrec = {}
+    for iper in range(nper):
+        eslrec_tr = []
+        for i in range(len(xc)):
+            cid = gwe.modelgrid.intersect(xc[i], yc[i])
+            eslrec_tr.append([(0,) + cid, Finj[iper, i + 1]])
+        eslrec[iper] = eslrec_tr
+
+    flopy.mf6.ModflowGweesl(
+        gwe,
+        stress_period_data=eslrec,
+        filename=f"{gwename}.esl",
+    )
+
+    # Instantiating MODFLOW 6 heat transport output control package
+    flopy.mf6.ModflowGweoc(
+        gwe,
+        budget_filerecord=f"{gwename}.cbc",
+        temperature_filerecord=f"{gwename}.ucn",
+        saverecord=[
+            ("TEMPERATURE", "ALL"),
+            ("BUDGET", "ALL"),
+        ],
+        printrecord=[("BUDGET", "ALL")],
+    )
+
+    # Instantiating MODFLOW 6 Flow-Model Interface package
+    pd = [
+        ("GWFHEAD", "../mf6gwf/" + sim_name + ".hds", None),
+        ("GWFBUDGET", "../mf6gwf/" + sim_name + ".cbc", None),
+    ]
+    flopy.mf6.ModflowGwefmi(gwe, packagedata=pd)
+
+    return sim
+
+
+# +
+def write_mf6_models(sim_gwf, sim_gwe, silent=True):
+    # Run the steady-state flow model
+    if sim_gwf is not None:
+        sim_gwf.write_simulation(silent=silent)
+
+    # Second, run the heat transport model
+    if sim_gwe is not None:
+        sim_gwe.write_simulation(silent=silent)
+
+
+@timed
+def run_model(sim, silent=True):
+    # Attempting to run model
+    success, buff = sim.run_simulation(silent=silent, report=True)
+    if not success:
+        print(buff)
+    return success
+
+
+# -
+
+
+# ### Plotting results
+#
+# Define functions that plot results.
+
+
+def plot_extraction_rates():
+    figsize = (6, 4)
+    fig, ax = plt.subplots(figsize=figsize)
+    ts = np.ediff1d(time)[0]
+    t_centered = time[:-1] + ts / 2
+    ax.bar(
+        t_centered / 86400,
+        loads[:, 1],
+        width=ts / 86400,
+        align="center",
+        edgecolor="black",
+    )
+    ax.set_xlabel("Time (d)")
+    ax.set_ylabel("Injection rate (W/m)")
+    ax.grid(linewidth=0.2)
+
+    # save figure
+    if plot_show:
+        plt.show()
+    if plot_save:
+        fpth = figs_path / f"{sim_name}-injection-rates.png"
+        fig.savefig(fpth, dpi=600)
+
+    return
+
+
+@timed
+def plot_contours(sim_gwe, kper):
+    gwename = sim_name
+    gwe = sim_gwe.get_model(gwename)
+
+    # get simulated temperature field at end of stress-period kper
+    temp = gwe.output.temperature()
+    temp_t = temp.get_data(kstpkper=(nstp - 1, output_kper))
+
+    # find corresponding model time of stress-period kper
+    kstp = nstp * kper + (nstp - 1)
+    t = temp.get_times()[kstp]
+
+    # analytical temperature field at time = t
+    temp_analy = bhe(Finj, xg, yg, t, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+
+    # plot
+    lvls = np.arange(-20, 20, 1) + T0
+    figsize = (10, 6)
+    fig, ax = plt.subplots(figsize=figsize)
+    csa = ax.contour(
+        xg,
+        yg,
+        temp_analy,
+        levels=lvls,
+        colors="black",
+        linewidths=0.8,
+        negative_linestyles="solid",
+    )
+    pmv = flopy.plot.PlotMapView(gwe, ax=ax)
+    cs = pmv.contour_array(
+        temp_t,
+        levels=lvls,
+        colors="red",
+        linewidths=0.8,
+        negative_linestyles="dashed",
+        linestyles="dashed",
+    )
+    plt.clabel(cs, fmt="%.2f", fontsize=8, colors="black")
+    ax.set_xlabel("x (m)")
+    ax.set_ylabel("y (m)")
+    ax.scatter(obs[0], obs[1], marker="x", color="green")
+    ax.scatter(xc, yc, marker=".", color="black")
+    ax.set_axisbelow(True)
+    ax.grid()
+    ax.set_aspect("equal")
+    ax.set_xlim(30, 65)
+    ax.set_ylim(30, 55)
+    h1, _ = csa.legend_elements()
+    h2, _ = cs.legend_elements()
+    ax.legend([h1[0], h2[0]], ["Analytical", "MODFLOW"])
+
+    # save figure
+    if plot_show:
+        plt.show()
+    if plot_save:
+        fpth = figs_path / f"{sim_name}-contours.png"
+        fig.savefig(fpth, dpi=600)
+
+    return
+
+
+@timed
+def plot_ts(sim_gwe, obs):
+    gwename = sim_name
+    gwe = sim_gwe.get_model(gwename)
+
+    # get simulated temperature series at location
+    obs_ij = gwe.modelgrid.intersect(obs[0], obs[1])
+    temp = gwe.output.temperature()
+    obs_temp = temp.get_ts((0,) + obs_ij)
+
+    # analytical temperature time series
+    temp_obs = bhe(Finj, obs[0], obs[1], obs_time, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+
+    # plot
+    figsize = (10, 4)
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.plot(obs_time / 86400, temp_obs, label="Analytical", color="black")
+    ax.plot(
+        obs_temp[:, 0] / 86400,
+        obs_temp[:, 1],
+        label="MODFLOW",
+        color="red",
+        linestyle="dashed",
+    )
+    ax.set_xlabel("Time (d)")
+    ax.set_ylabel(r"$\Delta$T (°C)")
+    ax.grid()
+    ax.legend()
+
+    # save figure
+    if plot_show:
+        plt.show()
+    if plot_save:
+        fpth = figs_path / f"{sim_name}-ts.png"
+        fig.savefig(fpth, dpi=600)
+
+
+def scenario(idx, silent=False):
+    sim_gwf = build_mf6_flow_model()
+    sim_gwe = build_mf6_heat_model()
+
+    if write and (sim_gwf is not None and sim_gwe is not None):
+        write_mf6_models(sim_gwf, sim_gwe, silent=silent)
+
+    if run:
+        success = run_model(sim_gwf, silent=silent)
+        if success:
+            success = run_model(sim_gwe, silent=silent)
+
+    if plot and success:
+        plot_extraction_rates()
+        plot_contours(sim_gwe, output_kper)
+        plot_ts(sim_gwe, obs)
+
+
+scenario(0, silent=True)
