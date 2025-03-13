@@ -18,8 +18,13 @@ import numpy as np
 from modflow_devtools.misc import get_env, timed
 from scipy.special import roots_legendre
 
-# Example name and base workspace
+# Example name and workspace paths. If this example is running
+# in the git repository, use the folder structure described in
+# the README. Otherwise just use the current working directory.
 sim_name = "ex-gwe-bhe"
+gwf_name = "gwf-" + sim_name.split("-")[-1]
+gwe_name = "gwe-" + sim_name.split("-")[-1]
+
 try:
     root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
@@ -41,7 +46,7 @@ plot_save = get_env("PLOT_SAVE", True)
 
 # ### Define analytical solution
 #
-# This uses the POINT2 algorithm for from [Wexler (1992)](https://doi.org/10.3133/twri03B7) (equation 76) with Gauss-Legendre quadrature as implemented in AdePy (https://github.com/cneyens/adepy/blob/v0.1.0/adepy/uniform/twoD.py). The `bhe()` function transforms the heat transport parameters to solute transport parameters and wraps the `point2()` function to allow for superposition of multiple BHE's and transient energy loading.
+# This uses the POINT2 algorithm describing 2D solute transport of a continuous point source in uniform background flow from [Wexler (1992)](https://doi.org/10.3133/twri03B7) (equation 76) with Gauss-Legendre quadrature as implemented in AdePy (https://github.com/cneyens/adepy/blob/v0.1.0/adepy/uniform/twoD.py). The `bhe()` function transforms the heat transport parameters to solute transport parameters and wraps the `point2()` function to allow for superposition of multiple BHE's and transient energy loading.
 
 
 # +
@@ -467,7 +472,6 @@ output_kper = 8  # after 1.5 years
 
 def build_mf6_flow_model():
     print(f"Building mf6gwf model...{sim_name}")
-    gwf_name = sim_name
     sim_ws_flow = sim_ws / "mf6gwf"
 
     # Instantiate a MODFLOW 6 simulation
@@ -560,7 +564,6 @@ def build_mf6_flow_model():
 
 def build_mf6_heat_model():
     print(f"Building mf6gwe model...{sim_name}")
-    gwename = sim_name
     sim_ws_heat = sim_ws / "mf6gwe"
 
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws_heat, exe_name="mf6")
@@ -568,7 +571,7 @@ def build_mf6_heat_model():
     # Instantiating MODFLOW 6 groundwater energy transport model
     gwe = flopy.mf6.ModflowGwe(
         sim,
-        modelname=gwename,
+        modelname=gwe_name,
         save_flows=True,
     )
 
@@ -594,18 +597,18 @@ def build_mf6_heat_model():
         delc=delc,
         top=top,
         botm=botm,
-        filename=f"{gwename}.dis",
+        filename=f"{gwe_name}.dis",
     )
 
     # Instantiating MODFLOW 6 heat transport initial temperature
-    flopy.mf6.ModflowGweic(gwe, strt=T0, filename=f"{gwename}.ic")
+    flopy.mf6.ModflowGweic(gwe, strt=T0, filename=f"{gwe_name}.ic")
 
     # Instantiating MODFLOW 6 heat transport advection package
-    flopy.mf6.ModflowGweadv(gwe, scheme=scheme, filename=f"{gwename}.adv")
+    flopy.mf6.ModflowGweadv(gwe, scheme=scheme, filename=f"{gwe_name}.adv")
 
     # Instantiating MODFLOW 6 heat transport conduction and dispersion package
     flopy.mf6.ModflowGwecnd(
-        gwe, alh=al, ath1=ah, ktw=k_w, kts=k_s, filename=f"{gwename}.cnd"
+        gwe, alh=al, ath1=ah, ktw=k_w, kts=k_s, filename=f"{gwe_name}.cnd"
     )
 
     # Instantiating MODFLOW 6 energy storage and transport package
@@ -616,7 +619,7 @@ def build_mf6_heat_model():
         porosity=n,
         heat_capacity_solid=c_s,
         density_solid=rho_s,
-        filename=f"{gwename}.est",
+        filename=f"{gwe_name}.est",
     )
 
     # Instantiating MODFLOW 6 source/sink mixing package
@@ -635,14 +638,14 @@ def build_mf6_heat_model():
     flopy.mf6.ModflowGweesl(
         gwe,
         stress_period_data=eslrec,
-        filename=f"{gwename}.esl",
+        filename=f"{gwe_name}.esl",
     )
 
     # Instantiating MODFLOW 6 heat transport output control package
     flopy.mf6.ModflowGweoc(
         gwe,
-        budget_filerecord=f"{gwename}.cbc",
-        temperature_filerecord=f"{gwename}.ucn",
+        budget_filerecord=f"{gwe_name}.cbc",
+        temperature_filerecord=f"{gwe_name}.ucn",
         saverecord=[
             ("TEMPERATURE", "ALL"),
             ("BUDGET", "ALL"),
@@ -672,12 +675,35 @@ def write_mf6_models(sim_gwf, sim_gwe, silent=True):
 
 
 @timed
-def run_model(sim, silent=True):
-    # Attempting to run model
-    success, buff = sim.run_simulation(silent=silent, report=True)
+def run_models(sim_gwf, sim_gwe, silent=True):
+    # Attempting to run MODFLOW models
+    print(f"Running mf6gwf model...{sim_name}")
+    success, buff = sim_gwf.run_simulation(silent=silent, report=True)
     if not success:
         print(buff)
+    else:
+        print(f"Running mf6gwe model...{sim_name}")
+        success, buff = sim_gwe.run_simulation(silent=silent, report=True)
     return success
+
+
+@timed
+def run_analytical(sim_gwe, kper, obs, obs_time):
+    gwe = sim_gwe.get_model(gwe_name)
+
+    # find corresponding model time of stress-period kper
+    temp = gwe.output.temperature()
+    kstp = nstp * kper + (nstp - 1)
+    t = temp.get_times()[kstp]
+
+    # analytical temperature contours at time kper
+    print(f"Running analytical model...{sim_name}")
+    cntrs = bhe(Finj, xg, yg, t, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+
+    # analytical temperature time series
+    ts = bhe(Finj, obs[0], obs[1], obs_time, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+
+    return cntrs, ts
 
 
 # -
@@ -714,21 +740,12 @@ def plot_extraction_rates():
     return
 
 
-@timed
-def plot_contours(sim_gwe, kper):
-    gwename = sim_name
-    gwe = sim_gwe.get_model(gwename)
+def plot_contours(sim_gwe, kper, cntrs):
+    gwe = sim_gwe.get_model(gwe_name)
 
     # get simulated temperature field at end of stress-period kper
     temp = gwe.output.temperature()
     temp_t = temp.get_data(kstpkper=(nstp - 1, output_kper))
-
-    # find corresponding model time of stress-period kper
-    kstp = nstp * kper + (nstp - 1)
-    t = temp.get_times()[kstp]
-
-    # analytical temperature field at time = t
-    temp_analy = bhe(Finj, xg, yg, t, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
 
     # plot
     lvls = np.arange(-20, 20, 1) + T0
@@ -737,7 +754,7 @@ def plot_contours(sim_gwe, kper):
     csa = ax.contour(
         xg,
         yg,
-        temp_analy,
+        cntrs,
         levels=lvls,
         colors="black",
         linewidths=0.8,
@@ -776,23 +793,18 @@ def plot_contours(sim_gwe, kper):
     return
 
 
-@timed
-def plot_ts(sim_gwe, obs):
-    gwename = sim_name
-    gwe = sim_gwe.get_model(gwename)
+def plot_ts(sim_gwe, obs, ts):
+    gwe = sim_gwe.get_model(gwe_name)
 
     # get simulated temperature series at location
     obs_ij = gwe.modelgrid.intersect(obs[0], obs[1])
     temp = gwe.output.temperature()
     obs_temp = temp.get_ts((0,) + obs_ij)
 
-    # analytical temperature time series
-    temp_obs = bhe(Finj, obs[0], obs[1], obs_time, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
-
     # plot
     figsize = (10, 4)
     fig, ax = plt.subplots(figsize=figsize)
-    ax.plot(obs_time / 86400, temp_obs, label="Analytical", color="black")
+    ax.plot(obs_time / 86400, ts, label="Analytical", color="black")
     ax.plot(
         obs_temp[:, 0] / 86400,
         obs_temp[:, 1],
@@ -821,14 +833,14 @@ def scenario(idx, silent=False):
         write_mf6_models(sim_gwf, sim_gwe, silent=silent)
 
     if run:
-        success = run_model(sim_gwf, silent=silent)
+        success = run_models(sim_gwf, sim_gwe, silent=silent)
         if success:
-            success = run_model(sim_gwe, silent=silent)
+            cntrs, ts = run_analytical(sim_gwe, output_kper, obs, obs_time)
 
     if plot and success:
         plot_extraction_rates()
-        plot_contours(sim_gwe, output_kper)
-        plot_ts(sim_gwe, obs)
+        plot_contours(sim_gwe, output_kper, cntrs)
+        plot_ts(sim_gwe, obs, ts)
 
 
 scenario(0, silent=True)
