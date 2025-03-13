@@ -749,7 +749,7 @@ def plot_contours(sim_gwe, kper, cntrs):
 
     # plot
     lvls = np.arange(-20, 20, 1) + T0
-    figsize = (10, 6)
+    figsize = (7, 5)
     fig, ax = plt.subplots(figsize=figsize)
     csa = ax.contour(
         xg,
@@ -769,7 +769,7 @@ def plot_contours(sim_gwe, kper, cntrs):
         negative_linestyles="dashed",
         linestyles="dashed",
     )
-    plt.clabel(cs, fmt="%.2f", fontsize=8, colors="black")
+    plt.clabel(cs, fmt="%.2f", fontsize=8, colors="black", inline=False)
     ax.set_xlabel("x (m)")
     ax.set_ylabel("y (m)")
     ax.scatter(obs[0], obs[1], marker="x", color="green")
@@ -802,7 +802,7 @@ def plot_ts(sim_gwe, obs, ts):
     obs_temp = temp.get_ts((0,) + obs_ij)
 
     # plot
-    figsize = (10, 4)
+    figsize = (7, 4)
     fig, ax = plt.subplots(figsize=figsize)
     ax.plot(obs_time / 86400, ts, label="Analytical", color="black")
     ax.plot(
