@@ -1,4 +1,4 @@
-# ## Thermal loading of borehole heat exchangers
+# ## Thermal Loading of Borehole Heat Exchangers
 #
 # This example simulates transient thermal energy loading of multiple borehole heat exchangers (BHE's) in a uniform flow field and compares the results to an analytical solution.
 #
