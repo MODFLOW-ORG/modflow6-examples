@@ -449,7 +449,7 @@ chd_pname = "CHD_0"  # CHD package name
 # The flow simulation has 1 steady-state stress-period
 # The energy transport simulation uses 10 time steps for each stress-period
 nper = nyear * nphase
-nstp = 10 
+nstp = 10
 tsmlt = 1.2
 tdis_rc = [(t, nstp, tsmlt) for t in np.ediff1d(time)]  # using lagged differences
 
