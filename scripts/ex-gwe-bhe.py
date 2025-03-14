@@ -367,31 +367,35 @@ length_units = "meters"
 time_units = "seconds"
 
 # Model parameters
-Lx = 80.0  # Length of simulation in X direction ($m$)
-Ly = 80.0  # Length of simulation in Y direction ($m$)
-delc = 1.0  # Width along the column ($m$)
-delr = 1.0  # Width along the row ($m$)
-nrow = int(Ly / delc)  # Number of rows in the simulation ($-$)
-ncol = int(Lx / delr)  # Number of columns in the simulation ($-$)
+Lx = 80.0  # Length of system in X direction ($m$)
+Ly = 80.0  # Length of system in Y direction ($m$)
+delc = 1.0  # Width along columns ($m$)
+delr = 1.0  # Width along rows ($m$)
 nlay = 1  # Total number of layers ($-$)
 top = 1.0  # Aquifer top elevation ($m$)
 botm = 0.0  # Aquifer bottom elevation ($m$)
-k = 10 / 86400  # Aquifer hydraulic conductivity ($m/s$)
+k = 10.0  # Aquifer hydraulic conductivity ($m/d$)
 n = 0.2  # Aquifer porosity ($-$)
 scheme = "TVD"  # Advection solution scheme ($-$)
-k_w = 0.59  # Thermal conductivity of the fluid ($\dfrac{W}{m \cdot ^{\circ}C}$)
-k_s = (
-    2.5  # Thermal conductivity of the aquifer material ($\dfrac{W}{m \cdot ^{\circ}C}$)
-)
-rho_w = 1000.0  # Density of water ($\frac{kg}{m^3}$) # 3282.296651
-c_w = 4184.0  # Mass-based heat capacity of the fluid ($\dfrac{J}{kg \cdot ^{\circ}C}$)
-rho_s = 2650.0  # Density of the solid aquifer material ($\dfrac{kg}{m^3}$)
-c_s = 900.0  # Mass-based heat capacity of the solid material ($\dfrac{J}{kg \cdot $^{\circ}C}$)
+ktw = 0.59  # Thermal conductivity of water ($\dfrac{W}{m \cdot ^{\circ}C}$)
+kts = 2.5  # Thermal conductivity of aquifer material ($\dfrac{W}{m \cdot ^{\circ}C}$)
+rhow = 1000.0  # Density of water ($\frac{kg}{m^3}$) # 3282.296651
+cpw = 4184.0  # Mass-based heat capacity of water ($\dfrac{J}{kg \cdot ^{\circ}C}$)
+rhos = 2650.0  # Density of dry solid aquifer material ($\dfrac{kg}{m^3}$)
+cps = 900.0  # Mass-based heat capacity of dry solid material ($\dfrac{J}{kg \cdot $^{\circ}C}$)
 al = 0.0  # Longitudinal dispersivity ($m$)
 ah = 0.0  # Horizontal transverse dispersivity ($m$)
-T0 = 0  # Initial temperature of the active domain ($^{\circ}C$)
-v = 0.1 / 86400  # Groundwater flow velocity ($m/s$)
-grad = v * n / k  # Hydraulic background gradient ($m/m$)
+T0 = 0.0  # Initial temperature of the domain ($^{\circ}C$)
+v = 0.1  # Groundwater flow velocity ($m/d$)
+
+# Other parameters not in the LateX table
+nrow = int(Ly / delc)
+ncol = int(Lx / delr)
+grad = v * n / k
+
+# convert K and v to m/s
+k = k / 86400
+v = v / 86400
 
 # Arbitrary BHE coordinates placed in the center of the system and coinciding with the 1x1 m cell centroids
 crds = np.array(
@@ -608,17 +612,17 @@ def build_mf6_heat_model():
 
     # Instantiating MODFLOW 6 heat transport conduction and dispersion package
     flopy.mf6.ModflowGwecnd(
-        gwe, alh=al, ath1=ah, ktw=k_w, kts=k_s, filename=f"{gwe_name}.cnd"
+        gwe, alh=al, ath1=ah, ktw=ktw, kts=kts, filename=f"{gwe_name}.cnd"
     )
 
     # Instantiating MODFLOW 6 energy storage and transport package
     flopy.mf6.ModflowGweest(
         gwe,
-        density_water=rho_w,
-        heat_capacity_water=c_w,
+        density_water=rhow,
+        heat_capacity_water=cpw,
         porosity=n,
-        heat_capacity_solid=c_s,
-        density_solid=rho_s,
+        heat_capacity_solid=cps,
+        density_solid=rhos,
         filename=f"{gwe_name}.est",
     )
 
@@ -698,10 +702,30 @@ def run_analytical(sim_gwe, kper, obs, obs_time):
 
     # analytical temperature contours at time kper
     print(f"Running analytical model...{sim_name}")
-    cntrs = bhe(Finj, xg, yg, t, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+    cntrs = bhe(
+        Finj, xg, yg, t, xc, yc, v, n, rhos, cps, kts, rhow, cpw, ktw, al, ah, T0=T0
+    )
 
     # analytical temperature time series
-    ts = bhe(Finj, obs[0], obs[1], obs_time, xc, yc, v, n, rho_s, c_s, k_s, T0=T0)
+    ts = bhe(
+        Finj,
+        obs[0],
+        obs[1],
+        obs_time,
+        xc,
+        yc,
+        v,
+        n,
+        rhos,
+        cps,
+        kts,
+        rhow,
+        cpw,
+        ktw,
+        al,
+        ah,
+        T0=T0,
+    )
 
     return cntrs, ts
 

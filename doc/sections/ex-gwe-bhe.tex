@@ -1,11 +1,11 @@
 \section{Thermal Loading of Borehole Heat Exchangers}
 
 % Describe source of problem
-Borehole Heat Exchangers (BHE's) are often used to provide a sustainable source of cooling and heating for residential buildings. The thermal energy demands may vary seasonally, with heat extraction occuring during the winter season and heat injection during the summer months. As a result, the subsurface temperature near the BHE's will vary seasonally, which may affect the efficiency of the heating system. This is illustrated here using the Groundwater Energy Transport (GWE) model. The results are compared with an analytical solution to verify the accuracy of the \mf simulation. 
+Borehole Heat Exchangers (BHE's) are increasingly more used to provide a sustainable source of cooling and heating for buildings. The thermal energy demands may vary seasonally, with heat extraction occurring during the winter season and heat injection during the warmer summer months. As a result, the subsurface temperature near the BHE's will show seasonal variability. This is illustrated here using the Groundwater Energy Transport (GWE) model. The results are compared with an analytical solution to verify the accuracy of the \mf simulation. 
 
 \subsection{Example description}
 
-Five BHE's are arbitrarily placed in a confined aquifer with uniform background flow in the x-direction. The BHE's are fully screened across the aquifer thickness and heat injection/extraction is evenly distributed along the borehole length. The resulting temperature field therefore does not vary along the z-axis, effectively rendering the problem two-dimensional. Heat extraction and injection follows a seasonal energy demand typical for residential BHE systems in temperate climates (figure~\ref{fig:ex-gwe-bhe-injection-rates}). During winter, heat is extracted from the aquifer whereas heat is injected (or cold is extracted) during summer. Note that on a yearly basis, more heat is extracted than injected.
+Five BHE's are arbitrarily placed in a confined aquifer with uniform background flow in the x-direction. The BHE's are fully screened across the aquifer thickness and heat injection/extraction is evenly distributed along the borehole length. The resulting temperature field therefore does not vary along the z-axis, effectively rendering the problem two-dimensional. Heat extraction and injection follow a seasonal energy demand typical for residential BHE systems in temperate climates (figure~\ref{fig:ex-gwe-bhe-injection-rates}). During winter, heat is extracted from the aquifer whereas heat is injected (or cold is extracted) during summer. Note that on a yearly basis, more heat is extracted than injected.
 
 \begin{StandardFigure}{
     Heat injection rate per unit aquifer thickness for each BHE.
@@ -19,7 +19,7 @@ The \mf model consists of a single, confined layer of unit thickness to simulate
 
 \subsection{Analytical solution}
 
-An analytical solution for the described 2D problem can be written based on the POINT2 algorithm provided by \cite{wexler1992} (equation 76) describing 2D solute transport for a continuous point source in an aquifer with uniform background flow:
+An analytical solution for the described 2D problem can be derived based on the POINT2 algorithm provided by \cite{wexler1992} (equation 76) describing 2D solute transport for a continuous point source in an aquifer with uniform background flow:
 
 \begin{equation}
     C(x,y,t) = \frac{C_0Q'}{4n\pi\sqrt{D_xD_y}}exp(\frac{v(x-x_c)}{2D_x})\int_0^t\frac{1}{\tau} exp(-\frac{v^2}{4D_x}\tau - \frac{(x-x_c)^2}{4D_x\tau}-\frac{(y-y_c)^2}{4D_y\tau})d\tau
@@ -45,7 +45,7 @@ where the heat injection rate $F_0$ per unit aquifer thickness $[ET^{-1}L^{-1}]$
 % for examples without scenarios
 \subsection{Example Results}
 
-Simulated temperature change contours after 1.5 years show that the groundwater temperature has decreased around the BHE field (figure~\ref{fig:ex-gwe-bhe-contours}). This decrease has strechted in the direction of flow as the cooler groundwater is transported downgradient. A good agreement is found between the analytical solution and the \mf solution. A time series of the simulated temperature change at a location downgradient of the BHE field shows the seasonal variation in groundwater temperature (figure~\ref{fig:ex-gwe-bhe-ts}). Since the annual heating demand is larger than the cooling demand, a thermal imbalance of the subsurface occurs during the early stages of operation. This causes the groundwater system to initially cool down before reaching a thermal dynamic equilibrium. As a result, the effectiveness of the residential heating is reduced on the long-term, which needs to be taken into account when dimensioning the system. The \mf results again show a good agreement with the analytical solution.
+Simulated temperature change contours after 1.5 years show that the groundwater temperature has decreased around the BHE field (figure~\ref{fig:ex-gwe-bhe-contours}). This decrease has stretched in the direction of flow as the cooler groundwater is transported downgradient. A good agreement is found between the analytical solution and the \mf solution. A time series of the simulated temperature change at a location downgradient of the BHE field shows the seasonal variation in groundwater temperature (figure~\ref{fig:ex-gwe-bhe-ts}). Since the annual heating demand is larger than the cooling demand, a thermal imbalance of the subsurface occurs during the early stages of operation. This causes the groundwater system to initially cool down before reaching a thermal dynamic equilibrium. As a result, the effectiveness of the residential heating is reduced in the long term as a larger temperature difference now needs to be met to sufficiently heat the building during winter, which needs to be taken into account when dimensioning the system. The \mf results again show a good agreement with the analytical solution.
 
 % a figure
 \begin{StandardFigure}{
