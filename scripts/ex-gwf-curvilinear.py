@@ -2165,7 +2165,7 @@ class DisvCurvilinearBuilder(DisvPropertyContainer):
             if (angle_span / angle_step) - ncol > 0.1:  # error towards larger
                 ncol += 1
         else:
-            ncol = int(round(-1 * angle_step))
+            ncol = round(-1 * angle_step)
         angle_step = angle_span / ncol
         return ncol, angle_step
 
