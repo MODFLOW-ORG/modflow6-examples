@@ -1,7 +1,7 @@
 \section{Thermal Loading of Borehole Heat Exchangers}
 
 % Describe source of problem
-Borehole Heat Exchangers (BHE's) are increasingly more used to provide a sustainable source of cooling and heating for buildings. The thermal energy demands may vary seasonally, with heat extraction occurring during the winter season and heat injection during the warmer summer months. As a result, the subsurface temperature near the BHE's will show seasonal variability. This is illustrated here using the Groundwater Energy Transport (GWE) model. The results are compared with an analytical solution to verify the accuracy of the \mf simulation. 
+Borehole Heat Exchangers (BHE's) are increasingly used to provide a sustainable source of cooling and heating for buildings. The thermal energy demands may vary seasonally, with heat extraction occurring during the winter season and heat injection during the warmer summer months. As a result, the subsurface temperature near the BHE's will show seasonal variability. This is illustrated here using the Groundwater Energy Transport (GWE) model. The results are compared with an analytical solution to verify the accuracy of the \mf simulation. 
 
 \subsection{Example description}
 
@@ -26,18 +26,18 @@ An analytical solution for the described 2D problem can be derived based on the 
     \label{eq:pointtwo}
 \end{equation}
 
-with $C(x,y,t)$ the simulated aqueous concentration $[ML^{-3}]$ at location $x$ $[L]$, $y$ $[L]$ and time $t$ $[T]$, $C_0$ the injected concentration $[ML^{-3}]$, $Q'$ the injection rate per unit aquifer thickness $[L^2T^{-1}]$, $n$ the aquifer porosity $[-]$, $D_x$ the longitudinal dispersion coefficient $[L^2T^{-1}]$ equal to $a_Lv + D_m$ with $a_L$ the longitudinal dispersivity $[L]$ and $D_m$ the effective molecular diffusion coefficient $[L^2T^{-1}]$, $D_y$ the horizontal transverse dispersion coefficient $[L^2T^{-1}]$ equal to $a_hv + D_m$ with $a_h$ the horizontal transverse dispersivity $[L]$, $v$ the average linear groundwater flow velocity $[LT^{-1}]$, $x_c$ the x-coordinate of the point source $[L]$, $y_c$ the y-coordinate of the point source $[L]$ and $\tau$ an integration variable for the time integration. By dividing $v$, $D_x$, $D_y$ and $Q'$ by the retardation coefficient $R$ $[-]$, linear equilibrium sorption can be included.
+By dividing $v$, $D_x$, $D_y$ and $Q'$ by the retardation coefficient $R$ $[-]$, linear equilibrium sorption can be included.
 
 Using the analogy between the solute transport equation and the heat transport equation (see e.g. \cite{zheng2010mt3dmsv5.3}), equation~\ref{eq:pointtwo} can be used to simulate 2D heat transport from a continuous point source in an aquifer with uniform background flow by transforming the governing heat transport parameters into the solute transport parameters $R$, $D_m$ and $C_0$:
 
 \begin{align}
-    k_0 &= n k_w + (1 - n) k_s \\
-    D_m &= \frac{k_0}{n  \rho_w  C_w} \\
-    \rho_b &= (1 - n) \rho_s \\
-    K_D &= \frac{C_s}{C_w \rho_w} \\
-    R &= 1 + \frac{K_D \rho_b}{n} \\
-    Q' &= 1 \\
-    C_0 &= \frac{F_0}{\rho_w C_w} \\
+    k_0 &= n k_w + (1 - n) k_s \label{eq:bhe-k0}\\
+    D_m &= \frac{k_0}{n  \rho_w  C_w}  \label{eq:bhe-Dm}\\
+    \rho_b &= (1 - n) \rho_s  \label{eq:bhe-rhob}\\
+    K_d &= \frac{C_s}{C_w \rho_w}  \label{eq:bhe-KD}\\
+    R &= 1 + \frac{K_d \rho_b}{n}  \label{eq:bhe-R}\\
+    Q' &= 1  \label{eq:bhe-Q}\\
+    C_0 &= \frac{F_0}{\rho_w C_w}  \label{eq:bhe-c0}
 \end{align}
 
 where the heat injection rate $F_0$ per unit aquifer thickness $[ET^{-1}L^{-1}]$ is converted to the injection concentration $C_0$ and the injection rate per unit aquifer thickness $Q'$ is set to unity. Since equation~\ref{eq:pointtwo} is linear, the superposition principle can be applied to allow for multiple BHE's in space as well as time-varying energy loading.

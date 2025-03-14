@@ -377,12 +377,12 @@ botm = 0.0  # Aquifer bottom elevation ($m$)
 k = 10.0  # Aquifer hydraulic conductivity ($m/d$)
 n = 0.2  # Aquifer porosity ($-$)
 scheme = "TVD"  # Advection solution scheme ($-$)
-ktw = 0.59  # Thermal conductivity of water ($\dfrac{W}{m \cdot ^{\circ}C}$)
-kts = 2.5  # Thermal conductivity of aquifer material ($\dfrac{W}{m \cdot ^{\circ}C}$)
-rhow = 1000.0  # Density of water ($\frac{kg}{m^3}$) # 3282.296651
-cpw = 4184.0  # Mass-based heat capacity of water ($\dfrac{J}{kg \cdot ^{\circ}C}$)
-rhos = 2650.0  # Density of dry solid aquifer material ($\dfrac{kg}{m^3}$)
-cps = 900.0  # Mass-based heat capacity of dry solid material ($\dfrac{J}{kg \cdot $^{\circ}C}$)
+ktw = 0.59  # Thermal conductivity of water ($\frac{W}{m \cdot ^{\circ}C}$)
+kts = 2.5  # Thermal conductivity of aquifer material ($\frac{W}{m \cdot ^{\circ}C}$)
+rhow = 1000.0  # Density of water ($\frac{kg}{m^3}$)
+cpw = 4184.0  # Heat capacity of water ($\frac{J}{kg \cdot ^{\circ}C}$)
+rhos = 2650.0  # Density of dry solid aquifer material ($\frac{kg}{m^3}$)
+cps = 900.0  # Heat capacity of dry solid aquifer material ($\frac{J}{kg \cdot ^{\circ}C}$)
 al = 0.0  # Longitudinal dispersivity ($m$)
 ah = 0.0  # Horizontal transverse dispersivity ($m$)
 T0 = 0.0  # Initial temperature of the domain ($^{\circ}C$)
@@ -448,9 +448,9 @@ chd_pname = "CHD_0"  # CHD package name
 # stress-period set-up
 # The flow simulation has 1 steady-state stress-period
 # The energy transport simulation uses 10 time steps for each stress-period
-nper = nyear * nphase  # Number of simulated stress periods ($-$)
-nstp = 10  # Number of time steps per stress period ($-$)
-tsmlt = 1.2  # Time step multiplier ($-$)
+nper = nyear * nphase
+nstp = 10 
+tsmlt = 1.2
 tdis_rc = [(t, nstp, tsmlt) for t in np.ediff1d(time)]  # using lagged differences
 
 # Solver parameters
