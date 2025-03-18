@@ -26,19 +26,44 @@ An analytical solution for the described 2D problem can be derived based on the 
     \label{eq:pointtwo}
 \end{equation}
 
-By dividing $v$, $D_x$, $D_y$ and $Q'$ by the retardation coefficient $R$ $[-]$, linear equilibrium sorption can be included.
+By dividing $v$, $D_x$, $D_y$ and $Q'$ by the retardation coefficient $R$, linear equilibrium sorption can be included.
 
 Using the analogy between the solute transport equation and the heat transport equation (see e.g. \cite{zheng2010mt3dmsv5.3}), equation~\ref{eq:pointtwo} can be used to simulate 2D heat transport from a continuous point source in an aquifer with uniform background flow by transforming the governing heat transport parameters into the solute transport parameters $R$, $D_m$ and $C_0$:
 
-\begin{align}
-    k_0 &= n k_w + (1 - n) k_s \label{eq:bhe-k0}\\
-    D_m &= \frac{k_0}{n  \rho_w  C_w}  \label{eq:bhe-Dm}\\
-    \rho_b &= (1 - n) \rho_s  \label{eq:bhe-rhob}\\
-    K_d &= \frac{C_s}{C_w \rho_w}  \label{eq:bhe-KD}\\
-    R &= 1 + \frac{K_d \rho_b}{n}  \label{eq:bhe-R}\\
-    Q' &= 1  \label{eq:bhe-Q}\\
-    C_0 &= \frac{F_0}{\rho_w C_w}  \label{eq:bhe-c0}
-\end{align}
+\begin{equation}
+    k_0 = n k_w + (1 - n) k_s 
+    \label{eq:bhe-k0}
+\end{equation}
+
+\begin{equation}
+    D_m = \frac{k_0}{n  \rho_w  C_w}  
+    \label{eq:bhe-Dm}
+\end{equation}
+
+\begin{equation}
+    \rho_b = (1 - n) \rho_s  
+    \label{eq:bhe-rhob}
+\end{equation}
+
+\begin{equation}
+    K_d = \frac{C_s}{C_w \rho_w}  
+    \label{eq:bhe-KD}
+\end{equation}
+
+\begin{equation}
+    R = 1 + \frac{K_d \rho_b}{n}  
+    \label{eq:bhe-R}
+\end{equation}
+
+\begin{equation}
+    Q' = 1
+    \label{eq:bhe-Q}
+\end{equation}
+
+\begin{equation}
+    C_0 = \frac{F_0}{\rho_w C_w} 
+    \label{eq:bhe-c0}
+\end{equation}
 
 where the heat injection rate $F_0$ per unit aquifer thickness $[ET^{-1}L^{-1}]$ is converted to the injection concentration $C_0$ and the injection rate per unit aquifer thickness $Q'$ is set to unity. Since equation~\ref{eq:pointtwo} is linear, the superposition principle can be applied to allow for multiple BHE's in space as well as time-varying energy loading.
 
