@@ -414,7 +414,7 @@ def plot_results(sims):
 
 def plot_head_results(sims):
     print("Plotting heads...")
-    sim_mf6gwf, _, sim_mf6prt, _, _ = sims
+    sim_mf6gwf, _, _, _, _ = sims
     gwf = sim_mf6gwf.flow
     botm = gwf.dis.botm.array
 
