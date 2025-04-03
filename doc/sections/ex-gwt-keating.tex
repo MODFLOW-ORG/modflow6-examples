@@ -3,7 +3,7 @@
 % Describe source of problem
 This example is based on an unsaturated flow and transport problem described in \cite{keating2009stable} under the section ``Extension to Mixed Vadose/ Saturated Zone Simulations.''  The problem consists of a two-dimensional cross-section model with a perched aquifer overlying a water table aquifer.  This problem offers a difficult test for the Newton flow formulation in \mf as well as for the transport model, which must transmit solute through dry cells.  This problem was also used by \cite{mt3dusgs} as a test for their solute routing approach implemented in MT3D-USGS for flow models solved with MODFLOW-NWT \citep{modflownwt}.
 
-In addition to the transport model, this example also includes a particle tracking model to simulate the advective motion of individual solute particles.  This model demonstrates the default approach taken by \mf to track particles through dry cells under the Newton formulation, which is to drop the particles instantaneously to the top-most active cell in the vertical column and resume tracking as usual.
+In addition to the transport model, this example also includes a particle tracking model.  The model demonstrates the default approach taken by \mf to track particles through dry cells under the Newton formulation, which is to drop the particles instantaneously to the top-most active cell in the vertical column and resume tracking as usual.
 
 \subsection{Example description}
 
