@@ -153,7 +153,7 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Set up headless display
-        uses: pyvista/setup-headless-display-action@v3
+        uses: pyvista/setup-headless-display-action@v4
 
       - name: Install Python packages
         working-directory: modflow6-examples/etc
