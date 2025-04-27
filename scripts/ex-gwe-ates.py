@@ -339,6 +339,8 @@ def get_bnd_inflow_locs(verts):
 
 
 def generate_bnd_features(verts, iverts, left_bnd_verts):
+    prev_pt3 = []
+
     # Store the ids of the new features
     inQ_feat = []
 
@@ -358,7 +360,6 @@ def generate_bnd_features(verts, iverts, left_bnd_verts):
             verts.append(newpt4)
         else:
             newpt3 = [len(verts), 0.0, pt2_y]
-            prev_pt3 = newpt3
 
             # Store the vertex
             verts.append(newpt3)
