@@ -898,7 +898,7 @@ def plot_temperature(sim, idx):
         ]
     )
     clb.ax.tick_params(labelsize=7)
-    fig.set_size_inches(8, 4)
+    fig.set_size_inches(6.5, 3.5)
 
     if plot_show:
         plt.show()
