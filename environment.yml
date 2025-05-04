@@ -28,6 +28,8 @@ dependencies:
       - git+https://github.com/Deltares/xmipy.git
       - git+https://github.com/MODFLOW-ORG/modflowapi.git
       - git+https://github.com/MODFLOW-ORG/modflow-devtools.git
+      # docs dependencies
+      - sphinx_markdown_tables
   - pooch
   - pyshp
   - pytest!=8.1.0
@@ -50,7 +52,6 @@ dependencies:
   - ipython
   - ipykernel
   - rtds_action
-  - sphinx_markdown_tables
   - sphinx-rtd-theme
   - pygments>=2.4.1
   - myst-parser
