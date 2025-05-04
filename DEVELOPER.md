@@ -45,7 +45,7 @@ Several Python packages are required to run the example scripts. A Conda environ
 
 Besides MODFLOW 6, the examples use a number of MODFLOW-related programs, discovered on the system `PATH`.
 
-With FloPy installed in the active Python environment, these can all be installed with:
+After activating the Conda environment, these can all be installed with:
 
 ```shell
 get-modflow :
