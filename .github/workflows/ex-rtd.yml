@@ -114,21 +114,19 @@ jobs:
           sudo tar xvzf pandoc-2.11.2-linux-amd64.tar.gz --strip-components=1 -C /usr/local
           pandoc --version
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Micromamba
+        uses: mamba-org/setup-micromamba@v2
         with:
-          python-version: '3.10'
+          environment-file: modflow6-examples/environment.yml
+          cache-downloads: true
+          cache-environment: true
+          init-shell: bash
 
       - name: Set up headless display
         uses: pyvista/setup-headless-display-action@v4
 
-      - name: Install Python packages
-        working-directory: modflow6-examples/etc
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install -r requirements.pip.txt
-          pip install -r requirements.usgs.txt
-          python -m ipykernel install --name python_kernel --user
+      - name: Create Jupyter kernel
+        run: python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
         run: python -m flopy.mf6.utils.generate_classes --ref ${{ needs.set_options.outputs.mf6_ref }} --no-backup
