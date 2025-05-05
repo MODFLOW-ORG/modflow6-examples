@@ -119,6 +119,8 @@ jobs:
     defaults:
       run:
         shell: bash -el {0}
+    env:
+      MPLBACKEND: agg
     steps:
       - name: Checkout MODFLOW 6 examples
         uses: actions/checkout@v4
