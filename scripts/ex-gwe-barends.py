@@ -50,6 +50,9 @@ from modflow_devtools.misc import get_env, timed
 
 # Example name and base workspace
 sim_name = "ex-gwe-barends"
+gwf_name = "gwf-" + sim_name.split("-")[-1]
+gwename = "gwe-" + sim_name.split("-")[-1]
+
 try:
     root = Path(git.Repo(".", search_parent_directories=True).working_dir)
 except:
@@ -233,7 +236,6 @@ ctp_spd = {0: ctp_left}
 # +
 @timed
 def build_mf6_flow_model():
-    gwf_name = sim_name
     sim_ws = workspace / sim_name / "mf6gwf"
 
     # Instantiate a MODFLOW 6 simulation
@@ -499,7 +501,6 @@ def run_model(sim, silent=True):
 # +
 @timed
 def plot_thermal_bleeding(sim_gwe):
-    gwename = sim_name
     gwe = sim_gwe.get_model(gwename)
 
     # Retrieve simulated temperature field
