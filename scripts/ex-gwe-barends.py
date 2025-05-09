@@ -347,7 +347,6 @@ def build_mf6_flow_model():
 # +
 def build_mf6_heat_model():
     print(f"Building mf6gwe model...{sim_name}")
-    gwename = sim_name
     sim_ws = workspace / sim_name / "mf6gwe"
 
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
