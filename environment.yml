@@ -27,7 +27,6 @@ dependencies:
       - git+https://github.com/modflowpy/pymake.git
       - git+https://github.com/Deltares/xmipy.git
       - git+https://github.com/MODFLOW-ORG/modflowapi.git
-      - git+https://github.com/MODFLOW-ORG/modflow-devtools.git
       # docs dependencies
       - sphinx_markdown_tables
       - nbsphinx_link
@@ -39,6 +38,7 @@ dependencies:
       - sphinx-rtd-theme
       - pygments>=2.4.1
       - myst-parser
+      - modflow-devtools==1.7.0
   - pooch
   - pyshp
   - pytest!=8.1.0
