@@ -1,26 +1,40 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
-# # Different advection schemes
+# ## Advection schemes in MODFLOW 6
 #
-# In this example we are going to look at the available schemes availalbe for the advection package.
-# There are 4 schemes available:
-# - Upstream
-# - Central difference (CD)
-# - TVD
-# - UTVD
+# This example demonstrates the performance of different numerical advection schemes when solving the groundwater transport equation under pure advection conditions. We solve the pure advection equation:
+# 
+# $$\frac{\partial \left(S_w \theta C\right)}{\partial t} = -\nabla \left(\mathbf{q} \cdot C\right)$$
 #
-# To demonstrate the difference between the different schemes we are going to look at 3 different functions:
-# - sin^2 wave
-# - block wave
-# - step wave
+# where C is concentration [dimensionless] and **q** is the specific discharge field = (qx, qy) = (0.354, 0.354) cm/s at 45°. The problem is configured with no dispersion or diffusion terms, making it a perfect test case for numerical scheme performance since an analytical solution exists.
 #
-# The sin^2 wave is a continious smooth function. When using the CD, TVD and UTVD schemes we are able to achieve 2^nd order accuracy.
-# The block wave and step wave are functions that have a discontinuity. This will cause the CD scheme to osscilate. In the worst case it might even get unstable and the simulation might fail. This is not the cause for the Upstream, TVD and UTVD schemes which are all bounded.
+# **Problem Setup:**
+# - Domain: 100cm × 100cm square with uniform flow at 45° angle
+# - Boundary conditions: Prescribed concentrations on inflow boundaries  
+# - Time: 50 seconds with 0.01s time steps
+# - Physics: Pure advection without mixing processes (analytical solution available)
 #
-# Further we are also going to explore the effect of the grid. We are going to look at 3 types of grids:
-# - structured
-# - triangle
-# - voronoi
-# We will see that second order accuracy is obtained on the strutured and voronoi grid with the UTVD scheme. On the triangle we get 1st order accuracy. This is becuase the vectors connecting cell centers don't cross the cell boundaries at a right angle. This causes smearing too happen.
+# **Four Advection Schemes Tested:**
+# - **Upstream**: 1st-order accurate, stable but diffusive
+# - **Central Difference (CD)**: 2nd-order accurate but can oscillate on discontinuities
+# - **TVD** (Total Variation Diminishing): Handles sharp fronts well, works reliably only on structured grids
+# - **UTVD** (Unstructured TVD): TVD extended with unstructured grid support, maintains TVD-quality performance on all grid types
+#
+# **Three Test Functions (probing different numerical challenges):**
+# - **sin² wave**: Smooth function testing 2nd-order accuracy
+# - **Block wave**: Sharp discontinuity testing stability  
+# - **Step wave**: Sharp transition testing boundedness
+#
+# **Three Grid Types:**
+# - **Structured**: Regular rectangular cells
+# - **Triangle**: Triangular mesh elements
+# - **Voronoi**: Voronoi polygon cells
+#
+# **Expected Results:**
+# - CD scheme should oscillate/fail on discontinuous functions
+# - TVD should work well on structured grids but may have issues on unstructured grids
+# - UTVD should handle discontinuities without oscillation across all grid types
+# - Different grid geometries may show different accuracy characteristics for the same numerical scheme
 
 # %% [markdown]
 # # Initial setup
@@ -48,14 +62,22 @@ from flopy.utils.triangle import Triangle
 from flopy.discretization.vertexgrid import VertexGrid
 from flopy.utils.voronoi import VoronoiGrid
 
+try:
+    import git
+except ImportError:
+    git = None
 
+# %%
 # Example name and workspace paths. If this example is running
 # in the git repository, use the folder structure described in
 # the README. Otherwise just use the current working directory.
 sim_name = "ex-gwt-adv-schemes"
 try:
-    root = Path(git.Repo(".", search_parent_directories=True).working_dir)
-except:
+    if git is not None:
+        root = Path(git.Repo(".", search_parent_directories=True).working_dir)
+    else:
+        root = None
+except Exception:
     root = None
 workspace = root / "examples" if root else Path.cwd()
 figs_path = root / "figures" if root else Path.cwd()
@@ -68,19 +90,23 @@ plot_show = get_env("PLOT_SHOW", True)
 plot_save = get_env("PLOT_SAVE", True)
 
 # %% [markdown]
-# # Define parameters
+# # Model Parameters
 #
-# Define model units, parameters and other settings.
+# These parameters define the test problem geometry, flow conditions, and numerical settings.
 
 # %%
-# Cases
-grids = ["structured", "triangle", "voronoi"]
-schemes = ["upstream", "central", "tvd", "utvd"]
-wave_functions = ["sin2-wave", "step-wave", "block-wave"]
+# Test case combinations (36 total simulations)
+grids = ["structured", "triangle", "voronoi"]           # 3 grid types
+schemes = ["upstream", "central", "tvd", "utvd"]        # 4 advection schemes  
+wave_functions = ["sin2-wave", "step-wave", "block-wave"]  # 3 test functions
 
 # Model units
 length_units = "centimeters"
 time_units = "seconds"
+
+# Constants for plotting
+AXES_FRACTION = 'axes fraction'
+OFFSET_POINTS = 'offset points'
 
 # Solver settings
 nouter = 100
@@ -89,42 +115,62 @@ hclose = 1e-6
 cclose = 1e-6
 rclose = 1e-6
 
-# Grid parameters
+# Physical domain
 nper = 1  # Number of periods
 nlay = 1  # Number of layers
-ncol = 50  # Number of columns
-nrow = 50  # Number of rows
-
-Length = Width = 100.0 # Length of system ($cm$)
+ncol = nrow = 50        # 50×50 = 2500 cells for structured grid
+Length = Width = 100.0  # Square domain size (cm)
 
 delr = Length / ncol
 delc = Width / nrow
 top = 1.0  # Top of the model ($cm$)
 botm = 0  # Layer bottom elevation ($cm$)
 
-# Model parameter
-specific_discharge = 0.5  # Specific discharge ($cm s^{-1}$)
+# Flow conditions  
+specific_discharge = 0.5  # Darcy velocity (cm/s)
 hydraulic_conductivity = 0.01  # Hydraulic conductivity ($cm s^{-1}$)
+angle = math.radians(45)  # Flow direction (45° from x-axis)
+qx = qy = specific_discharge * math.cos(angle)  # ≈ 0.354 cm/s each direction
+inlet_height = 20.0     # Height of concentration inlet signal (cm)
 
-angle =  math.radians(45) # angle of the flow from the x-axis
-qx = math.cos(angle) * specific_discharge # x-component specific discharge
-qy = math.sin(angle) * specific_discharge # y-component specific discharge
-inlet_height = 20.0
-
-total_time = 50.0  # Simulation time ($s$)
-dt = 0.01
+# Simulation timing
+total_time = 50.0  # Total simulation time (s) 
+dt = 0.01          # Time step (s) → 5000 time steps
+# Note: Courant number ≈ 0.35 (stable for explicit schemes)
 
 
 # %% [markdown]
-# # Analytical solution
+# # Analytical Solution
 #
-# Exact solution of the concentration field. We take a uniform flow field along the x-axis and rotated with the flow angle to get the exact solution.
+# Exact solution of the concentration field for pure advection. 
+#
+# The analytical solution works by:
+# 1. Rotating coordinates to align with flow direction
+# 2. Applying the 1D inlet signal in the rotated coordinate system  
+# 3. This works because advection simply translates the inlet pattern
+#
+# For uniform flow at angle θ, any point (x,y) maps to:
+# - Rotated coordinate: y' = sin(-θ)·x + cos(-θ)·y
+# - Concentration: C(x,y,t) = inlet_signal(y' - v·t)
 
 # %%
 def exact_solution_concentration(x, y, analytical):
+    """Calculate exact concentration at any point in the domain.
+    
+    The analytical solution works by:
+    1. Rotating coordinates to align with flow direction
+    2. Applying the 1D inlet signal in the rotated coordinate system
+    3. This works because advection simply translates the inlet pattern
+    
+    Args:
+        x, y: Spatial coordinates (cm)
+        analytical: Signal type ('sin2-wave', 'step-wave', 'block-wave')
+    
+    Returns:
+        Concentration values [dimensionless, 0-1]
+    """
     # Rotate to 1d solution space
     reverse_angle = -angle
-    rotated_x = math.cos(reverse_angle) * x - math.sin(reverse_angle) * y
     rotated_y = math.sin(reverse_angle) * x + math.cos(reverse_angle) * y
     
     # Compute concentration
@@ -132,16 +178,25 @@ def exact_solution_concentration(x, y, analytical):
         
     
 def inlet_signal(y, signal_name):
+    """Generate inlet signal based on the signal type.
+    
+    Args:
+        y: y-coordinate values
+        signal_name: Type of signal ('step-wave', 'block-wave', 'sin2-wave')
+    
+    Returns:
+        Concentration values based on the signal type
+    """
     clipped_y = np.clip(y, -inlet_height / 2, inlet_height / 2)
     match signal_name:
         case "step-wave":
             return np.where(y < 0, np.ones(y.shape), np.zeros(y.shape))
         case "block-wave":
-            return np.where(np.abs(y) < inlet_height/2, np.ones(y.shape), np.zeros(y.shape))
+            return np.where(np.abs(y) < inlet_height / 2, np.ones(y.shape), np.zeros(y.shape))
         case "sin2-wave":
-            return np.power(np.cos(math.pi * clipped_y /inlet_height),2)
+            return np.power(np.cos(math.pi * clipped_y / inlet_height), 2)
         case _:
-            raise ValueError("Unknow signal name")
+            raise ValueError("Unknown signal name")
 
 
 # %% [markdown]
@@ -174,7 +229,7 @@ def grid_triangulator(itri, delr, delc):
                 vertdict[icell] = [vs[0], vs[1], vs[2], vs[0]]
                 icell += 1
             else:
-                raise Exception(f"Unknown itri value: {itri[i, j]}")
+                raise ValueError(f"Unknown itri value: {itri[i, j]}")
     verts, iverts = flopy.utils.cvfdutil.to_cvfd(vertdict)
     return verts, iverts
 
@@ -193,7 +248,7 @@ def cvfd_to_cell2d(verts, iverts):
     return vertices, cell2d
 
 def grid_intersector(vgrid):
-    # if not isinstance(grid, VoronoiGrid):
+    """Create a grid intersector for the given vertex grid."""
     return flopy.utils.GridIntersect(vgrid)
 
     
@@ -230,6 +285,14 @@ def merge_bc_mean(boundaries):
 
 
 def create_grid(grid_type):
+    """Create grid based on the specified type.
+    
+    Args:
+        grid_type: Type of grid ('structured', 'triangle', 'voronoi')
+    
+    Returns:
+        Tuple of (ncpl, nvert, vertices, cell2d)
+    """
     if grid_type == "structured":
         itri = np.zeros((nrow, ncol), dtype=int)
         verts, iverts = grid_triangulator(itri, delr, delc)
@@ -268,18 +331,18 @@ def create_grid(grid_type):
         return ncpl, nvert, vertices, cell2d
 
     else:
-        raise f"grid of type '{grid_type}' is not supported."
+        raise ValueError(f"grid of type '{grid_type}' is not supported.")
 
 def axis_aligned_segment_length(polygon, axis='y', value=0):
+    """Calculate the total length of segments aligned with the specified axis at the given value."""
     total_length = 0.0
     coords = list(polygon.exterior.coords)
 
     for i in range(len(coords) - 1):
         p1, p2 = coords[i], coords[i + 1]
-        if axis == 'y' and p1[1] == value and p2[1] == value:
-            segment = LineString([p1, p2])
-            total_length += segment.length
-        elif axis == 'x' and p1[0] == value and p2[0] == value:
+        is_aligned = ((axis == 'y' and p1[1] == value and p2[1] == value) or
+                     (axis == 'x' and p1[0] == value and p2[0] == value))
+        if is_aligned:
             segment = LineString([p1, p2])
             total_length += segment.length
 
@@ -321,13 +384,12 @@ def build_mf6gwf(grid_type):
         export_array_ascii=True,
         icelltype=0,
         k=hydraulic_conductivity,
-        # xt3doptions=[(True)]
     )
 
     flopy.mf6.ModflowGwfic(gwf, strt=0.0, export_array_ascii=True)
    
     ncpl, nvert, vertices, cell2d = create_grid(grid_type)
-    disv = flopy.mf6.ModflowGwfdisv(
+    flopy.mf6.ModflowGwfdisv(
         gwf,
         nlay=nlay,
         ncpl=ncpl,
@@ -366,27 +428,24 @@ def build_mf6gwf(grid_type):
     left_boundary_ids = get_boundary(gi, left_edge)
 
     # Set top right element to a chd 0. This makes the solution unique
-    topright_id, right_boundary_id, top_boundary_id = np.intersect1d(right_boundary_ids, top_boundary_ids, return_indices=True)
-
-    # top_boundary_ids = np.delete(top_boundary_ids, top_boundary_id)
-    # right_boundary_ids = np.delete(right_boundary_ids, right_boundary_id)
+    topright_id, _, _ = np.intersect1d(right_boundary_ids, top_boundary_ids, return_indices=True)
     
     if topright_id.any():
         flopy.mf6.ModflowGwfchd(gwf, stress_period_data = create_bc(topright_id, 0))
     
     geometry = vgrid.geo_dataframe.geometry
     cell_area = geometry.area.values
-    Inflow_Area_left = geometry.loc[left_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='x', value=0)).values
-    Inflow_Area_bot = geometry.loc[bottom_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='y', value=0)).values
-    Outflow_Area_right = geometry.loc[right_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='x', value=Length)).values
-    Outflow_Area_top = geometry.loc[top_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='y', value=Width)).values
+    inflow_area_left = geometry.loc[left_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='x', value=0)).values
+    inflow_area_bot = geometry.loc[bottom_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='y', value=0)).values
+    outflow_area_right = geometry.loc[right_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='x', value=Length)).values
+    outflow_area_top = geometry.loc[top_boundary_ids].apply(lambda poly: axis_aligned_segment_length(poly, axis='y', value=Width)).values
 
     flopy.mf6.ModflowGwfrch(gwf,
         stress_period_data = merge_bc_sum(
-                                create_bc(left_boundary_ids     , qx * Inflow_Area_left / cell_area[left_boundary_ids]) +
-                                create_bc(bottom_boundary_ids   , qy * Inflow_Area_bot / cell_area[bottom_boundary_ids]) +
-                                create_bc(right_boundary_ids    ,-qx * Outflow_Area_right / cell_area[right_boundary_ids]) +
-                                create_bc(top_boundary_ids      ,-qy * Outflow_Area_top / cell_area[top_boundary_ids])
+                                create_bc(left_boundary_ids     , qx * inflow_area_left / cell_area[left_boundary_ids]) +
+                                create_bc(bottom_boundary_ids   , qy * inflow_area_bot / cell_area[bottom_boundary_ids]) +
+                                create_bc(right_boundary_ids    ,-qx * outflow_area_right / cell_area[right_boundary_ids]) +
+                                create_bc(top_boundary_ids      ,-qy * outflow_area_top / cell_area[top_boundary_ids])
         ),
     )
 
@@ -394,7 +453,7 @@ def build_mf6gwf(grid_type):
 
 def build_mf6gwt(grid_type, scheme, wave_func):
     pathname = f"trans_{grid_type}_{wave_func}_{scheme}"
-    gwtname = f"trans"
+    gwtname = "trans"
     gwfname = f"flow_{grid_type}"
     sim_ws = workspace / sim_name / Path(pathname)
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
@@ -402,7 +461,7 @@ def build_mf6gwt(grid_type, scheme, wave_func):
     nsteps = int(total_time/dt)
     tdis_ds = ((total_time, nsteps, 1.0),)
 
-    tdis = flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
+    flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
 
     flopy.mf6.ModflowIms(
         sim, 
@@ -442,7 +501,7 @@ def build_mf6gwt(grid_type, scheme, wave_func):
     )
 
     ncpl, nvert, vertices, cell2d = create_grid(grid_type)
-    disv = flopy.mf6.ModflowGwtdisv(
+    flopy.mf6.ModflowGwtdisv(
         gwt,
         nlay=nlay,
         ncpl=ncpl,
@@ -473,7 +532,7 @@ def build_mf6gwt(grid_type, scheme, wave_func):
     conc_left = exact_solution_concentration(xc, yc, wave_func)
 
     # Set inlet concentrations
-    cnc = flopy.mf6.ModflowGwtcnc(
+    flopy.mf6.ModflowGwtcnc(
         gwt,
         stress_period_data=merge_bc_mean(
             create_bc(bottom_boundary_ids, conc_bottom) +
@@ -517,7 +576,7 @@ def plot_flows(gwf_sims):
         fig, axs = plt.subplots(1, len(gwf_sims), 
                     figsize=(4 * len(gwf_sims), 4)
                 )
-        fig.suptitle(f"Head - flow angle 45")
+        fig.suptitle("Head - flow angle 45")
 
         for idx, (grid, sim) in enumerate(gwf_sims.items()):
                 plot_flow(sim, axs[idx])
@@ -525,7 +584,7 @@ def plot_flows(gwf_sims):
         pad = 5 # in points
         for ax, col in zip(axs, gwf_sims.keys()):
             ax.annotate(col, xy=(0.5, 1), xytext=(0, pad),
-                xycoords='axes fraction', textcoords='offset points',
+                xycoords=AXES_FRACTION, textcoords=OFFSET_POINTS,
                 size='large', ha='center', va='baseline')     
 
     plt.show()
@@ -535,7 +594,7 @@ def plot_flow(sim, ax):
     head = gwf.output.head().get_data()
     bud = gwf.output.budget()
     spdis = bud.get_data(text="DATA-SPDIS")[0]
-    qx, qy, qz = flopy.utils.postprocessing.get_specific_discharge(
+    qx, qy, _ = flopy.utils.postprocessing.get_specific_discharge(
     spdis, gwf
 )
     vmin = head.min()
@@ -549,8 +608,8 @@ def plot_flow(sim, ax):
     pmv.plot_vector(qx, qy, color="white")
     plt.colorbar(pc)
 
-    ax.set_xlabel("x[m]")
-    ax.set_ylabel("y[m]")
+    ax.set_xlabel("x (cm)")
+    ax.set_ylabel("y (cm)")
     ax.set_aspect("equal")
 
 def plot_concentrations(gwf_sims):
@@ -571,12 +630,12 @@ def plot_concentrations(gwf_sims):
             pad = 5 # in points
             for ax, col in zip(axs[0], grids):
                 ax.annotate(col, xy=(0.5, 1), xytext=(0, pad),
-                    xycoords='axes fraction', textcoords='offset points',
+                    xycoords=AXES_FRACTION, textcoords=OFFSET_POINTS,
                     size='large', ha='center', va='baseline')
 
             for ax, row in zip(axs[:,0], schemes):
                 ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad, 0),
-                    xycoords=ax.yaxis.label, textcoords='offset points',
+                    xycoords=ax.yaxis.label, textcoords=OFFSET_POINTS,
                     size='large', ha='right', va='center')
             
             fig.subplots_adjust(left=0.25, top=0.95)
@@ -597,8 +656,8 @@ def plot_concentration(sim, ax):
     )
     plt.colorbar(pc)
 
-    ax.set_xlabel("x[m]")
-    ax.set_ylabel("y[m]")
+    ax.set_xlabel("x (cm)")
+    ax.set_ylabel("y (cm)")
     ax.set_aspect("equal")
 
 def plot_concentration_cross_sections(gwf_sims):
@@ -608,7 +667,7 @@ def plot_concentration_cross_sections(gwf_sims):
             ncols=len(grids), 
             figsize=(4 * len(grids) + 4, 4 * len(wave_functions))
         )
-        fig.suptitle(f"Concentration cross-section")
+        fig.suptitle("Concentration cross-section")
 
         for wave_idx, wave_func in enumerate(wave_functions):
             for grid_idx, grid in enumerate(grids):
@@ -616,21 +675,21 @@ def plot_concentration_cross_sections(gwf_sims):
                 plot_concentration_analytical(wave_func, ax)
                 for scheme in schemes:
                     sim = gwf_sims[(grid, scheme, wave_func)]
-                    plot_concentration_cross_section(sim, scheme, wave_func, ax)
+                    plot_concentration_cross_section(sim, scheme, ax)
 
                 ax.legend()
-                ax.set_xlabel("x[m]")
-                ax.set_ylabel("C[-]")
+                ax.set_xlabel("x (cm)")
+                ax.set_ylabel("C [-]")
     
         pad = 5 # in points
         for ax, col in zip(axs[0], grids):
             ax.annotate(col, xy=(0.5, 1), xytext=(0, pad),
-                xycoords='axes fraction', textcoords='offset points',
+                xycoords=AXES_FRACTION, textcoords=OFFSET_POINTS,
                 size='large', ha='center', va='baseline')
 
         for ax, row in zip(axs[:,0], wave_functions):
                 ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad, 0),
-                    xycoords=ax.yaxis.label, textcoords='offset points',
+                    xycoords=ax.yaxis.label, textcoords=OFFSET_POINTS,
                     size='large', ha='right', va='center')
 
         fig.subplots_adjust(left=0.25, top=0.95)
@@ -652,7 +711,7 @@ def plot_concentration_analytical(analytical_func, ax):
             label = "exact"
         )
 
-def plot_concentration_cross_section(sim, scheme, analytical_func, ax):
+def plot_concentration_cross_section(sim, scheme, ax):
     gwt = sim.get_model()
     ucnobj_mf6 = gwt.output.concentration()
     conc = ucnobj_mf6.get_data(totim=total_time).flatten()
@@ -688,43 +747,56 @@ def plot_concentration_cross_section(sim, scheme, analytical_func, ax):
 
 # %%
 def scenario(silent=True):
+    print("="*60)
+    print("MODFLOW 6 Advection Schemes Comparison")
+    print("="*60)
+    print(f"Total simulations: {len(grids)} grids × {len(schemes)} schemes × {len(wave_functions)} functions = {len(grids) * len(schemes) * len(wave_functions)} transport models")
+    print(f"Plus {len(grids)} flow models")
+    print()
+    
     gwf_sims = {}
    
     # Build and run the gwt models on different grids
     for grid in grids:
         gwf_sims[grid] = build_mf6gwf(grid)
 
-    # Build and run gwf with sin^2 wave on all grids
+    # Build the gwt models
     gwt_sims = {}
     combinations = list(itertools.product(*[grids, schemes, wave_functions]))
     for combination in combinations:
-        gwt_sims[combination] = build_mf6gwt(combination[0],  combination[1], combination[2])
+        gwt_sims[combination] = build_mf6gwt(combination[0], combination[1], combination[2])
     
     if write:
-        print("\n writting flow models:")
+        print("\nWriting flow models:")
         for grid, sim in gwf_sims.items():
             print(f"- {grid} grid")
             write_models(sim, silent=silent)
         
-        print("\n writting transport models:")
+        print("\nWriting transport models:")
         for key, sim in gwt_sims.items():
             grid, scheme, wave = key
-            print(f"- {grid} grid \t {scheme} scheme \t {wave}-function")
+            print(f"- {grid} grid \t {scheme} scheme \t {wave} function")
             write_models(sim, silent=silent)
 
     if run:
-        print("\n Running flow models:")
+        print("\nRunning flow models:")
         for grid, sim in gwf_sims.items():
             print(f"- {grid} grid")
             run_models(sim, silent=silent)
 
-        print("\n Running transport models:")
+        print("\nRunning transport models:")
         for key, sim in gwt_sims.items():
             grid, scheme, wave = key
-            print(f"- {grid} grid \t {scheme} scheme \t {wave}-function")
+            print(f"- {grid} grid \t {scheme} scheme \t {wave} function")
             run_models(sim, silent=silent)
     if plot:
-        print("\n Plotting results")
+        print("\n" + "="*40)
+        print("PLOTTING RESULTS")
+        print("="*40)
+        print("Generating 3 figure sets:")
+        print("1. Flow fields (3 subplots)")
+        print(f"2. Concentration maps ({len(schemes)} rows × {len(grids)} cols per wave func = {len(schemes) * len(grids) * len(wave_functions)} total subplots)")
+        print(f"3. Cross-section comparisons ({len(wave_functions)} rows × {len(grids)} cols = {len(wave_functions) * len(grids)} subplots)")
         plot_results(gwf_sims, gwt_sims)
 
 
