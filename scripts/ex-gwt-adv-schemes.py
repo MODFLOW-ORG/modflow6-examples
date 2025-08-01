@@ -75,7 +75,7 @@ plot_save = get_env("PLOT_SAVE", True)
 # %%
 # Cases
 grids = ["structured", "triangle", "voronoi"]
-schemes = ["upstream", "tvd", "utvd"]
+schemes = ["upstream", "central", "tvd", "utvd"]
 wave_functions = ["sin2-wave", "step-wave", "block-wave"]
 
 # Model units
