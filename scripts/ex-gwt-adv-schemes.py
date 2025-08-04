@@ -11,7 +11,7 @@
 # **Problem Setup:**
 # - Domain: 100cm × 100cm square with uniform flow at 45° angle
 # - Boundary conditions: Prescribed concentrations on inflow boundaries  
-# - Time: 50 seconds with 0.01s time steps
+# - Time: 300 seconds with adaptive time stepping (initial dt = 5s)
 # - Physics: Pure advection without mixing processes (analytical solution available)
 #
 # **Four Advection Schemes Tested:**
@@ -134,9 +134,9 @@ qx = qy = specific_discharge * math.cos(angle)  # ≈ 0.354 cm/s each direction
 inlet_height = 20.0     # Height of concentration inlet signal (cm)
 
 # Simulation timing
-total_time = 50.0  # Total simulation time (s) 
-dt = 0.01          # Time step (s) → 5000 time steps
-# Note: Courant number ≈ 0.35 (stable for explicit schemes)
+total_time = 300.0  # Total simulation time (s) 
+dt = 5          # Initial time step (s)
+percel = 0.7    # Courant number
 
 
 # %% [markdown]
@@ -152,6 +152,7 @@ dt = 0.01          # Time step (s) → 5000 time steps
 # For uniform flow at angle θ, any point (x,y) maps to:
 # - Rotated coordinate: y' = sin(-θ)·x + cos(-θ)·y
 # - Concentration: C(x,y,t) = inlet_signal(y' - v·t)
+# Note: At t=300s, the pattern has fully advected through the domain
 
 # %%
 def exact_solution_concentration(x, y, analytical):
@@ -461,7 +462,21 @@ def build_mf6gwt(grid_type, scheme, wave_func):
     nsteps = int(total_time/dt)
     tdis_ds = ((total_time, nsteps, 1.0),)
 
-    flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
+    tdis = flopy.mf6.ModflowTdis(sim, nper=nper, perioddata=tdis_ds, time_units=time_units)
+
+    dtmin = 1e-5
+    dtmax = 10
+    dtadj = 2
+    dtfailadj = dtadj
+    ats_filerecord = gwtname + ".ats"
+    atsperiod = [
+        (0, dt, dtmin, dtmax, dtadj, dtfailadj)
+    ]
+    tdis.ats.initialize(
+       maxats=len(atsperiod),
+       perioddata=atsperiod,
+       filename=ats_filerecord,
+    )
 
     flopy.mf6.ModflowIms(
         sim, 
@@ -480,7 +495,7 @@ def build_mf6gwt(grid_type, scheme, wave_func):
 
     flopy.mf6.ModflowGwtssm(gwt)
 
-    flopy.mf6.ModflowGwtadv(gwt, scheme=scheme)
+    flopy.mf6.ModflowGwtadv(gwt, scheme=scheme,  ats_percel=percel)
 
     packagedata = [
         ("GWFHEAD", f"../{gwfname}/{gwfname}.hds", None),
@@ -496,7 +511,7 @@ def build_mf6gwt(grid_type, scheme, wave_func):
         gwt,
         budget_filerecord=f"{gwtname}.cbc",
         concentration_filerecord=f"{gwtname}.ucn",
-        saverecord=[("CONCENTRATION", "FREQUENCY", 10), ("BUDGET", "FREQUENCY", 10)],
+        saverecord=[("CONCENTRATION", "LAST"), ("BUDGET", "LAST")],
         printrecord=[("CONCENTRATION", "LAST"), ("BUDGET", "LAST")],
     )
 
@@ -540,10 +555,8 @@ def build_mf6gwt(grid_type, scheme, wave_func):
         )
     )
 
-    # Set initial condition equal to analytical
-    xc, yc = cell2d_df.loc[:,1:2].T.to_numpy()
-    conc = exact_solution_concentration(xc, yc, wave_func)
-    flopy.mf6.ModflowGwtic(gwt, strt=conc)
+    # Set initial condition equal to zero
+    flopy.mf6.ModflowGwtic(gwt, strt=0)
 
     return sim
 
@@ -612,7 +625,7 @@ def plot_flow(sim, ax):
     ax.set_ylabel("y (cm)")
     ax.set_aspect("equal")
 
-def plot_concentrations(gwf_sims):
+def plot_concentrations(gwt_sims):
     for wave_func in wave_functions:   
         with styles.USGSPlot():     
             fig, axs = plt.subplots(
@@ -624,7 +637,7 @@ def plot_concentrations(gwf_sims):
 
             for idx_scheme, scheme in enumerate(schemes):
                 for idx_grid, grid in enumerate(grids):
-                    sim = gwf_sims[(grid, scheme, wave_func)]
+                    sim = gwt_sims[(grid, scheme, wave_func)]
                     plot_concentration(sim, axs[idx_scheme, idx_grid])
 
             pad = 5 # in points
@@ -645,7 +658,7 @@ def plot_concentrations(gwf_sims):
 def plot_concentration(sim, ax):
     gwt = sim.get_model()
     ucnobj_mf6 = gwt.output.concentration()
-    conc = ucnobj_mf6.get_data(totim=total_time).flatten()
+    conc = ucnobj_mf6.get_data(totim=ucnobj_mf6.get_times()[-1]).flatten()
 
     vmin = conc.min()
     vmax = conc.max()
@@ -660,7 +673,7 @@ def plot_concentration(sim, ax):
     ax.set_ylabel("y (cm)")
     ax.set_aspect("equal")
 
-def plot_concentration_cross_sections(gwf_sims):
+def plot_concentration_cross_sections(gwt_sims):
     with styles.USGSPlot():     
         fig, axs = plt.subplots(
             nrows=len(wave_functions), 
@@ -674,12 +687,13 @@ def plot_concentration_cross_sections(gwf_sims):
                 ax = axs[wave_idx][grid_idx]
                 plot_concentration_analytical(wave_func, ax)
                 for scheme in schemes:
-                    sim = gwf_sims[(grid, scheme, wave_func)]
+                    sim = gwt_sims[(grid, scheme, wave_func)]
                     plot_concentration_cross_section(sim, scheme, ax)
 
                 ax.legend()
                 ax.set_xlabel("x (cm)")
                 ax.set_ylabel("C [-]")
+                ax.set_ylim(-0.1, 1.1)
     
         pad = 5 # in points
         for ax, col in zip(axs[0], grids):
@@ -714,7 +728,7 @@ def plot_concentration_analytical(analytical_func, ax):
 def plot_concentration_cross_section(sim, scheme, ax):
     gwt = sim.get_model()
     ucnobj_mf6 = gwt.output.concentration()
-    conc = ucnobj_mf6.get_data(totim=total_time).flatten()
+    conc = ucnobj_mf6.get_data(totim=ucnobj_mf6.get_times()[-1]).flatten()
 
     grid = gwt.modelgrid
     xc = grid.xcellcenters
