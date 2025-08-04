@@ -9,6 +9,7 @@
 
 # +
 # Imports
+import itertools
 import math
 from pathlib import Path
 from pprint import pformat
@@ -291,7 +292,7 @@ def create_bnd_iverts(bnd_verts, vert_idx, ivert_idx, side):
 
     # Once sorted, create rectangular iverts along entire boundary
     new_pt2 = None
-    for i, (v1, v2) in enumerate(zip(bnd_verts[0:-1], bnd_verts[1:])):
+    for i, (v1, v2) in enumerate(itertools.pairwise(bnd_verts)):
         v_x_coord1 = v1[1]
         v_y_coord1 = v1[2]
 
