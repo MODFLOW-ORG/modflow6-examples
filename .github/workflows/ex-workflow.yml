@@ -217,13 +217,13 @@ jobs:
           format: MM/DD/YYYY HH:mm
 
       - name: Download ${{ env.DISTNAME }}.pdf
-        uses: actions/download-artifact@v4.3.0
+        uses: actions/download-artifact@v5.0.0
         with:
           name: ${{ env.DISTNAME }}.pdf
           path: ${{ env.TAG }}
 
       - name: Download ${{ env.DISTNAME }}.zip
-        uses: actions/download-artifact@v4.3.0
+        uses: actions/download-artifact@v5.0.0
         with:
           name: ${{ env.DISTNAME }}.zip
           path: ${{ env.TAG }}
