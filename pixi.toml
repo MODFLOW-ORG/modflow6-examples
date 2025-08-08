@@ -16,6 +16,14 @@ update-environment-yml = "pixi workspace export conda-environment environment.ym
 update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop --no-backup"
 install = "pixi upgrade flopy mfpymake modflowapi modflow-devtools"
 
+# Check format
+check-format = "ruff check .; ruff format . --check"
+check-spelling = "codespell"
+
+# Fix format
+fix-format = { cmd = "ruff check --fix; ruff format ." }
+fix-spelling = { cmd = "codespell --write-changes" }    
+
 # CommonDocs
 build-latex-md = { cmd = "python process-scripts.py", cwd ="scripts" }
 build-rst = { cmd = "python ci_create_examples_rst.py", cwd = "etc" }
