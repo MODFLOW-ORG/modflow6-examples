@@ -36,7 +36,7 @@
 # - Different grid geometries may show different accuracy characteristics for the same numerical scheme
 
 # %% [markdown]
-# # Initial setup
+# ### Initial setup
 #
 # Import dependencies, define the example name and workspace, and read settings from environment variables.
 
@@ -64,7 +64,6 @@ try:
 except ImportError:
     git = None
 
-# %%
 # Example name and workspace paths. If this example is running
 # in the git repository, use the folder structure described in
 # the README. Otherwise just use the current working directory.
@@ -87,54 +86,52 @@ plot_show = get_env("PLOT_SHOW", True)
 plot_save = get_env("PLOT_SAVE", True)
 
 # %% [markdown]
-# # Model Parameters
+# ## Define parameters
 #
-# These parameters define the test problem geometry, flow conditions, and numerical settings.
+# Define model units, parameters and other settings.
 
 # %%
-# Test case combinations (36 total simulations)
-grids = ["structured", "triangle", "voronoi"]  # 3 grid types
+# Model units
+length_units = "centimeters"  # Length units
+time_units = "seconds"  # Time units
+
+# Model parameters
+nper = 1  # Number of periods
+nlay = 1  # Number of layers
+ncol = 50  # Number of columns
+nrow = 50  # Number of rows (50x50 = 2500 cells for structured grid)
+Length = 100.0  # Domain length (cm)
+Width = 100.0  # Domain width (cm)
+
+delr = Length / ncol  # Column width (cm)
+delc = Width / nrow  # Row width (cm)
+top = 1.0  # Top of the model (cm)
+botm = 0  # Layer bottom elevation (cm)
+
+specific_discharge = 0.5  # Specific discharge (cm/s)
+hydraulic_conductivity = 0.01  # Hydraulic conductivity (cm/s)
+angle = math.radians(45)  # Flow direction (°)
+qx = specific_discharge * math.cos(angle)  # x-component of specific discharge (cm/s)
+qy = specific_discharge * math.cos(angle)  # y-component of specific discharge (cm/s)
+inlet_height = 20.0  # Height of concentration inlet signal (cm)
+
+total_time = 300.0  # Total simulation time (s)
+dt = 5  # Initial time step (s)
+percel = 0.7  # Courant number (-)
+
+# Solver parameters
+nouter = 100  # Maximum outer iterations
+ninner = 300  # Maximum inner iterations
+hclose = 1e-6  # Head closure criterion
+cclose = 1e-6  # Concentration closure criterion
+rclose = 1e-6  # Residual closure criterion
+
+grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulations)
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
 wave_functions = ["sin2-wave", "step-wave", "block-wave"]  # 3 test functions
 
-# Model units
-length_units = "centimeters"
-time_units = "seconds"
-
-# Constants for plotting
 AXES_FRACTION = "axes fraction"
 OFFSET_POINTS = "offset points"
-
-# Solver settings
-nouter = 100
-ninner = 300
-hclose = 1e-6
-cclose = 1e-6
-rclose = 1e-6
-
-# Physical domain
-nper = 1  # Number of periods
-nlay = 1  # Number of layers
-ncol = nrow = 50  # 50x50 = 2500 cells for structured grid
-Length = Width = 100.0  # Square domain size (cm)
-
-delr = Length / ncol
-delc = Width / nrow
-top = 1.0  # Top of the model ($cm$)
-botm = 0  # Layer bottom elevation ($cm$)
-
-# Flow conditions
-specific_discharge = 0.5  # Darcy velocity (cm/s)
-hydraulic_conductivity = 0.01  # Hydraulic conductivity ($cm s^{-1}$)
-angle = math.radians(45)  # Flow direction (45° from x-axis)
-qx = qy = specific_discharge * math.cos(angle)  # ≈ 0.354 cm/s each direction
-inlet_height = 20.0  # Height of concentration inlet signal (cm)
-
-# Simulation timing
-total_time = 300.0  # Total simulation time (s)
-dt = 5  # Initial time step (s)
-percel = 0.7  # Courant number
-
 
 # %% [markdown]
 # # Analytical Solution
@@ -649,7 +646,13 @@ def plot_flows(gwf_sims):
                 va="baseline",
             )
 
-    plt.show()
+    if plot_show:
+        plt.show()
+    if plot_save:
+        fname = f"{sim_name}-flow.png"
+        fpth = figs_path / fname
+        fig.savefig(fpth)
+    
 
 
 def plot_flow(sim, ax):
@@ -714,7 +717,12 @@ def plot_concentrations(gwt_sims):
 
             fig.subplots_adjust(left=0.25, top=0.95)
 
-        plt.show()
+            if plot_show:
+                plt.show()
+            if plot_save:
+                fname = f"{sim_name}-{wave_func}-conc.png"
+                fpth = figs_path / fname
+                fig.savefig(fpth)
 
 
 def plot_concentration(sim, ax):
@@ -783,7 +791,12 @@ def plot_concentration_cross_sections(gwt_sims):
 
         fig.subplots_adjust(left=0.25, top=0.95)
 
-    plt.show()
+    if plot_show:
+        plt.show()
+    if plot_save:
+        fname = f"{sim_name}-conc-cross-section.png"
+        fpth = figs_path / fname
+        fig.savefig(fpth)
 
 
 def plot_concentration_analytical(analytical_func, ax):
