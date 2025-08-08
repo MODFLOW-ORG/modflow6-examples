@@ -652,7 +652,6 @@ def plot_flows(gwf_sims):
         fname = f"{sim_name}-flow.png"
         fpth = figs_path / fname
         fig.savefig(fpth)
-    
 
 
 def plot_flow(sim, ax):
