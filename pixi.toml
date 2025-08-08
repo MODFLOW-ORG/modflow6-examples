@@ -1,0 +1,94 @@
+[workspace]
+channels = ["conda-forge", "nodefaults"]
+name = "modflow6-examples"
+platforms = ["win-64", "linux-64", "linux-aarch64", "osx-arm64", "osx-64"]
+version = "1.0.0"
+description = "This repository contains MODFLOW 6 examples."
+
+[tasks]
+# General
+run-scripts = { cmd = "pytest -v -n auto test_scripts.py --plot", cwd = "autotest" }
+build-notebooks = { cmd = "pytest -v -n auto test_notebooks.py --plot", cwd = "autotest" }
+jupytext = { cmd = "jupytext --to notebook ", cwd = "scripts" } # Add script name e.g. pixi run jpytext ex-gwe-ates.py
+jupyter = { cmd = "jupyter notebook", cwd = "notebooks"}
+update-environment-yml = "pixi workspace export conda-environment environment.yml"
+
+update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop --no-backup"
+install = "pixi upgrade flopy mfpymake modflowapi modflow-devtools"
+
+# CommonDocs
+build-latex-md = { cmd = "python process-scripts.py", cwd ="scripts" }
+build-rst = { cmd = "python ci_create_examples_rst.py", cwd = "etc" }
+
+# ReadTheDocs
+build-sphinx = { cmd = "make clean; make html", cwd = ".doc" }
+build-rtd-docs = { depends-on = [
+    "build-notebooks",
+    "build-latex-md",
+    "build-rst",
+    "build-sphinx",
+] }
+
+# PDF document
+build-pdflatex = { cmd = "bash build-pdf.sh", cwd = "doc" }
+build-pdf = { depends-on = [
+    "run-scripts",
+    "build-latex-md",
+    "build-rst",
+    "build-pdflatex",
+] }
+
+[target.win-64.tasks]
+build-pdflatex = { cmd = "build-pdf.bat", cwd = "doc" }
+
+[dependencies]
+python = ">=3.10"
+boltons = "*"
+appdirs = "*"
+cffconvert = "*"
+codespell = "*"
+filelock = "*"
+flaky = "*"
+fprettify = "*"
+fortran-language-server = "*"
+gitpython = "*"
+geopandas = "*"
+jinja2 = ">=3.1.5,<4"
+jupytext = "*"
+matplotlib = "<=3.9.4"
+meson = "1.8.0.*"
+ninja = "*"
+numpy = "*"
+pip = "*"
+pooch = "*"
+pyshp = "*"
+pytest = "!=8.1.0"
+pytest-benchmark = "*"
+pytest-dotenv = "*"
+pytest-order = "*"
+pytest-xdist = "*"
+pyvista = "*"
+rasterio = "*"
+rasterstats = "*"
+ruff = "*"
+scipy = "*"
+shapely = "*"
+syrupy = "*"
+tomli = ">=2.2.1,<3"
+tomli-w = ">=1.2.0,<2"
+
+[pypi-dependencies]
+flopy = { git = "https://github.com/modflowpy/flopy.git" }
+mfpymake = { git = "https://github.com/modflowpy/pymake.git" }
+modflowapi = { git = "https://github.com/MODFLOW-ORG/modflowapi.git" }
+modflow-devtools = { git = "https://github.com/MODFLOW-ORG/modflow-devtools.git" }
+sphinx-markdown-tables = "*"
+nbsphinx-link = "*"
+rtds-action = "*"
+nbconvert = "==7.16.3"
+nbsphinx = "*"
+ipython = "*"
+ipykernel = "*"
+sphinx-rtd-theme = "*"
+pygments = ">=2.4.1"
+myst-parser = "*"
