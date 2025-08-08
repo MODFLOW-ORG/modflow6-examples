@@ -111,8 +111,6 @@ botm = 0  # Layer bottom elevation (cm)
 specific_discharge = 0.5  # Specific discharge (cm/s)
 hydraulic_conductivity = 0.01  # Hydraulic conductivity (cm/s)
 angle = math.radians(45)  # Flow direction (°)
-qx = specific_discharge * math.cos(angle)  # x-component of specific discharge (cm/s)
-qy = specific_discharge * math.cos(angle)  # y-component of specific discharge (cm/s)
 inlet_height = 20.0  # Height of concentration inlet signal (cm)
 
 total_time = 300.0  # Total simulation time (s)
@@ -126,9 +124,14 @@ hclose = 1e-6  # Head closure criterion
 cclose = 1e-6  # Concentration closure criterion
 rclose = 1e-6  # Residual closure criterion
 
+# Grid and scheme definitions
 grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulations)
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
 wave_functions = ["sin2-wave", "step-wave", "block-wave"]  # 3 test functions
+
+# Compute discharge components
+qx = specific_discharge * math.cos(angle)  # x-component of specific discharge (cm/s)
+qy = specific_discharge * math.cos(angle)  # y-component of specific discharge (cm/s)
 
 AXES_FRACTION = "axes fraction"
 OFFSET_POINTS = "offset points"
