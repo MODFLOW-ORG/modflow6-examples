@@ -7,14 +7,14 @@ description = "This repository contains MODFLOW 6 examples."
 
 [tasks]
 # General
-run-scripts = { cmd = "pytest -v -n auto test_scripts.py --plot", cwd = "autotest" }
-build-notebooks = { cmd = "pytest -v -n auto test_notebooks.py --plot", cwd = "autotest" }
-jupytext = { cmd = "jupytext --to notebook ", cwd = "scripts" } # Add script name e.g. pixi run jpytext ex-gwe-ates.py
+script = { cmd = "pytest -v -n auto test_scripts.py -k", cwd = "autotest"} # Add script name e.g. pixi run script ex-gwe-ates.py
+notebook = { cmd = "pytest -v -n auto test_notebooks.py -k", cwd = "autotest" } # Add script name e.g. pixi run notebook ex-gwe-ates.py
+jupytext = { cmd = "jupytext --to notebook ", cwd = "scripts" } # Add script name e.g. pixi run jupytext ex-gwe-ates.py
 jupyter = { cmd = "jupyter notebook", cwd = "notebooks"}
-update-environment-yml = "pixi workspace export conda-environment environment.yml"
 
+update-environment-yml = "pixi workspace export conda-environment environment.yml"
 update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop --no-backup"
-install = "pixi upgrade flopy mfpymake modflowapi modflow-devtools"
+install = "pixi update flopy mfpymake modflowapi modflow-devtools"
 
 # Check format
 check-format = "ruff check .; ruff format . --check"
@@ -25,22 +25,24 @@ fix-format = { cmd = "ruff check --fix; ruff format ." }
 fix-spelling = { cmd = "codespell --write-changes" }    
 
 # CommonDocs
-build-latex-md = { cmd = "python process-scripts.py", cwd ="scripts" }
+build-latex-md = { cmd = "python create-doc-tables.py", cwd ="scripts" }
 build-rst = { cmd = "python ci_create_examples_rst.py", cwd = "etc" }
 
 # ReadTheDocs
+build-plots = { cmd = "pytest -v -n auto test_notebooks.py --plot", cwd = "autotest" }
 build-sphinx = { cmd = "make clean; make html", cwd = ".doc" }
-build-rtd-docs = { depends-on = [
-    "build-notebooks",
+make-rtd = { depends-on = [
+    "build-plots",
     "build-latex-md",
     "build-rst",
     "build-sphinx",
 ] }
 
 # PDF document
+build-input = { cmd = "pytest -v -n auto test_scripts.py --plot", cwd = "autotest" }
 build-pdflatex = { cmd = "bash build-pdf.sh", cwd = "doc" }
-build-pdf = { depends-on = [
-    "run-scripts",
+make-pdf = { depends-on = [
+    "build-input",
     "build-latex-md",
     "build-rst",
     "build-pdflatex",

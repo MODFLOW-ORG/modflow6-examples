@@ -19,10 +19,8 @@ def test_notebooks(example_script, write, run, plot, plot_save, gif):
     ):
         args = [
             "jupytext",
-            "--from",
-            "py",
             "--to",
-            "ipynb",
+            "notebook",
             "--execute",
             example_script,
             "-o",
