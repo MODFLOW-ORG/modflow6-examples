@@ -7,8 +7,8 @@ description = "This repository contains MODFLOW 6 examples."
 
 [tasks]
 # General
-script = { cmd = "pytest -v -n auto test_scripts.py -k", cwd = "autotest"} # Add script name e.g. pixi run script ex-gwe-ates.py
-notebook = { cmd = "pytest -v -n auto test_notebooks.py -k", cwd = "autotest" } # Add script name e.g. pixi run notebook ex-gwe-ates.py
+script = { cmd = "pytest -v test_scripts.py -k", cwd = "autotest"} # Add script name e.g. pixi run script ex-gwe-ates.py
+notebook = { cmd = "pytest -v test_notebooks.py -k", cwd = "autotest" } # Add script name e.g. pixi run notebook ex-gwe-ates.py
 scripts = { cmd = "pytest -v -n auto test_scripts.py", cwd = "autotest"} # Runs all scripts
 notebooks = { cmd = "pytest -v -n auto test_notebooks.py", cwd = "autotest" } # Runs all notebooks
 jupytext = { cmd = "jupytext --to notebook ", cwd = "scripts" } # Add script name e.g. pixi run jupytext ex-gwe-ates.py
