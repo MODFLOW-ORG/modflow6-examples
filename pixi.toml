@@ -9,8 +9,12 @@ description = "This repository contains MODFLOW 6 examples."
 # General
 script = { cmd = "pytest -v -n auto test_scripts.py -k", cwd = "autotest"} # Add script name e.g. pixi run script ex-gwe-ates.py
 notebook = { cmd = "pytest -v -n auto test_notebooks.py -k", cwd = "autotest" } # Add script name e.g. pixi run notebook ex-gwe-ates.py
+scripts = { cmd = "pytest -v -n auto test_scripts.py", cwd = "autotest"} # Runs all scripts
+notebooks = { cmd = "pytest -v -n auto test_notebooks.py", cwd = "autotest" } # Runs all notebooks
 jupytext = { cmd = "jupytext --to notebook ", cwd = "scripts" } # Add script name e.g. pixi run jupytext ex-gwe-ates.py
 jupyter = { cmd = "jupyter notebook", cwd = "notebooks"}
+
+build-input = { cmd = "pytest -v -n auto test_scripts.py --init", cwd = "autotest" }
 
 update-environment-yml = "pixi workspace export conda-environment environment.yml"
 update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop --no-backup"
@@ -25,11 +29,11 @@ fix-format = { cmd = "ruff check --fix; ruff format ." }
 fix-spelling = { cmd = "codespell --write-changes" }    
 
 # CommonDocs
+build-plots = { cmd = "pytest -v -n auto test_notebooks.py --plot", cwd = "autotest" }
 build-latex-md = { cmd = "python create-doc-tables.py", cwd ="scripts" }
 build-rst = { cmd = "python ci_create_examples_rst.py", cwd = "etc" }
 
 # ReadTheDocs
-build-plots = { cmd = "pytest -v -n auto test_notebooks.py --plot", cwd = "autotest" }
 build-sphinx = { cmd = "make clean; make html", cwd = ".doc" }
 make-rtd = { depends-on = [
     "build-plots",
@@ -39,10 +43,9 @@ make-rtd = { depends-on = [
 ] }
 
 # PDF document
-build-input = { cmd = "pytest -v -n auto test_scripts.py --plot", cwd = "autotest" }
 build-pdflatex = { cmd = "bash build-pdf.sh", cwd = "doc" }
 make-pdf = { depends-on = [
-    "build-input",
+    "build-plots",
     "build-latex-md",
     "build-rst",
     "build-pdflatex",
