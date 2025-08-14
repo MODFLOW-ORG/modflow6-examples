@@ -19,14 +19,14 @@ def test_notebooks(example_script, write, run, plot, plot_save, gif):
     ):
         args = [
             "jupytext",
-            "--from",
-            "py",
             "--to",
-            "ipynb",
+            "notebook",
             "--execute",
             example_script,
             "-o",
             NOTEBOOKS_PATH / example_script.with_suffix(".ipynb").name,
+            "--set-kernel",
+            "python3",
         ]
         stdout, stderr, retcode = run_cmd(*args, verbose=True, env=environ)
         assert not retcode, stdout + stderr

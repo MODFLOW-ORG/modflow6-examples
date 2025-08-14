@@ -1,0 +1,107 @@
+[workspace]
+channels = ["conda-forge", "nodefaults"]
+name = "modflow6-examples"
+platforms = ["win-64", "linux-64", "linux-aarch64", "osx-arm64", "osx-64"]
+version = "1.0.0"
+description = "This repository contains MODFLOW 6 examples."
+
+[tasks]
+# General
+script = { cmd = "pytest -v test_scripts.py -k", cwd = "autotest"} # Add script name e.g. pixi run script ex-gwe-ates.py
+notebook = { cmd = "pytest -v test_notebooks.py -k", cwd = "autotest" } # Add script name e.g. pixi run notebook ex-gwe-ates.py
+scripts = { cmd = "pytest -v -n auto test_scripts.py", cwd = "autotest"} # Runs all scripts
+notebooks = { cmd = "pytest -v -n auto test_notebooks.py", cwd = "autotest" } # Runs all notebooks
+jupytext = { cmd = "jupytext --to notebook ", cwd = "scripts" } # Add script name e.g. pixi run jupytext ex-gwe-ates.py
+jupyter = { cmd = "jupyter notebook", cwd = "notebooks"}
+
+build-input = { cmd = "pytest -v -n auto test_scripts.py --init", cwd = "autotest" }
+
+update-environment-yml = "pixi workspace export conda-environment environment.yml"
+update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop --no-backup"
+install = "pixi update flopy mfpymake modflowapi modflow-devtools"
+
+# Check format
+check-format = "ruff check .; ruff format . --check"
+check-spelling = "codespell"
+
+# Fix format
+fix-format = { cmd = "ruff check --fix; ruff format ." }
+fix-spelling = { cmd = "codespell --write-changes" }    
+
+# CommonDocs
+build-plots = { cmd = "pytest -v -n auto test_notebooks.py --plot", cwd = "autotest" }
+build-latex-md = { cmd = "python create-doc-tables.py", cwd ="scripts" }
+build-rst = { cmd = "python ci_create_examples_rst.py", cwd = "etc" }
+
+# ReadTheDocs
+build-sphinx = { cmd = "make clean; make html", cwd = ".doc" }
+make-rtd = { depends-on = [
+    "build-plots",
+    "build-latex-md",
+    "build-rst",
+    "build-sphinx",
+] }
+
+# PDF document
+build-pdflatex = { cmd = "bash build-pdf.sh", cwd = "doc" }
+make-pdf = { depends-on = [
+    "build-plots",
+    "build-latex-md",
+    "build-rst",
+    "build-pdflatex",
+] }
+
+[target.win-64.tasks]
+build-pdflatex = { cmd = "build-pdf.bat", cwd = "doc" }
+
+[dependencies]
+python = ">=3.10"
+boltons = "*"
+appdirs = "*"
+cffconvert = "*"
+codespell = "*"
+filelock = "*"
+flaky = "*"
+fprettify = "*"
+fortran-language-server = "*"
+gitpython = "*"
+geopandas = "*"
+jinja2 = ">=3.1.5,<4"
+jupytext = "*"
+matplotlib = "<=3.9.4"
+meson = "1.8.0.*"
+ninja = "*"
+numpy = "*"
+pip = "*"
+pooch = "*"
+pyshp = "*"
+pytest = "!=8.1.0"
+pytest-benchmark = "*"
+pytest-dotenv = "*"
+pytest-order = "*"
+pytest-xdist = "*"
+pyvista = "*"
+rasterio = "*"
+rasterstats = "*"
+ruff = "*"
+scipy = "*"
+shapely = "*"
+syrupy = "*"
+tomli = ">=2.2.1,<3"
+tomli-w = ">=1.2.0,<2"
+
+[pypi-dependencies]
+flopy = { git = "https://github.com/modflowpy/flopy.git" }
+mfpymake = { git = "https://github.com/modflowpy/pymake.git" }
+modflowapi = { git = "https://github.com/MODFLOW-ORG/modflowapi.git" }
+modflow-devtools = { git = "https://github.com/MODFLOW-ORG/modflow-devtools.git" }
+sphinx-markdown-tables = "*"
+nbsphinx-link = "*"
+rtds-action = "*"
+nbconvert = "==7.16.3"
+nbsphinx = "*"
+ipython = "*"
+ipykernel = "*"
+sphinx-rtd-theme = "*"
+pygments = ">=2.4.1"
+myst-parser = "*"

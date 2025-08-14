@@ -1,3 +1,3 @@
 [codespell]
-skip = ./examples,*.list,*.log,*.fem,*.grb,*.png,*.jpg,*.tif
+skip = ./examples,*.list,*.log,*.fem,*.grb,*.png,*.jpg,*.tif, pixi.lock
 ignore-words = etc/codespell.ignore

@@ -27,7 +27,7 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW 6 examples
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Micromamba
         uses: mamba-org/setup-micromamba@v2
@@ -56,12 +56,12 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: modflow6-examples
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
@@ -123,18 +123,18 @@ jobs:
       MPLBACKEND: agg
     steps:
       - name: Checkout MODFLOW 6 examples
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: modflow6-examples
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
 
       - name: Checkout usgslatex
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: MODFLOW-ORG/usgslatex
           path: usgslatex
@@ -185,7 +185,7 @@ jobs:
 
       - name: Run postprocessing
         working-directory: modflow6-examples/scripts
-        run: python process-scripts.py
+        run: python create-doc-tables.py
 
       - name: Build PDF document
         working-directory: modflow6-examples/doc
@@ -208,7 +208,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Get current time
         uses: josStorer/get-current-time@v2
@@ -217,13 +217,13 @@ jobs:
           format: MM/DD/YYYY HH:mm
 
       - name: Download ${{ env.DISTNAME }}.pdf
-        uses: actions/download-artifact@v4.3.0
+        uses: actions/download-artifact@v5.0.0
         with:
           name: ${{ env.DISTNAME }}.pdf
           path: ${{ env.TAG }}
 
       - name: Download ${{ env.DISTNAME }}.zip
-        uses: actions/download-artifact@v4.3.0
+        uses: actions/download-artifact@v5.0.0
         with:
           name: ${{ env.DISTNAME }}.zip
           path: ${{ env.TAG }}

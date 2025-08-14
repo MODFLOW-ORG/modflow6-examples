@@ -252,7 +252,7 @@ This will
 Next, build LaTeX and Markdown files:
 
 ```shell
-python scripts/process-scripts.py
+python scripts/create-doc-tables.py
 ```
 
 Next, create ReStructuredText (RST) index files from the contents of `doc/body.tex`:
@@ -283,7 +283,7 @@ The `test_notebooks.py` also suffices, but in this case the conversion from exam
 Next, build LaTeX and Markdown files:
 
 ```shell
-python scripts/process-scripts.py
+python scripts/create-doc-tables.py
 ```
 
 Next, create ReStructuredText (RST) index files from the contents of `doc/body.tex`:
