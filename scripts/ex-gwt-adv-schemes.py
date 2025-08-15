@@ -753,7 +753,7 @@ def plot_concentration_cross_sections(gwt_sims):
             nrows=len(wave_functions),
             ncols=len(grids),
             dpi=300,
-            figsize=(7 * len(grids), 7 * len(wave_functions)/len(grids)),
+            figsize=(7, 7 * len(wave_functions)/len(grids)),
             tight_layout=True
         )
         fig.suptitle("Concentration cross-section")
