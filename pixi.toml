@@ -17,8 +17,8 @@ jupyter = { cmd = "jupyter notebook", cwd = "notebooks"}
 build-input = { cmd = "pytest -v -n auto test_scripts.py --init", cwd = "autotest" }
 
 update-environment-yml = "pixi workspace export conda-environment environment.yml"
-update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop --no-backup"
-install = "pixi update flopy mfpymake modflowapi modflow-devtools"
+update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop"
+install = "pixi update flopy mfpymake modflowapi"
 
 # Check format
 check-format = "ruff check .; ruff format . --check"
@@ -94,7 +94,7 @@ tomli-w = ">=1.2.0,<2"
 flopy = { git = "https://github.com/modflowpy/flopy.git" }
 mfpymake = { git = "https://github.com/modflowpy/pymake.git" }
 modflowapi = { git = "https://github.com/MODFLOW-ORG/modflowapi.git" }
-modflow-devtools = { git = "https://github.com/MODFLOW-ORG/modflow-devtools.git" }
+modflow-devtools = "==1.7.0"
 sphinx-markdown-tables = "*"
 nbsphinx-link = "*"
 rtds-action = "*"
