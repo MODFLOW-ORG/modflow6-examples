@@ -630,8 +630,10 @@ def plot_results(gwf_sims, gwt_sims):
 
 def plot_flows(gwf_sims):
     with styles.USGSPlot():
-        figure_size = (7, 7/len(gwf_sims))
-        fig, axs = plt.subplots(1, len(gwf_sims), dpi=300, figsize=figure_size, tight_layout=True)
+        figure_size = (7, 7 / len(gwf_sims))
+        fig, axs = plt.subplots(
+            1, len(gwf_sims), dpi=300, figsize=figure_size, tight_layout=True
+        )
         fig.suptitle("Head - flow angle 45")
 
         for idx, (grid, sim) in enumerate(gwf_sims.items()):
@@ -686,7 +688,7 @@ def plot_concentrations(gwt_sims):
                 ncols=len(grids),
                 dpi=300,
                 figsize=(7, 7 * len(schemes) / len(grids)),
-                tight_layout=True
+                tight_layout=True,
             )
             fig.suptitle(f"Concentration - {wave_func}")
 
@@ -753,8 +755,8 @@ def plot_concentration_cross_sections(gwt_sims):
             nrows=len(wave_functions),
             ncols=len(grids),
             dpi=300,
-            figsize=(7, 7 * len(wave_functions)/len(grids)),
-            tight_layout=True
+            figsize=(7, 7 * len(wave_functions) / len(grids)),
+            tight_layout=True,
         )
         fig.suptitle("Concentration cross-section")
 
