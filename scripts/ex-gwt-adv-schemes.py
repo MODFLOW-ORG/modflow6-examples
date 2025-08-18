@@ -687,7 +687,7 @@ def plot_concentrations(gwt_sims):
                 nrows=len(schemes),
                 ncols=len(grids),
                 dpi=300,
-                figsize=(7, 7 * len(schemes) / len(grids)),
+                figsize=(7, 7 * len(schemes) / (len(grids) + 1)),
                 tight_layout=True,
             )
             fig.suptitle(f"Concentration - {wave_func}")
@@ -755,7 +755,7 @@ def plot_concentration_cross_sections(gwt_sims):
             nrows=len(wave_functions),
             ncols=len(grids),
             dpi=300,
-            figsize=(7, 7 * len(wave_functions) / len(grids)),
+            figsize=(7, 7 * len(wave_functions) / (len(grids) + 1)),
             tight_layout=True,
         )
         fig.suptitle("Concentration cross-section")
@@ -768,7 +768,7 @@ def plot_concentration_cross_sections(gwt_sims):
                     sim = gwt_sims[(grid, scheme, wave_func)]
                     plot_concentration_cross_section(sim, scheme, ax)
 
-                ax.legend()
+                ax.legend(fontsize="small")
                 ax.set_xlabel("x (cm)")
                 ax.set_ylabel("C [-]")
                 ax.set_ylim(-0.1, 1.1)
@@ -814,7 +814,7 @@ def plot_concentration_analytical(analytical_func, ax):
 
     conc = exact_solution_concentration(x, y, analytical_func)
 
-    ax.plot(x, conc, linestyle="-", mfc="none", markersize="4", label="exact")
+    ax.plot(x, conc, linestyle="-", mfc="none", markersize="3", linewidth=1, label="exact")
 
 
 def plot_concentration_cross_section(sim, scheme, ax):
@@ -840,7 +840,9 @@ def plot_concentration_cross_section(sim, scheme, ax):
         linestyle="--",
         marker="o",
         mfc="none",
-        markersize="4",
+        markersize="3",
+        linewidth="0.5",
+        markeredgewidth="0.5",
         label=scheme,
     )
 
