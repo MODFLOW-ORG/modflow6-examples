@@ -814,7 +814,9 @@ def plot_concentration_analytical(analytical_func, ax):
 
     conc = exact_solution_concentration(x, y, analytical_func)
 
-    ax.plot(x, conc, linestyle="-", mfc="none", markersize="3", linewidth=1, label="exact")
+    ax.plot(
+        x, conc, linestyle="-", mfc="none", markersize="3", linewidth=1, label="exact"
+    )
 
 
 def plot_concentration_cross_section(sim, scheme, ax):
