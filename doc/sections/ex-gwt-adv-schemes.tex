@@ -1,6 +1,6 @@
 \section{Advection schemes in MODFLOW6}
 
-This example demonstrates the performance of different numerical advection schemes when solving the groundwater transport equation under pure advection conditions. The example provides a comparison of four advection schemes (upstream, central difference, TVD, and UTVD) across three different grid types (structured, triangular, and Voronoi) using three test functions with varying numerical challenges.
+This example demonstrates the performance of different numerical advection schemes when solving the groundwater transport equation under pure advection conditions. The example provides a comparison of four advection schemes (upstream, central difference, TVD, and UTVD) across three different grid types (structured, triangular, and Voronoi) using three inflow concentration profiles with varying numerical challenges.
 
 \subsection{Example description}
 
@@ -11,20 +11,18 @@ The problem solves the pure advection equation:
 \label{eq:pureadvection}
 \end{equation}
 
-where $C$ is concentration, $S_w$ is water saturation, $\theta$ is porosity, and $\mathbf{q}$ is the specific discharge field. The problem is configured with no dispersion or diffusion terms, making it ideal for testing numerical scheme performance since an analytical solution exists.
+\noindent where $C$ is the normalized volumetric concentration (dimensionless), $S_w$ is water saturation (dimensionless), $\theta$ is porosity (dimensionless), and $\mathbf{q}$ is the specific discharge field (cm/s). The problem is configured with no dispersion or diffusion terms, making it ideal for testing numerical scheme performance since an analytical solution exists.
 
-The model domain consists of a 100 cm $\times$ 100 cm square with uniform flow at a 45° angle. The specific discharge field is $\vec{q} = (q_x, q_y) = (0.354, 0.354)$ cm/s, resulting from a hydraulic conductivity of 0.01 cm/s and a specific discharge magnitude of 0.5 cm/s. Prescribed concentrations are applied on the inflow boundaries (left and bottom edges), while CHD boundary conditions are used on the outflow boundaries which extract any outflowing concentration.
+The model domain consists of a 100 cm $\times$ 100 cm square. A uniform flow of 0.5 cm/s at a 45° angle is applied to the inflow boundaries (left and bottom edges) resulting in a specific discharge field of $\vec{q} = (q_x, q_y) = (0.354, 0.354)$ cm/s. Prescribed concentrations are applied on the inflow boundaries,while CHD boundary conditions are used on the outflow boundaries which extract any outflowing concentration.
 
-The spatial discretization uses three different grid types to test scheme performance across different mesh geometries:
+The spatial discretization uses three different grid types to test scheme performance across different grid geometries:
 \begin{itemize}
-\item \textbf{Structured grid}: Regular 50 $\times$ 50 rectangular cells (2 cm $\times$ 2 cm)
-\item \textbf{Triangular mesh}: Unstructured triangular elements with maximum area constraint
-\item \textbf{Voronoi grid}: Voronoi polygon cells derived from triangular tessellation
+\item \textbf{Structured grid}: Grid using 50 $\times$ 50 rectangular cells (2 cm $\times$ 2 cm)
+\item \textbf{Triangular grid}: Grid using triangular cells with maximum area constraint
+\item \textbf{Voronoi grid}: Grid using Voronoi cells derived from triangular cells
 \end{itemize}
 
-The temporal discretization spans 300 seconds using adaptive time stepping with an initial time step of 5 seconds and a target Courant number of 0.7. This relatively high Courant number is chosen specifically to challenge the central difference scheme and demonstrate oscillatory behavior on discontinuous functions.
-
-Four advection schemes are compared:
+\noindent The simulation time spans 300 seconds using adaptive time stepping with an initial time step of 5 seconds and a Courant number of 0.7. The Courant number is a dimensionless quantity representing the fraction of a cell that fluid travels in a single time step. A value less or equal to 1 is required for stability. A relatively high Courant number is chosen here specifically to challenge the central difference scheme and demonstrate its potential for oscillatory behavior on discontinuous functions. Four advection schemes are compared:
 \begin{itemize}
 \item \textbf{Upstream}: First-order accurate, stable but diffusive scheme
 \item \textbf{Central difference}: Second-order accurate but prone to oscillations on discontinuities
@@ -32,12 +30,14 @@ Four advection schemes are compared:
 \item \textbf{UTVD}: Unstructured TVD scheme extending TVD capabilities to unstructured grids
 \end{itemize}
 
-Three test functions are used to probe different numerical challenges:
+\noindent Three inflow concentration profiles are used to probe different numerical challenges:
 \begin{itemize}
-\item \textbf{sin² wave}: Smooth function testing second-order accuracy
+\item \textbf{Sin² wave}: Smooth function testing second-order accuracy
 \item \textbf{Step wave}: Sharp transition testing boundedness properties
-\item \textbf{Block wave}: Sharp rectangular discontinuity testing whether schemes can capture the original peak value of the analytical solution
+\item \textbf{Square wave}: Sharp rectangular discontinuity testing whether schemes can capture the original peak value of the analytical solution
 \end{itemize}
+
+These inflow concentration profiles are applied as concentration profiles on the inflow boundaries (left and bottom edges), where the concentration varies with position along the edge. In this pure advection problem these profiles should be transported along the streamlines without any change in shape. By comparing the simulation results to this expected behavior, we can evaluate how well each numerical scheme handles different challenges, such as the smooth gradients of the sin² wave versus the sharp discontinuities of the step and square waves. Any observed numerical diffusion or oscillations errors highlight the limitations of a given scheme.
 
 The model parameters are summarized in table~\ref{tab:ex-gwt-adv-schemes-01}.
 
@@ -45,44 +45,44 @@ The model parameters are summarized in table~\ref{tab:ex-gwt-adv-schemes-01}.
 
 \subsection{Example Results}
 
-The example generates 39 total simulations: 3 flow models (one per grid type) and 36 transport models (3 grids $\times$ 4 schemes $\times$ 3 test functions). Results are presented in three complementary views to highlight different aspects of scheme performance.
+The example generates 39 total simulations: 3 flow simulations (one per grid type) and 36 simulations models (3 grids $\times$ 4 schemes $\times$ 3 inflow concentration profiles). Results are presented in three complementary views to highlight different aspects of scheme performance.
 
 \subsubsection{Flow Field}
 
 Figure~\ref{fig:ex-gwt-adv-schemes-flow} shows the computed head fields for all three grid types. The results verify that the flow field produces the expected uniform gradient with a 45° angle across all grid geometries, providing the necessary foundation for the pure advection transport simulations. Head contours are parallel straight lines as expected for uniform flow, confirming the correct implementation of the boundary conditions and hydraulic properties.
 
 \begin{StandardFigure}{
-    Computed head fields for the three grid types used in the advection scheme comparison. \textit{Left}: Structured rectangular grid. \textit{Center}: Triangular mesh. \textit{Right}: Voronoi polygon grid. All grids produce the expected uniform head gradient at 45° angle.
+    Computed head fields for the three grid types used in the advection scheme comparison. \textit{Left}: Structured rectangular grid. \textit{Center}: Triangular grid. \textit{Right}: Voronoi polygon grid. All grids produce the expected uniform head gradient at 45° angle.
 }{fig:ex-gwt-adv-schemes-flow}{../figures/ex-gwt-adv-schemes-flow.png}
 \end{StandardFigure}
 
 \subsubsection{Concentration Field Results}
 
-Figures~\ref{fig:ex-gwt-adv-schemes-sin2}, \ref{fig:ex-gwt-adv-schemes-step}, and \ref{fig:ex-gwt-adv-schemes-block} show the final concentration distributions for the three test functions across all scheme and grid combinations. These 2D concentration maps reveal the characteristic behavior of each numerical scheme, though the specific wave profiles are more clearly visualized in the cross-section analysis presented later:
+Figures~\ref{fig:ex-gwt-adv-schemes-sin²}, \ref{fig:ex-gwt-adv-schemes-step}, and \ref{fig:ex-gwt-adv-schemes-square} show the final concentration distributions at the end of the simulation, which are near the steady-state solution, for the three inflow concentration profiles across all scheme and grid combinations. These 2D concentration maps reveal the characteristic behavior of each numerical scheme, though the specific wave profiles are more clearly visualized in the cross-section analysis presented later. A mask has been applied to filter out all values below 0 and above 1. This has been done to make it easier to compare the results between different schemes.
 
-\paragraph{Sin² wave results} (Figure~\ref{fig:ex-gwt-adv-schemes-sin2}) reveal important differences in scheme performance even for this smooth test function. While all schemes perform well on the structured grid, the central difference scheme becomes unstable on the triangular and Voronoi grids. On the structured grid, the central difference scheme is the least diffusive but exhibits undershoots resulting in negative concentrations due to the relatively high CFL number (0.7); lowering the CFL number eliminates this behavior. The UTVD scheme demonstrates robust performance across all grid types, maintaining both accuracy and stability.
+\paragraph{Sin² wave results} (Figure~\ref{fig:ex-gwt-adv-schemes-sin²}) reveal important differences in scheme performance for this smooth inflow concentration profile. While all schemes perform well on the structured grid, the upstream scheme is noticeable more diffusive. The central difference scheme becomes unstable on the triangular and Voronoi grids. On the structured grid, the central difference scheme is the least diffusive but exhibits undershoots resulting in negative concentrations due to the relatively high Courant number (0.7); lowering the Courant number eliminates this behavior. The UTVD scheme demonstrates robust performance across all grid types, maintaining both accuracy and stability.
 \begin{StandardFigure}{
-    Final concentration distributions for the sin² wave test function. Rows represent the four advection schemes (upstream, central difference, TVD, UTVD) and columns represent the three grid types (structured, triangular, Voronoi). All schemes perform well on this smooth test function.
-}{fig:ex-gwt-adv-schemes-sin2}{../figures/ex-gwt-adv-schemes-sin2-wave-conc.png}
+    Final concentration distributions for the sin² wave inflow concentration profile. Rows represent the four advection schemes (upstream, central difference, TVD, UTVD) and columns represent the three grid types (structured, triangular, Voronoi).
+}{fig:ex-gwt-adv-schemes-sin²}{../figures/ex-gwt-adv-schemes-sin²-wave-conc.png}
 \end{StandardFigure}
 
-\paragraph{Step wave results} (Figure~\ref{fig:ex-gwt-adv-schemes-step}) reveal more pronounced differences between schemes as the sharp transition challenges numerical stability. The central difference scheme no longer outperforms UTVD and displays clear oscillations that blow up on the triangular and Voronoi grids, demonstrating its unsuitability for unstructured meshes with discontinuous functions. The TVD and upstream schemes perform similarly with TVD slightly outperforming upstream in terms of accuracy. The UTVD scheme emerges as the least dissipative while maintaining stability across all grid types.
+\paragraph{Step wave results} (Figure~\ref{fig:ex-gwt-adv-schemes-step}) show similar trends to the sin² wave results. On the structured grid, the central difference scheme outperforms UTVD in preserving the overall shape of the wave. However, while it only exhibited undershoot for the smooth sin² wave, the sharp discontinuity of the step wave causes both undershoot and overshoot. As with the other inflow profiles, the central difference scheme becomes unstable on the triangular and Voronoi grids. The TVD scheme outperforms upstream on the structured grid but performs similarly on the triangular and Voronoi grids.The UTVD scheme emerges as the least dissipative scheme that maintains stability across all grid types.
 \begin{StandardFigure}{
-    Final concentration distributions for the step wave test function. The central difference scheme begins to show oscillatory behavior near the sharp transition, while TVD and UTVD schemes maintain monotonic solutions.
+    Final concentration distributions for the step wave inflow concentration profile. The central difference scheme begins to show oscillatory behavior near the sharp transition, while TVD and UTVD schemes maintain monotonic solutions.
 }{fig:ex-gwt-adv-schemes-step}{../figures/ex-gwt-adv-schemes-step-wave-conc.png}
 \end{StandardFigure}
 
-\paragraph{Block wave results} (Figure~\ref{fig:ex-gwt-adv-schemes-block}) exhibit similar behavior to the step wave results, providing the most challenging test with sharp discontinuities. The TVD scheme outperforms upstream on the structured grid but performs similarly on the triangular and Voronoi grids. The central difference scheme shows oscillations on the structured grid and blows up on the other grids, with this behavior being related to the CFL number and reducing when the CFL number is lowered. The UTVD scheme works well on all grids and is the only stable scheme that actually comes close to the maximum value of the analytical solution, demonstrating its superior capability for handling sharp discontinuities across all grid types.
+\paragraph{Square wave results} (Figure~\ref{fig:ex-gwt-adv-schemes-square}) exhibit similar behavior to the step wave results. The TVD scheme outperforms upstream on the structured grid but performs similarly on the triangular and Voronoi grids. The central difference scheme shows oscillations on the structured grid and blows up on the other grids. The UTVD scheme works well on all grids and is the only stable scheme that actually comes close to the maximum value of the analytical solution, demonstrating its capability for handling sharp discontinuities across all grid types.
 \begin{StandardFigure}{
-    Final concentration distributions for the block wave test function. This challenging test with sharp discontinuities clearly demonstrates the oscillatory behavior of the central difference scheme and the superior performance of TVD/UTVD schemes in maintaining monotonic solutions.
-}{fig:ex-gwt-adv-schemes-block}{../figures/ex-gwt-adv-schemes-block-wave-conc.png}
+    Final concentration distributions for the square wave inflow concentration profile. This test with sharp discontinuities demonstrates the oscillatory behavior of the central difference scheme and the ability of the TVD/UTVD schemes to maintain monotonic solutions.
+}{fig:ex-gwt-adv-schemes-square}{../figures/ex-gwt-adv-schemes-square-wave-conc.png}
 \end{StandardFigure}
 
 \subsubsection{Cross-Section Analysis}
 
-Figure~\ref{fig:ex-gwt-adv-schemes-conc-cross-section} presents concentration profiles along the centerline (y = 50 cm) for all test functions and grid types, comparing numerical solutions against the analytical solution. These 1D cross-sections provide quantitative assessment of scheme accuracy and enable detailed comparison of numerical behavior:
+Figure~\ref{fig:ex-gwt-adv-schemes-conc-cross-section} presents concentration profiles along the centerline (y = 50 cm) for all inflow concentration profiles and grid types, comparing numerical solutions against the analytical solution. These 1D cross-sections provide quantitative assessment of scheme accuracy and enable detailed comparison of numerical behavior:
 
-\textbf{Accuracy assessment}: The cross-sections reveal that UTVD schemes follow the analytical solution best for discontinuous functions, while maintaining computational stability. TVD schemes only slightly outperform the upstream scheme in terms of accuracy. The central difference scheme works well on smooth functions but its CFL condition is restricting, limiting its practical applicability.
+\textbf{Accuracy assessment}: The cross-sections reveal that the UTVD scheme follows the analytical solution best for discontinuous functions, while maintaining computational stability. The TVD scheme only slightly outperforms the upstream scheme in terms of accuracy. The central difference scheme works well for the smooth function on a structured grid but its Courant condition is restricting, limiting its practical applicability.
 
 \textbf{Oscillation identification}: Clear oscillations in the central difference scheme are visible as concentration values exceeding the physical bounds [0,1] or exhibiting spurious undershoot/overshoot behavior.
 
@@ -91,24 +91,24 @@ Figure~\ref{fig:ex-gwt-adv-schemes-conc-cross-section} presents concentration pr
 \textbf{Diffusion quantification}: The upstream scheme shows characteristic smearing of sharp features, providing a baseline for assessing the improvement offered by higher-order schemes.
 
 \begin{StandardFigure}{
-    Concentration cross-sections at y = 50 cm comparing numerical solutions (dashed lines with markers) against analytical solutions (solid lines) for all test functions and grid types. \textit{Rows}: Test functions (sin² wave, step wave, block wave). \textit{Columns}: Grid types (structured, triangular, Voronoi). The restricted y-axis range [-0.1, 1.1] helps visualize oscillations and overshoots.
+    Concentration cross-sections at y = 50 cm comparing numerical solutions (dashed lines with markers) against analytical solutions (solid lines) for all inflow concentration profiles and grid types. \textit{Rows}: Test functions (sin² wave, step wave, square wave). \textit{Columns}: Grid types (structured, triangular, Voronoi). The restricted y-axis range [-0.1, 1.1] helps visualize oscillations and overshoots.
 }{fig:ex-gwt-adv-schemes-conc-cross-section}{../figures/ex-gwt-adv-schemes-conc-cross-section.png}
 \end{StandardFigure}
 
 \subsubsection{Key Findings}
 
-This comprehensive comparison reveals several important findings for advection scheme selection in groundwater transport modeling:
+The results from these simulations provide several key findings that can be used as guidance for advection scheme selection in groundwater transport modeling. While this comparison is based on solid testing, it is also limited in scope and the findings should be interpreted accordingly:
 
 \begin{enumerate}
 \item \textbf{Grid-dependent performance}: The central difference scheme performs reasonably on structured grids but becomes unstable on triangular and Voronoi grids, particularly for discontinuous functions. This demonstrates the critical importance of considering grid type when selecting numerical schemes.
 
-\item \textbf{CFL number sensitivity}: The central difference scheme's stability is highly sensitive to the CFL number. At CFL = 0.7, it exhibits undershoots leading to negative concentrations on smooth functions and oscillatory blowup on discontinuous functions. Reducing the CFL number mitigates these issues but at the cost of computational efficiency.
+\item \textbf{Courant number sensitivity}: The central difference scheme's stability is highly sensitive to the Courant number. At Courant = 0.7, it exhibits undershoots leading to negative concentrations on smooth functions and oscillatory blowup on discontinuous functions. Reducing the Courant number mitigates these issues but at the cost of computational efficiency.
 
-\item \textbf{UTVD scheme as overall best choice}: The UTVD scheme consistently outperforms all others across grid types and test functions. It maintains stability while being the least dissipative scheme, and is the only stable scheme that approaches the maximum values of analytical solutions for sharp discontinuities.
+\item \textbf{UTVD scheme as overall best choice}: The UTVD scheme consistently outperforms all others across grid types and inflow concentration profiles. It maintains stability while being the least dissipative scheme, and is the only stable scheme that approaches the maximum values of analytical solutions for sharp discontinuities.
 
 \item \textbf{TVD limitations on unstructured grids}: While TVD performs well on structured grids and outperforms upstream schemes for discontinuous functions, its advantage diminishes on unstructured grids where it performs similarly to the upstream scheme.
 
-\item \textbf{Upstream scheme reliability}: The upstream scheme provides a stable baseline across all grid types and test functions, though with significant diffusion. It serves as a reliable fallback option when stability is paramount.
+\item \textbf{Upstream scheme reliability}: The upstream scheme provides a stable baseline across all grid types and inflow concentration profiles, though with significant diffusion. It serves as a reliable fallback option when stability is paramount.
 
-\item \textbf{Practical recommendations}: For unstructured mesh applications involving transport with potential sharp fronts, UTVD is the clear choice. For structured grids, TVD offers a good balance of accuracy and stability. The central difference scheme should be used with caution and requires careful CFL number selection, particularly on unstructured grids.
+\item \textbf{Practical recommendations}: For unstructured grid applications involving transport with potential sharp fronts, UTVD is the clear choice. For structured grids, TVD offers a good balance of accuracy and stability. The central difference scheme should be used with caution and requires careful Courant number selection, particularly on unstructured grids.
 \end{enumerate}                 

@@ -21,7 +21,7 @@
 #
 # **Three Test Functions (probing different numerical challenges):**
 # - **sin² wave**: Smooth function testing 2nd-order accuracy
-# - **Block wave**: Sharp discontinuity testing stability
+# - **Square wave**: Sharp discontinuity testing stability
 # - **Step wave**: Sharp transition testing boundedness
 #
 # **Three Grid Types:**
@@ -97,21 +97,21 @@ time_units = "seconds"  # Time units
 
 # Model parameters
 nper = 1  # Number of periods
-nlay = 1  # Number of layers
-ncol = 50  # Number of columns
-nrow = 50  # Number of rows (50x50 = 2500 cells for structured grid)
+nlay = 1  # Number of layers for the structured grid
+ncol = 50  # Number of columns for the structured grid
+nrow = 50  # Number of rows for the structured grid
 Length = 100.0  # Domain length (cm)
 Width = 100.0  # Domain width (cm)
 
-delr = Length / ncol  # Column width (cm)
-delc = Width / nrow  # Row width (cm)
+delr = 2  # Column width (cm)
+delc = 2  # Row width (cm)
 top = 1.0  # Top of the model (cm)
 botm = 0  # Layer bottom elevation (cm)
 
 specific_discharge = 0.5  # Specific discharge (cm/s)
 hydraulic_conductivity = 0.01  # Hydraulic conductivity (cm/s)
-angle = math.radians(45)  # Flow direction (°)
-inlet_height = 20.0  # Height of concentration inlet signal (cm)
+angledeg = 45  # Flow direction (°)
+inlet_amplitude = 20.0  # Amplitude of concentration inlet signal (-)
 
 total_time = 300.0  # Total simulation time (s)
 dt = 5  # Initial time step (s)
@@ -127,9 +127,10 @@ rclose = 1e-6  # Residual closure criterion
 # Grid and scheme definitions
 grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulations)
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
-wave_functions = ["sin2-wave", "step-wave", "block-wave"]  # 3 test functions
+wave_functions = ["sin²-wave", "step-wave", "square-wave"]  # 3 test functions
 
 # Compute discharge components
+angle = math.radians(angledeg)
 qx = specific_discharge * math.cos(angle)  # x-component of specific discharge (cm/s)
 qy = specific_discharge * math.cos(angle)  # y-component of specific discharge (cm/s)
 
@@ -163,7 +164,7 @@ def exact_solution_concentration(x, y, analytical):
 
     Args:
         x, y: Spatial coordinates (cm)
-        analytical: Signal type ('sin2-wave', 'step-wave', 'block-wave')
+        analytical: Signal type ('sin²-wave', 'step-wave', 'square-wave')
 
     Returns:
         Concentration values [dimensionless, 0-1]
@@ -181,21 +182,21 @@ def inlet_signal(y, signal_name):
 
     Args:
         y: y-coordinate values
-        signal_name: Type of signal ('step-wave', 'block-wave', 'sin2-wave')
+        signal_name: Type of signal ('step-wave', 'square-wave', 'sin²-wave')
 
     Returns:
         Concentration values based on the signal type
     """
-    clipped_y = np.clip(y, -inlet_height / 2, inlet_height / 2)
+    clipped_y = np.clip(y, -inlet_amplitude / 2, inlet_amplitude / 2)
     match signal_name:
         case "step-wave":
             return np.where(y < 0, np.ones(y.shape), np.zeros(y.shape))
-        case "block-wave":
+        case "square-wave":
             return np.where(
-                np.abs(y) < inlet_height / 2, np.ones(y.shape), np.zeros(y.shape)
+                np.abs(y) < inlet_amplitude / 2, np.ones(y.shape), np.zeros(y.shape)
             )
-        case "sin2-wave":
-            return np.power(np.cos(math.pi * clipped_y / inlet_height), 2)
+        case "sin²-wave":
+            return np.power(np.cos(math.pi * clipped_y / inlet_amplitude), 2)
         case _:
             raise ValueError("Unknown signal name")
 
@@ -400,6 +401,7 @@ def build_mf6gwf(grid_type):
         save_specific_discharge=True,
         save_saturation=True,
         export_array_ascii=True,
+        xt3doptions=True,
         icelltype=0,
         k=hydraulic_conductivity,
     )
@@ -446,14 +448,20 @@ def build_mf6gwf(grid_type):
     left_boundary_ids = get_boundary(gi, left_edge)
 
     # Set top right element to a chd 0. This makes the solution unique
+    geometry = vgrid.geo_dataframe.geometry
+
     topright_id, _, _ = np.intersect1d(
         right_boundary_ids, top_boundary_ids, return_indices=True
     )
 
-    if topright_id.any():
-        flopy.mf6.ModflowGwfchd(gwf, stress_period_data=create_bc(topright_id, 0))
+    if not topright_id.any():
+        topright_id = [
+            geometry.loc[top_boundary_ids].get_coordinates()["x"].idxmax().tolist()
+        ]
 
-    geometry = vgrid.geo_dataframe.geometry
+    flopy.mf6.ModflowGwfchd(gwf, stress_period_data=create_bc(topright_id, 0))
+
+    # Set boundary conditions
     cell_area = geometry.area.values
     inflow_area_left = (
         geometry.loc[left_boundary_ids]
@@ -665,14 +673,13 @@ def plot_flow(sim, ax):
     head = gwf.output.head().get_data()
     bud = gwf.output.budget()
     spdis = bud.get_data(text="DATA-SPDIS")[0]
-    qx, qy, _ = flopy.utils.postprocessing.get_specific_discharge(spdis, gwf)
     vmin = head.min()
     vmax = head.max()
 
     pmv = flopy.plot.PlotMapView(gwf, ax=ax)
     pmv.plot_grid(colors="k", alpha=0.1)
     pc = pmv.plot_array(head, vmin=vmin, vmax=vmax, alpha=0.5)
-    pmv.plot_vector(qx, qy, color="white")
+    pmv.contour_array(head, levels=np.linspace(vmin, vmax, 10))
     plt.colorbar(pc)
 
     ax.set_xlabel("x (cm)")
@@ -737,11 +744,13 @@ def plot_concentration(sim, ax):
     ucnobj_mf6 = gwt.output.concentration()
     conc = ucnobj_mf6.get_data(totim=ucnobj_mf6.get_times()[-1]).flatten()
 
-    vmin = conc.min()
-    vmax = conc.max()
+    tol = 1e-2
+    vmin = -0.0 - tol
+    vmax = 1.0 + tol
 
+    masked_conc = np.ma.masked_outside(conc, vmin, vmax)
     pmv = flopy.plot.PlotMapView(gwt, ax=ax)
-    pc = pmv.plot_array(conc, vmin=vmin, vmax=vmax, alpha=0.5)
+    pc = pmv.plot_array(masked_conc, vmin=vmin, vmax=vmax, alpha=1)
     plt.colorbar(pc)
 
     ax.set_xlabel("x (cm)")
