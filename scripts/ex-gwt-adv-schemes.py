@@ -5,7 +5,7 @@
 #
 # $$\frac{\partial \left(S_w \theta C\right)}{\partial t} = -\nabla \left(\mathbf{q} \cdot C\right)$$
 #
-# where C is concentration [dimensionless] and **q** is the specific discharge field = (qx, qy) = (0.354, 0.354) cm/s at 45°. The problem is configured with no dispersion or diffusion terms, making it a perfect test case for numerical scheme performance since an analytical solution exists.
+# where C is concentration [g/cm³] and **q** is the specific discharge field = (qx, qy) = (0.354, 0.354) cm/s at 45°. The problem is configured with no dispersion or diffusion terms, making it a perfect test case for numerical scheme performance since an analytical solution exists.
 #
 # **Problem Setup:**
 # - Domain: 100cm x 100cm square with uniform flow at 45° angle
@@ -103,15 +103,15 @@ nrow = 50  # Number of rows for the structured grid
 Length = 100.0  # Domain length (cm)
 Width = 100.0  # Domain width (cm)
 
-delr = 2  # Column width (cm)
-delc = 2  # Row width (cm)
-top = 1.0  # Top of the model (cm)
-botm = 0  # Layer bottom elevation (cm)
+delr = 2  # Column width (cm) for the structured grid
+delc = 2  # Row width (cm) for the structured grid
+top = 1.0  # Top elevation of the model (cm)
+botm = 0  # Bottom elevation of the model (cm)
 
 specific_discharge = 0.5  # Specific discharge (cm/s)
 hydraulic_conductivity = 0.01  # Hydraulic conductivity (cm/s)
 angledeg = 45  # Flow direction (°)
-inlet_amplitude = 20.0  # Amplitude of concentration inlet signal (-)
+profile_width  = 20.0  # Width of the inflow concentration profiles (cm)
 
 total_time = 300.0  # Total simulation time (s)
 dt = 5  # Initial time step (s)
@@ -187,16 +187,16 @@ def inlet_signal(y, signal_name):
     Returns:
         Concentration values based on the signal type
     """
-    clipped_y = np.clip(y, -inlet_amplitude / 2, inlet_amplitude / 2)
+    clipped_y = np.clip(y, -profile_width  / 2, profile_width  / 2)
     match signal_name:
         case "step-wave":
             return np.where(y < 0, np.ones(y.shape), np.zeros(y.shape))
         case "square-wave":
             return np.where(
-                np.abs(y) < inlet_amplitude / 2, np.ones(y.shape), np.zeros(y.shape)
+                np.abs(y) < profile_width  / 2, np.ones(y.shape), np.zeros(y.shape)
             )
         case "sin²-wave":
-            return np.power(np.cos(math.pi * clipped_y / inlet_amplitude), 2)
+            return np.power(np.cos(math.pi * clipped_y / profile_width ), 2)
         case _:
             raise ValueError("Unknown signal name")
 
@@ -682,8 +682,8 @@ def plot_flow(sim, ax):
     pmv.contour_array(head, levels=np.linspace(vmin, vmax, 10))
     plt.colorbar(pc)
 
-    ax.set_xlabel("x (cm)")
-    ax.set_ylabel("y (cm)")
+    ax.set_xlabel("x [cm]")
+    ax.set_ylabel("y [cm]")
     ax.set_aspect("equal")
 
 
@@ -753,8 +753,8 @@ def plot_concentration(sim, ax):
     pc = pmv.plot_array(masked_conc, vmin=vmin, vmax=vmax, alpha=1)
     plt.colorbar(pc)
 
-    ax.set_xlabel("x (cm)")
-    ax.set_ylabel("y (cm)")
+    ax.set_xlabel("x [cm]")
+    ax.set_ylabel("y [cm]")
     ax.set_aspect("equal")
 
 
@@ -778,8 +778,8 @@ def plot_concentration_cross_sections(gwt_sims):
                     plot_concentration_cross_section(sim, scheme, ax)
 
                 ax.legend(fontsize="small")
-                ax.set_xlabel("x (cm)")
-                ax.set_ylabel("C [-]")
+                ax.set_xlabel("x [cm]")
+                ax.set_ylabel("C [g/cm³]")
                 ax.set_ylim(-0.1, 1.1)
 
         pad = 5  # in points
