@@ -111,7 +111,7 @@ botm = 0  # Bottom elevation of the model (cm)
 specific_discharge = 0.5  # Specific discharge (cm/s)
 hydraulic_conductivity = 0.01  # Hydraulic conductivity (cm/s)
 angledeg = 45  # Flow direction (°)
-profile_width  = 20.0  # Width of the inflow concentration profiles (cm)
+profile_width = 20.0  # Width of the inflow concentration profiles (cm)
 
 total_time = 300.0  # Total simulation time (s)
 dt = 5  # Initial time step (s)
@@ -187,16 +187,16 @@ def inlet_signal(y, signal_name):
     Returns:
         Concentration values based on the signal type
     """
-    clipped_y = np.clip(y, -profile_width  / 2, profile_width  / 2)
+    clipped_y = np.clip(y, -profile_width / 2, profile_width / 2)
     match signal_name:
         case "step-wave":
             return np.where(y < 0, np.ones(y.shape), np.zeros(y.shape))
         case "square-wave":
             return np.where(
-                np.abs(y) < profile_width  / 2, np.ones(y.shape), np.zeros(y.shape)
+                np.abs(y) < profile_width / 2, np.ones(y.shape), np.zeros(y.shape)
             )
         case "sin²-wave":
-            return np.power(np.cos(math.pi * clipped_y / profile_width ), 2)
+            return np.power(np.cos(math.pi * clipped_y / profile_width), 2)
         case _:
             raise ValueError("Unknown signal name")
 
