@@ -1,9 +1,8 @@
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, Dict, List, Tuple, Any
 
-import pytest
-import numpy as np
 import pandas as pd
+import pytest
 from numpy.typing import NDArray
 
 pytest_plugins = ["modflow_devtools.fixtures", "modflow_devtools.snapshots"]
@@ -19,7 +18,10 @@ NOTEBOOKS_PATH = PROJ_ROOT / ".doc" / "_notebooks"
 SNAPSHOT_CONFIG: dict[str, dict[str, Callable[[Path], NDArray]]] = {
     # TODO: support multiple snapshot files. this is a dictionary to leave the door open for that.
     "ex-gwt-keating": {
-        "mf6prt/track.trk.csv": lambda p: pd.read_csv(p).drop("name", axis=1).round(2).to_records(index=False),
+        "mf6prt/track.trk.csv": lambda p: pd.read_csv(p)
+        .drop("name", axis=1)
+        .round(2)
+        .to_records(index=False),
     },
 }
 
@@ -57,11 +59,13 @@ def gif(request, plot) -> bool:
 
 
 @pytest.fixture
-def snapshot_config(example_script, array_snapshot) -> dict[str, Callable[[Path], NDArray]] | None:
+def snapshot_config(
+    example_script, array_snapshot
+) -> dict[str, Callable[[Path], NDArray]] | None:
     example_name = Path(example_script).stem
     config = SNAPSHOT_CONFIG.get(example_name, {})
     if config:
-        print(f"Snapshot file for {example_name}: {list(config.keys())[0]}")
+        print(f"Snapshot file for {example_name}: {list(config.keys())[0]}")  # noqa: RUF015
     return (config, array_snapshot) if any(config) else None
 
 
