@@ -60,8 +60,10 @@ def gif(request, plot) -> bool:
 
 @pytest.fixture
 def snapshot_config(
-    example_script, array_snapshot
+    request, example_script, array_snapshot
 ) -> dict[str, Callable[[Path], NDArray]] | None:
+    if request.config.getoption("--snapshot-disable"):
+        return None
     example_name = Path(example_script).stem
     config = SNAPSHOT_CONFIG.get(example_name, {})
     if config:
