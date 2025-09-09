@@ -4,7 +4,7 @@ import sys
 from os import environ
 from pathlib import Path
 
-from modflow_devtools.misc import get_env, is_in_ci, run_cmd, set_env
+from modflow_devtools.misc import is_in_ci, run_cmd, set_env
 
 
 def test_scripts(
@@ -24,13 +24,16 @@ def test_scripts(
 
     example_name = Path(example_script).stem
     example_workspace = Path(example_script).parent.parent / "examples" / example_name
+
     # skip snapshots in CI with intel compilers
     skip = (
         "keating" in example_name
         and is_in_ci()
-        and get_env("FC", None) in ["ifx", "ifort"]
+        and environ.get("FC", None) in ["ifx", "ifort"]
     ) or (
-        "ex-prt-mp7-p01" in example_name and is_in_ci() and get_env("FC", None) == "ifx"
+        "ex-prt-mp7-p01" in example_name
+        and is_in_ci()
+        and environ.get("FC", None) == "ifx"
     )
 
     if run and snapshot_config and not skip:
