@@ -4,7 +4,7 @@ import sys
 from os import environ
 from pathlib import Path
 
-from modflow_devtools.misc import run_cmd, get_env, set_env, is_in_ci
+from modflow_devtools.misc import get_env, is_in_ci, run_cmd, set_env
 
 
 def test_scripts(
@@ -23,11 +23,13 @@ def test_scripts(
         assert not retcode, stdout + stderr
 
     example_name = Path(example_script).stem
-    example_workspace = (
-        Path(example_script).parent.parent / "examples" / example_name
-    )
+    example_workspace = Path(example_script).parent.parent / "examples" / example_name
     # skip this snapshot in CI with intel compilers until a proper fix is found
-    skip = "keating" in example_name and is_in_ci() and get_env("FC", None) in ["ifx", "ifort"]
+    skip = (
+        "keating" in example_name
+        and is_in_ci()
+        and get_env("FC", None) in ["ifx", "ifort"]
+    )
 
     if run and snapshot_config and not skip:
         config, snapshot = snapshot_config
