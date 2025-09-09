@@ -26,15 +26,7 @@ def test_scripts(
     example_workspace = Path(example_script).parent.parent / "examples" / example_name
 
     # skip snapshots in CI with intel compilers
-    skip = (
-        "keating" in example_name
-        and is_in_ci()
-        and environ.get("FC", None) in ["ifx", "ifort"]
-    ) or (
-        "ex-prt-mp7-p01" in example_name
-        and is_in_ci()
-        and environ.get("FC", None) == "ifx"
-    )
+    skip = is_in_ci() and environ.get("FC", None) in ["ifx", "ifort"]
 
     if run and snapshot_config and not skip:
         config, snapshot = snapshot_config

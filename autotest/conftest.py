@@ -29,6 +29,24 @@ SNAPSHOT_CONFIG: dict[str, dict[str, Callable[[Path], NDArray]]] = {
         .round(2)
         .to_records(index=False),
     },
+    "ex-prt-mp7-p02": {
+        "prt/mp7-p02-prt.trk.csv": lambda p: pd.read_csv(p)
+        .drop("name", axis=1)
+        .round(2)
+        .to_records(index=False),
+    },
+    "ex-prt-mp7-p03": {
+        "prt/mp7-p03-prt.trk.csv": lambda p: pd.read_csv(p)
+        .drop("name", axis=1)
+        .round(2)
+        .to_records(index=False),
+    },
+    "ex-prt-mp7-p04": {
+        "prt/mp7-p04-prt.trk.csv": lambda p: pd.read_csv(p)
+        .drop("name", axis=1)
+        .round(2)
+        .to_records(index=False),
+    },
 }
 
 
