@@ -24,12 +24,8 @@ def test_scripts(
 
     example_name = Path(example_script).stem
     example_workspace = Path(example_script).parent.parent / "examples" / example_name
-    # skip this snapshot in CI with intel compilers until a proper fix is found
-    skip = (
-        "keating" in example_name
-        and is_in_ci()
-        and get_env("FC", None) in ["ifx", "ifort"]
-    )
+    # skip snapshots in CI with intel compilers
+    skip = is_in_ci() and get_env("FC", None) in ["ifx", "ifort"]
 
     if run and snapshot_config and not skip:
         config, snapshot = snapshot_config
