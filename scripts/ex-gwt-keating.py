@@ -326,7 +326,12 @@ def build_mf6prt():
     ccs = list(
         zip(prt.modelgrid.xcellcenters.ravel(), prt.modelgrid.ycellcenters.ravel())
     )
-    prpdata = [(nn, *ids[nn], *ccs[nn], 0.5) for nn in nns]
+    prpdata = [
+        (nn, *ids[nn], *ccs[nn], 0.5)
+        for nn in nns
+        if ccs[nn][0] > 4200.0 and ccs[nn][0] < 4800.0
+    ]
+    prpdata = [(i, *row[1:]) for i, row in enumerate(prpdata)]
     prp = flopy.mf6.ModflowPrtprp(
         prt,
         pname="prp1a",
