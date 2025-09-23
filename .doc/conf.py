@@ -22,7 +22,7 @@ on_rtd = get_env("READTHEDOCS", False)
 ref = get_env("READTHEDOCS_GIT_IDENTIFIER", "master")
 
 # -- setup regular expression for body.tex -----------------------------------
-ex_regex = re.compile("\\\\input{sections/(.*?)\\}")
+ex_regex = re.compile(r"\\input{sections/(.*?)\}")
 
 # -- parse body.tex for example order ----------------------------------------
 pth = os.path.join("..", "doc", "body.tex")

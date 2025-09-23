@@ -3,6 +3,7 @@ target-version = "py310"
 
 [lint]
 select = [
+    "C4",   # flake8 comprehensions
     "D409", # pydocstyle - section-underline-matches-section-length
     "E",    # pycodestyle error
     "F",    # Pyflakes

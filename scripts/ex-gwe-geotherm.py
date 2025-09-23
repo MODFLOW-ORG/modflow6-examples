@@ -929,7 +929,7 @@ def plot_temperature(sim, scen, time_):
         )
 
         for label in labels:
-            label.set_bbox(dict(facecolor="white", pad=1, ec="none"))
+            label.set_bbox({"facecolor": "white", "pad": 1, "ec": "none"})
 
         ax.set_xlabel("x position (m)")
         ax.set_ylabel("y position (m)")

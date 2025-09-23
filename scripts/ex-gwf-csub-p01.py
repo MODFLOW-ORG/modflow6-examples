@@ -257,7 +257,12 @@ def plot_results(sim, silent=True):
             ha="left",
             va="center",
             zorder=100,
-            arrowprops=dict(facecolor="black", shrink=0.05, headwidth=5, width=1.5),
+            arrowprops={
+                "facecolor": "black",
+                "shrink": 0.05,
+                "headwidth": 5,
+                "width": 1.5,
+            },
         )
         styles.heading(ax, letter="A", heading="Map view")
         styles.remove_edge_ticks(ax)

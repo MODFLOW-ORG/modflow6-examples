@@ -611,7 +611,7 @@ for z in botm:
     edges.append((-z, -z))
 
 figure_size = (6.8, 3.4)
-arrow_props = dict(facecolor="black", arrowstyle="-", lw=0.5)
+arrow_props = {"facecolor": "black", "arrowstyle": "-", "lw": 0.5}
 
 
 def export_tables(silent=True):
@@ -833,14 +833,14 @@ def print_label(ax, zelev, k, fontsize=6):
     z = 1 - 0.5 * (z0 + z1) / zmax
     text = f"Layer {k + 1}"
     if k == 10:
-        arrowprops = dict(
-            facecolor="black",
-            arrowstyle="-",
-            lw=0.5,
-            connectionstyle="angle,angleA=-90,angleB=180,rad=0",
-            shrinkA=0,
-            shrinkB=0,
-        )
+        arrowprops = {
+            "facecolor": "black",
+            "arrowstyle": "-",
+            "lw": 0.5,
+            "connectionstyle": "angle,angleA=-90,angleB=180,rad=0",
+            "shrinkA": 0,
+            "shrinkB": 0,
+        }
         ax.annotate(
             text,
             xy=(1, z),
@@ -868,7 +868,13 @@ def print_label(ax, zelev, k, fontsize=6):
 
 
 def constant_heads(ax, annotate=False, fontsize=6, xrange=(0, 1)):
-    arrowprops = dict(facecolor="black", arrowstyle="-", lw=0.5, shrinkA=0, shrinkB=0)
+    arrowprops = {
+        "facecolor": "black",
+        "arrowstyle": "-",
+        "lw": 0.5,
+        "shrinkA": 0,
+        "shrinkB": 0,
+    }
     label = ""
     for k in [0, 5, 10, 12]:
         label = set_label(label, text="Constant head")
@@ -1319,9 +1325,9 @@ def plot_calibration(silent=True):
             xytext=(xca, 1.2),
             ha="center",
             va="center",
-            arrowprops=dict(arrowstyle="-|>", fc="black", lw=0.5),
+            arrowprops={"arrowstyle": "-|>", "fc": "black", "lw": 0.5},
             color="none",
-            bbox=dict(boxstyle="square,pad=-0.07", fc="none", ec="none"),
+            bbox={"boxstyle": "square,pad=-0.07", "fc": "none", "ec": "none"},
         )
         styles.add_annotation(
             ax=ax,
@@ -1332,8 +1338,8 @@ def plot_calibration(silent=True):
             xytext=(xca, 1.2),
             ha="center",
             va="center",
-            arrowprops=dict(arrowstyle="-|>", fc="black", lw=0.5),
-            bbox=dict(boxstyle="square,pad=-0.07", fc="none", ec="none"),
+            arrowprops={"arrowstyle": "-|>", "fc": "black", "lw": 0.5},
+            bbox={"boxstyle": "square,pad=-0.07", "fc": "none", "ec": "none"},
         )
 
         ax.yaxis.set_ticks(np.linspace(1.15, 1.45, 7))
@@ -1396,8 +1402,8 @@ def plot_calibration(silent=True):
                 ha="center",
                 va="center",
                 fontsize=7,
-                arrowprops=dict(arrowstyle="-", color="red", fc="red", lw=0.5),
-                bbox=dict(boxstyle="square,pad=-0.15", fc="none", ec="none"),
+                arrowprops={"arrowstyle": "-", "color": "red", "fc": "red", "lw": 0.5},
+                bbox={"boxstyle": "square,pad=-0.15", "fc": "none", "ec": "none"},
             )
 
         xtext = "Total compaction since {}, in {}".format(

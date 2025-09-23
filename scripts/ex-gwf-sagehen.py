@@ -1775,7 +1775,7 @@ for i in np.arange(0, top.shape[0]):
             else 0
         )
         if idomain1[i, j] and not sfrCell_bool and not chdCell_bool:
-            drn_spd.append([(0, i, j), top[i, j], cond, ddrn])  #  'ddrn',
+            drn_spd.append([(0, i, j), top[i, j], cond, ddrn])  # 'ddrn',
             # append dictionary of drain indices
             drn_dict.update({(i, j): idrnno})
             drn_dict_rev.update({idrnno: (i, j)})

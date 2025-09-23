@@ -292,7 +292,7 @@ def build_local(name, simulation):
     f2 = 0.5 * (delr_r + delr[-1]) / delc_r
 
     # build chd for model
-    regional_range = [k for k in range(nlay_r)]
+    regional_range = list(range(nlay_r))
     local_range = [[0]] + [[k, k + 1] for k in range(1, nlay, 2)]
     chd_spd = []
     for kr, kl in zip(regional_range, local_range):
@@ -416,7 +416,13 @@ def run_models(sim, silent=True):
 # Figure properties
 figure_size = (6.3, 4.3)
 masked_values = (0, 1e30, -1e30)
-arrow_props = dict(facecolor="black", arrowstyle="-", lw=0.25, shrinkA=0.1, shrinkB=0.1)
+arrow_props = {
+    "facecolor": "black",
+    "arrowstyle": "-",
+    "lw": 0.25,
+    "shrinkA": 0.1,
+    "shrinkB": 0.1,
+}
 
 
 def plot_maw_results(silent=True):
@@ -441,7 +447,7 @@ def plot_maw_results(silent=True):
         if silent:
             print(f"MAW head: {maw['H0']}  Average head: {hgwf}")
 
-        zelev = sorted(list(set(list(obs_elev.values()))), reverse=True)
+        zelev = sorted(set(obs_elev.values()), reverse=True)
 
         results = {"maw": {}, "gwf": {}}
         for z in zelev:

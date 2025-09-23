@@ -539,13 +539,13 @@ def plot_results(gwf_sim, gwe_sim, prt_sim, silent=True):
                     xycoords="data",
                     xytext=(30, -20),
                     textcoords="offset points",
-                    bbox=dict(boxstyle="round", fc="1.0", alpha=0.66),
-                    arrowprops=dict(
-                        arrowstyle="->",
-                        shrinkA=0,
-                        shrinkB=5,
-                        connectionstyle="angle,angleA=0,angleB=135,rad=40",
-                    ),
+                    bbox={"boxstyle": "round", "fc": "1.0", "alpha": 0.66},
+                    arrowprops={
+                        "arrowstyle": "->",
+                        "shrinkA": 0,
+                        "shrinkB": 5,
+                        "connectionstyle": "angle,angleA=0,angleB=135,rad=40",
+                    },
                 )
             else:
                 ax.annotate(
@@ -554,13 +554,13 @@ def plot_results(gwf_sim, gwe_sim, prt_sim, silent=True):
                     xycoords="data",
                     xytext=(-75, 10),
                     textcoords="offset points",
-                    bbox=dict(boxstyle="round", fc="1.0", alpha=0.66),
-                    arrowprops=dict(
-                        arrowstyle="->",
-                        shrinkA=0,
-                        shrinkB=5,
-                        connectionstyle="angle,angleA=0,angleB=135,rad=30",
-                    ),
+                    bbox={"boxstyle": "round", "fc": "1.0", "alpha": 0.66},
+                    arrowprops={
+                        "arrowstyle": "->",
+                        "shrinkA": 0,
+                        "shrinkB": 5,
+                        "connectionstyle": "angle,angleA=0,angleB=135,rad=30",
+                    },
                 )
 
         # Setup 2 additional plots relating the particle's x-position with temperature
