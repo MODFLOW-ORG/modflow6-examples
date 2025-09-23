@@ -1253,10 +1253,10 @@ class DisvGridMerger:
         return cp
 
     def get_merged_cell2d(self, name, cell2d_orig):
-        return self.name2cell[(name, cell2d_orig)]
+        return self.name2cell[name, cell2d_orig]
 
     def get_merged_vertex(self, name, vertex_orig):
-        return self.name2vert[(name, vertex_orig)]
+        return self.name2vert[name, vertex_orig]
 
     def get_grid(self, name="__main__"):
         if name == "" or name == "__main__":
@@ -1437,11 +1437,11 @@ class DisvGridMerger:
 
         for ic, *_ in cell2d:
             self.cell2name[ic] = (name1, ic)
-            self.name2cell[(name1, ic)] = ic
+            self.name2cell[name1, ic] = ic
 
         for iv, *_ in vertices:
             self.vert2name[iv] = [(name1, iv)]
-            self.name2vert[(name1, iv)] = iv
+            self.name2vert[name1, iv] = iv
 
         ic_new = ic  # Last cell2d id from previous-previous loop
         iv_new = iv  # Last vertex id from previous loop
@@ -1461,7 +1461,7 @@ class DisvGridMerger:
                 self.snap_order.append(name2)
 
             v1_orig = v1
-            v1 = self.name2vert[(name1, v1_orig)]
+            v1 = self.name2vert[name1, v1_orig]
 
             v1x, v1y = self._get_vertex_xy("__main__", v1)
             v2x, v2y = self._get_vertex_xy(name2, v2)
@@ -1479,7 +1479,7 @@ class DisvGridMerger:
                 ):
                     ind = self.force_snap[key][1].index(v2_orig)
                     v1_orig_force = self.force_snap[key][0][ind]
-                    iv = self.name2vert[(name1, v1_orig_force)]
+                    iv = self.name2vert[name1, v1_orig_force]
                     if self.force_snap_drop[key] == 1:
                         # replace v1 vertex with the x,y from v2 to force snap
                         self._replace_vertex_xy(iv, xv, yv)
@@ -1493,10 +1493,10 @@ class DisvGridMerger:
                     iv_new += 1
                     vertices.append([iv_new, xv, yv])
                     self.vert2name[iv_new] = [(name2, v2_orig)]
-                    self.name2vert[(name2, v2_orig)] = iv_new
+                    self.name2vert[name2, v2_orig] = iv_new
                 else:
                     self.vert2name[iv].append((name2, v2_orig))
-                    self.name2vert[(name2, v2_orig)] = iv
+                    self.name2vert[name2, v2_orig] = iv
 
             # Loop through cells and update center point and icvert
             for ic, xc, yc, ncvert, *icvert in self.grids[name2].cell2d:
@@ -1505,11 +1505,11 @@ class DisvGridMerger:
                 yc += dify
 
                 self.cell2name[ic_new] = (name2, ic)
-                self.name2cell[(name2, ic)] = ic_new
+                self.name2cell[name2, ic] = ic_new
 
                 item = [ic_new, xc, yc, ncvert]  # append new icvert's
                 for iv_orig in icvert:
-                    item.append(self.name2vert[(name2, iv_orig)])  # = iv_new
+                    item.append(self.name2vert[name2, iv_orig])  # = iv_new
                 cell2d.append(item)
 
         # Force snapped cells need to update cell center and check for
@@ -1517,7 +1517,7 @@ class DisvGridMerger:
         for name, iv_orig in force_snapped:
             for ic, _, _, _, *icvert in self.grids[name].cell2d:
                 if iv_orig in icvert:  # cell was deformed by force snap
-                    ic_new = self.name2cell[(name, ic)]
+                    ic_new = self.name2cell[name, ic]
                     self.force_snap_cellid.add(ic_new)
 
         if len(self.force_snap_cellid) > 0:
@@ -2040,7 +2040,7 @@ class DisvCurvilinearBuilder(DisvPropertyContainer):
 
         if rad == 0:  # Case with no center point or single center point
             if self.single_center_cell:
-                return [iv for iv in range(nver + ivc)][::-1]
+                return list(range(nver + ivc))[::-1]
             elif ivc == 1:  # Single center point
                 if full_circle and col == ncol - 1:
                     return [1, col + 1, 0]  # [col+2-nver, col+1, 0]
@@ -2313,8 +2313,8 @@ for lay in range(nlay):
         node = grid_merger.get_merged_cell2d("curvlin2", cellid_old)
         chd_right.append([(lay, node), bc1])
 
-chd_left = {sp: chd_left for sp in range(nper)}
-chd_right = {sp: chd_right for sp in range(nper)}
+chd_left = dict.fromkeys(range(nper), chd_left)
+chd_right = dict.fromkeys(range(nper), chd_right)
 
 # Static temporal data used by TDIS file
 # Simulation is steady state so setup only a one day stress period.

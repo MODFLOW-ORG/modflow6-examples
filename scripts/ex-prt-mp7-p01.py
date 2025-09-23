@@ -142,7 +142,7 @@ mp7_particle_data_1a = flopy.modpath.ParticleData(
     [(0, i, 2) for i in range(nrow)],
     drape=0,
     structured=True,
-    particleids=[i for i in range(nrow)],
+    particleids=list(range(nrow)),
     localz=1.0,
 )
 
@@ -719,7 +719,7 @@ def plot_pathpoints_3d(gwf, pathlines, title):
             gwf.modelgrid.extent[2],
             gwf.modelgrid.extent[3],
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     wel_mesh = pv.Box(bounds=(4500, 5000, 5000, 5500, 0, 200 * vert_exag))

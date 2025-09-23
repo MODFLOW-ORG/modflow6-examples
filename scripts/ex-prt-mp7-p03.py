@@ -709,7 +709,7 @@ def plot_pathpoints_3d(gwf, mf6pl, title=None):
             3000,
             3500,
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     riv_mesh = pv.Box(
@@ -719,7 +719,7 @@ def plot_pathpoints_3d(gwf, mf6pl, title=None):
             gwf.modelgrid.extent[2],
             gwf.modelgrid.extent[3],
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     wel_mesh = pv.Box(bounds=(4500, 5000, 5000, 5500, 220 * vert_exag, top * vert_exag))
