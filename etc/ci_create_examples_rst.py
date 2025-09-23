@@ -31,7 +31,7 @@ pth = os.path.join("..", "doc", "body.tex")
 with open(pth) as f:
     lines = f.read()
 examples = []
-ex_regex = re.compile("\\\\input{sections/(.*?)\\}")
+ex_regex = re.compile(r"\\input{sections/(.*?)\}")
 for v in ex_regex.findall(lines):
     if "ex-" in v:
         examples.append(v.replace(".tex", ""))
@@ -121,7 +121,7 @@ for ex in examples:
         lines = file.read()
 
     # find equation labels in lines
-    ex_regex = re.compile("\\\\label{(.*?)\\}")
+    ex_regex = re.compile(r"\\label{(.*?)\}")
     replace_eq_labels = {}
     eq_labels = []
     for v in ex_regex.findall(lines):
@@ -132,8 +132,8 @@ for ex in examples:
         replace_eq_labels[tag] = f":eq:`{v.replace(':', '-')}`"
 
     # find figure references in lines
-    ex_regex = re.compile("\\`(.*?)\\`__")
-    ex_tag = re.compile("\\#(.*?)\\>")
+    ex_regex = re.compile(r"\`(.*?)\`__")
+    ex_tag = re.compile(r"\#(.*?)\>")
     fig_tab_refs = {}
     for v in ex_regex.findall(lines):
         tag0 = f"`{v}`__"

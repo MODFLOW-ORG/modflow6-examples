@@ -738,7 +738,7 @@ cells_on_refinement_boundary = [10, 43, 203, 402, 708, 1020, 1332]
 
 def plot_well_vertices_on_refinement_boundary(ax):
     for nn in cells_on_refinement_boundary:
-        verts = list(set([tuple(grid.verts[v]) for v in grid.iverts[nn]]))
+        verts = list({tuple(grid.verts[v]) for v in grid.iverts[nn]})
         verts = [
             v
             for v in verts
@@ -761,12 +761,12 @@ def plot_well_ifaces(ax):
 
         # reduce vertices to 4 corners of square
         xmax, xmin = (
-            max([v[0] for v in sorted_verts]),
-            min([v[0] for v in sorted_verts]),
+            max(v[0] for v in sorted_verts),
+            min(v[0] for v in sorted_verts),
         )
         ymax, ymin = (
-            max([v[1] for v in sorted_verts]),
-            min([v[1] for v in sorted_verts]),
+            max(v[1] for v in sorted_verts),
+            min(v[1] for v in sorted_verts),
         )
         sorted_verts = [
             v for v in sorted_verts if v[0] in [xmax, xmin] and v[1] in [ymax, ymin]

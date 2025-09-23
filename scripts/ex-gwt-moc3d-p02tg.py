@@ -76,7 +76,7 @@ source_location = (1, 12, 8)  # Source location (layer, row, column)
 
 botm = [-(k + 1) * delv for k in range(nlay)]
 specific_discharge = velocity_x * porosity
-source_location0 = tuple([idx - 1 for idx in source_location])
+source_location0 = tuple(idx - 1 for idx in source_location)
 # -
 
 # ### Model setup

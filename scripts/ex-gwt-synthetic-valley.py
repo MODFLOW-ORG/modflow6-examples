@@ -686,7 +686,13 @@ contour_gwt_label_dict = {
 clabel_dict = {"inline": True, "fmt": "%1.0f", "fontsize": 6, "inline_spacing": 0.5}
 font_dict = {"fontsize": 5, "color": "black"}
 grid_dict = {"lw": 0.25, "color": "0.5"}
-arrowprops = dict(arrowstyle="-", edgecolor="red", lw=0.5, shrinkA=0.15, shrinkB=0.15)
+arrowprops = {
+    "arrowstyle": "-",
+    "edgecolor": "red",
+    "lw": 0.5,
+    "shrinkA": 0.15,
+    "shrinkB": 0.15,
+}
 river_dict = {"color": "blue", "linestyle": "-", "linewidth": 1}
 lake_cmap = colors.ListedColormap(["cyan"])
 clay_cmap = colors.ListedColormap(["brown"])

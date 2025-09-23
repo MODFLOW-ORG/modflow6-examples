@@ -1034,7 +1034,7 @@ def plot_3d(gwf, pathlines, endpoints=None, title=None):
             gwf.modelgrid.extent[2],
             gwf.modelgrid.extent[3],
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     wel_mesh = pv.Box(bounds=(4700, 4800, 5200, 5300, 0, 200 * vert_exag))

@@ -354,7 +354,7 @@ def run_models(sim, silent=True):
 # +
 # Set figure properties specific to the problem
 figure_size = (6.8, 5.5)
-arrow_props = dict(facecolor="black", arrowstyle="-", lw=0.5)
+arrow_props = {"facecolor": "black", "arrowstyle": "-", "lw": 0.5}
 plot_tags = (
     "W1L",
     "W2L",
