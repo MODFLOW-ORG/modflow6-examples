@@ -326,3 +326,5 @@ Steps to create a release include:
 5. Release the documentation PDF and a zip archive of model input files.
 
 These should not be necessary to perform manually, as GitHub Actions automatically creates a new release whenever code is merged into the `master` branch of this repository.
+
+It is necessary to manually trigger a rebuild of the ReadTheDocs site. This can be done by starting the `rtd` workflow from the GitHub Actions web UI, specifying `refs/heads/master` for both the examples and MF6 repos in the dialog. (The workflow should be used from the `develop` branch.)
