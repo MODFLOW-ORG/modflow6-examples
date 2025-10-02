@@ -66,9 +66,11 @@ jobs:
           manifest-path: modflow6-examples/pixi.toml
 
       - name: Create Jupyter kernel
+        working-directory: modflow6-examples
         run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
+        working-directory: modflow6-examples
         run: pixi run update-flopy --releasemode
 
       - name: Install MODFLOW executables
@@ -77,9 +79,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          pixi run meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          pixi run meson install -C builddir
-          pixi run meson test --verbose --no-rebuild -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson install -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
 
       - name: Install MODFLOW 6
         working-directory: modflow6
@@ -149,10 +151,11 @@ jobs:
         uses: pyvista/setup-headless-display-action@v4
 
       - name: Create Jupyter kernel
+        working-directory: modflow6-examples
         run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        working-directory: modflow6
+        working-directory: modflow6-examples
         run: pixi run update-flopy --releasemode
 
       - name: Install MODFLOW executables
@@ -161,9 +164,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          pixi run meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          pixi run meson install -C builddir
-          pixi run meson test --verbose --no-rebuild -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson install -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
 
       - name: Install MODFLOW 6
         working-directory: modflow6

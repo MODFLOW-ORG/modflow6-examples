@@ -124,9 +124,11 @@ jobs:
         uses: pyvista/setup-headless-display-action@v4
 
       - name: Create Jupyter kernel
+        working-directory: modflow6-examples
         run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
+        working-directory: modflow6-examples
         run: |
           cmd="pixi run python -m flopy.mf6.utils.generate_classes --ref ${{ needs.set_options.outputs.mf6_ref }}"
           if [[ "${{ needs.set_options.outputs.mf6_ref }}" == "refs/heads/master" ]]; then
@@ -140,9 +142,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          pixi run meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          pixi run meson install -C builddir
-          pixi run meson test --verbose --no-rebuild -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson install -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
           cp bin/* ~/.local/bin/modflow/
       
       - name: Run notebooks, make plots
