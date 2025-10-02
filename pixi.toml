@@ -17,7 +17,7 @@ jupyter = { cmd = "jupyter notebook", cwd = "notebooks"}
 build-input = { cmd = "pytest -v -n auto test_scripts.py --init", cwd = "autotest" }
 
 update-environment-yml = "pixi workspace export conda-environment environment.yml"
-update-flopy = "python -m flopy.mf6.utils.generate_classes --ref develop"
+update-flopy = "python -m flopy.mf6.utils.generate_classes"
 install = "pixi update flopy mfpymake modflowapi"
 
 # Check format

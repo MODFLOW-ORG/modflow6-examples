@@ -129,7 +129,12 @@ jobs:
         run: python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --ref ${{ needs.set_options.outputs.mf6_ref }} --no-backup
+        run: |
+          cmd="python -m flopy.mf6.utils.generate_classes --ref ${{ needs.set_options.outputs.mf6_ref }}"
+          if [[ "${{ needs.set_options.outputs.mf6_ref }}" == "refs/heads/master" ]]; then
+            cmd="$cmd --releasemode"
+          fi
+          eval "$cmd"
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1

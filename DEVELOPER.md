@@ -66,7 +66,7 @@ See the [FloPy documentation](https://flopy.readthedocs.io/en/stable/md/get_modf
 FloPy and MODFLOW 6 versions must be kept in sync for FloPy to properly generate and consume MF6 input/output files. To update FloPy from some branch of the [MODFLOW 6 repository](https://github.com/MODFLOW-ORG/modflow6), for instance the `develop` branch:
 
 ```shell
-python -m flopy.mf6.utils.generate_classes --ref develop --no-backup
+python -m flopy.mf6.utils.generate_classes --ref develop
 ```
 
 The `--owner` and `--repo` arguments can be used to select an alternative repository (e.g. your fork). See [the FloPy documentation](https://flopy.readthedocs.io/en/stable/md/generate_classes.html) for more info.
