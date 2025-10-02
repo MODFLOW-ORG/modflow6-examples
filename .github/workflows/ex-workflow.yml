@@ -29,23 +29,16 @@ jobs:
       - name: Checkout MODFLOW 6 examples
         uses: actions/checkout@v5
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.1
         with:
-          environment-file: environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
+          pixi-version: v0.41.4
 
-      - name: Lint
-        run: ruff check .
-
-      - name: Format
-        run: ruff format . --check
+      - name: Check format
+        run: pixi run check-format
 
       - name: Check spelling
-        run: codespell
-        # add false-positives to etc/codespell.ignore
+        run: pixi run check-spelling
 
   dist:
     name: Build example models
@@ -66,19 +59,16 @@ jobs:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.1
         with:
-          environment-file: modflow6-examples/environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
+          pixi-version: v0.41.4
 
       - name: Create Jupyter kernel
-        run: python -m ipykernel install --name python_kernel --user
+        run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --releasemode
+        run: pixi run update-flopy --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -86,9 +76,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          meson install -C builddir
-          meson test --verbose --no-rebuild -C builddir
+          pixi run meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run meson install -C builddir
+          pixi run meson test --verbose --no-rebuild -C builddir
 
       - name: Install MODFLOW 6
         working-directory: modflow6
@@ -97,7 +87,7 @@ jobs:
       - name: Create example models
         working-directory: modflow6-examples/autotest
         # run the scripts via pytest without running the models, just build input files
-        run: pytest -v -n=auto --durations=0 test_scripts.py --init
+        run: pixi run pytest -v -n=auto --durations=0 test_scripts.py --init
 
       - name: Make zipfile
         working-directory: modflow6-examples
@@ -139,6 +129,11 @@ jobs:
           repository: MODFLOW-ORG/usgslatex
           path: usgslatex
 
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.1
+        with:
+          pixi-version: v0.41.4
+
       - name: Install LaTeX and extra fonts
         run: |
           sudo apt-get update
@@ -148,22 +143,15 @@ jobs:
         working-directory: usgslatex/usgsLaTeX
         run: sudo ./install.sh --all-users
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
-        with:
-          environment-file: modflow6-examples/environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
-
       - name: Set up headless display
         uses: pyvista/setup-headless-display-action@v4
 
       - name: Create Jupyter kernel
-        run: python -m ipykernel install --name python_kernel --user
+        run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --releasemode
+        working-directory: modflow6
+        run: pixi run update-flopy --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -171,9 +159,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          meson install -C builddir
-          meson test --verbose --no-rebuild -C builddir
+          pixi run meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run meson install -C builddir
+          pixi run meson test --verbose --no-rebuild -C builddir
 
       - name: Install MODFLOW 6
         working-directory: modflow6
@@ -181,11 +169,11 @@ jobs:
 
       - name: Run examples, make plots
         working-directory: modflow6-examples/autotest
-        run: pytest -v -n=auto --durations=0 test_scripts.py --plot
+        run: pixi run pytest -v -n=auto --durations=0 test_scripts.py --plot
 
       - name: Run postprocessing
         working-directory: modflow6-examples/scripts
-        run: python create-doc-tables.py
+        run: pixi run python create-doc-tables.py
 
       - name: Build PDF document
         working-directory: modflow6-examples/doc
