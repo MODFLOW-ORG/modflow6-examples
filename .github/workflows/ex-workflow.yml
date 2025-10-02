@@ -63,6 +63,7 @@ jobs:
         uses: prefix-dev/setup-pixi@v0.9.1
         with:
           pixi-version: v0.41.4
+          manifest-path: modflow6-examples/pixi.toml
 
       - name: Create Jupyter kernel
         run: pixi run python -m ipykernel install --name python_kernel --user
@@ -133,6 +134,7 @@ jobs:
         uses: prefix-dev/setup-pixi@v0.9.1
         with:
           pixi-version: v0.41.4
+          manifest-path: modflow6-examples/pixi.toml
 
       - name: Install LaTeX and extra fonts
         run: |
