@@ -163,7 +163,7 @@ jobs:
         run: python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --ref develop --no-backup
+        run: python -m flopy.mf6.utils.generate_classes --ref develop --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
