@@ -160,7 +160,7 @@ jobs:
         run: pixi run python ci_create_examples_rst.py
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: rtd-files-for-${{ needs.set_options.outputs.sha }}
           path: |

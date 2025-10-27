@@ -100,7 +100,7 @@ jobs:
         shell: python
 
       - name: Upload zipfile
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.DISTNAME }}.zip
           path: modflow6-examples/${{ env.DISTNAME }}.zip
@@ -189,7 +189,7 @@ jobs:
         run: mv doc/${{ env.DISTNAME }}.pdf ${{ env.DISTNAME }}.pdf
 
       - name: Upload PDF document
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.DISTNAME}}.pdf
           path: modflow6-examples/${{ env.DISTNAME }}.pdf
