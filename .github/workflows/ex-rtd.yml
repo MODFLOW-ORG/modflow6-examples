@@ -51,7 +51,7 @@ jobs:
           echo "ref=$ref" >> $GITHUB_OUTPUT
 
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.set_ref.outputs.ref }}
 
@@ -88,13 +88,13 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: modflow6-examples
           ref: ${{ needs.set_options.outputs.ref }}
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
@@ -187,7 +187,7 @@ jobs:
       )
     steps:
       - name: Checkout MODFLOW6 examples repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Trigger RTD build
         uses: dfm/rtds-action@v1
