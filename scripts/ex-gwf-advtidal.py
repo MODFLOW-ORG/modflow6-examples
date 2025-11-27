@@ -276,7 +276,7 @@ def build_models():
         "9ca294d3260c9d3c3487f8db498a0aa6",
     ]
     for ipak, p in enumerate([recharge_zone_1, recharge_zone_2, recharge_zone_3]):
-        ix = GridIntersect(gwf.modelgrid, method="vertex", rtree=True)
+        ix = GridIntersect(gwf.modelgrid)
         result = ix.intersect(p)
         rch_spd = []
         for i in range(result.shape[0]):

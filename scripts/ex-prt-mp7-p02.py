@@ -313,7 +313,7 @@ def build_gwf_sim():
     )
 
     # GridIntersect object for setting up boundary conditions
-    ix = GridIntersect(gwf.modelgrid, method="vertex", rtree=True)
+    ix = GridIntersect(gwf.modelgrid)
 
     # Instantiate the MODFLOW 6 gwf initial conditions package
     flopy.mf6.ModflowGwfic(gwf, pname="ic", strt=riv_h)

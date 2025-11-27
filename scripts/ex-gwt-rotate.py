@@ -181,7 +181,7 @@ def get_cstrt(nlay, ncol, length, x1, x2, a1, a2, b, c1, c2, c3):
     delc = b / nlay * np.ones(nlay)
     delr = length / ncol * np.ones(ncol)
     sgr = flopy.discretization.StructuredGrid(delc, delr)
-    ix = GridIntersect(sgr, method="structured")
+    ix = GridIntersect(sgr)
     for ival, p in [(c2, p2), (c3, p3)]:
         result = ix.intersect(p)
         for i, j in list(result["cellids"]):
