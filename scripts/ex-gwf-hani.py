@@ -13,7 +13,6 @@
 from pathlib import Path
 
 import flopy
-import flopy.utils.cvfdutil
 import git
 import matplotlib.pyplot as plt
 import numpy as np
