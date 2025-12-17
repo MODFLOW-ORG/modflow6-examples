@@ -277,7 +277,7 @@ def build_models():
     ]
     for ipak, p in enumerate([recharge_zone_1, recharge_zone_2, recharge_zone_3]):
         ix = GridIntersect(gwf.modelgrid)
-        result = ix.intersect(p)
+        result = ix.intersect(p, geo_dataframe=False)
         rch_spd = []
         for i in range(result.shape[0]):
             rch_spd.append(

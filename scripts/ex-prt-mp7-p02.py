@@ -1,3 +1,4 @@
+# %%
 # ## Backward Particle Tracking, Quad-Refined Grid, Steady-State Flow
 #
 # Application of a MODFLOW 6 particle-tracking (PRT) model
@@ -338,15 +339,15 @@ def build_gwf_sim():
     )
 
     # Instantiate the MODFLOW 6 gwf well package
-    welcells = ix.intersects(MultiPoint(wel_coords))
-    welcells = [icpl for (icpl,) in welcells]
+    welcells = ix.intersects(MultiPoint(wel_coords), dataframe=False)
+    welcells = welcells["cellids"]
     welspd = [[(2, icpl), wel_q[idx]] for idx, icpl in enumerate(welcells)]
     flopy.mf6.ModflowGwfwel(gwf, print_input=True, stress_period_data=welspd)
 
     # Instantiate the MODFLOW 6 gwf river package
     riverline = [(Lx - 1.0, Ly), (Lx - 1.0, 0.0)]
-    rivcells = ix.intersects(LineString(riverline))
-    rivcells = [icpl for (icpl,) in rivcells]
+    rivcells = ix.intersects(LineString(riverline), dataframe=False)
+    rivcells = rivcells["cellids"]
     rivspd = [
         [(0, icpl), riv_h, riv_c, riv_z, riv_iface, riv_iflowface] for icpl in rivcells
     ]

@@ -345,7 +345,9 @@ lake_vg_grid = flopy.discretization.VertexGrid(
 # +
 # intersect stream features with the grid
 ixs = flopy.utils.GridIntersect(voronoi_grid)
-sg_result = ixs.intersect(LineString(sg_densify), sort_by_cellid=False)
+sg_result = ixs.intersect(
+    LineString(sg_densify), sort_by_cellid=False, geo_dataframe=False
+)
 
 # build sfr package datasets
 sfr_plt_array = np.zeros(voronoi_grid.ncpl, dtype=int)
