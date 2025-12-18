@@ -143,17 +143,17 @@ def build_gwf_sim(name):
 
     # identify cells on left edge
     line = LineString([(xmin, ymin), (xmin, ymax)])
-    cells_left = gi.intersect(line)["cellids"]
+    cells_left = gi.intersect(line, geo_dataframe=False)["cellids"]
     cells_left = np.array(list(cells_left))
 
     # identify cells on right edge
     line = LineString([(xmax, ymin), (xmax, ymax)])
-    cells_right = gi.intersect(line)["cellids"]
+    cells_right = gi.intersect(line, geo_dataframe=False)["cellids"]
     cells_right = np.array(list(cells_right))
 
     # identify cells on bottom edge
     line = LineString([(xmin, ymin), (xmax, ymin)])
-    cells_bottom = gi.intersect(line)["cellids"]
+    cells_bottom = gi.intersect(line, geo_dataframe=False)["cellids"]
     cells_bottom = np.array(list(cells_bottom))
 
     # identify well cell
