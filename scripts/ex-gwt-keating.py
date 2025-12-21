@@ -356,6 +356,7 @@ def build_mf6prt():
         saverecord=[("BUDGET", "ALL")],
     )
     pd = [
+        ("GWFGRID", Path(f"../{gwf_ws.name}/flow.dis.grb")),
         ("GWFHEAD", Path(f"../{gwf_ws.name}/flow.hds")),
         ("GWFBUDGET", Path(f"../{gwf_ws.name}/flow.bud")),
     ]
