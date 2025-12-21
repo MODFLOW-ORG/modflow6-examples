@@ -67,6 +67,7 @@ prt_ws.mkdir(exist_ok=True, parents=True)
 mp7_ws.mkdir(exist_ok=True, parents=True)
 
 # Define output file names
+gridfile = f"{gwf_name}.dis.grb"
 headfile = f"{gwf_name}.hds"
 budgetfile = f"{gwf_name}.cbb"
 budgetfile_prt = f"{prt_name}.cbb"
@@ -435,6 +436,7 @@ def build_prt_model():
     flopy.mf6.ModflowPrtfmi(
         prt,
         packagedata=[
+            ("GWFGRID", Path(f"../{gwf_ws.name}/{gridfile}")),
             ("GWFHEAD", Path(f"../{gwf_ws.name}/{headfile}")),
             ("GWFBUDGET", Path(f"../{gwf_ws.name}/{budgetfile}")),
         ],
