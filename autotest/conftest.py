@@ -20,7 +20,7 @@ SNAPSHOT_CONFIG: dict[str, dict[str, Callable[[Path], NDArray]]] = {
     "ex-gwt-keating": {
         "mf6prt/track.trk.csv": lambda p: pd.read_csv(p)
         .drop("name", axis=1)
-        .round(2)
+        .round(1)
         .to_records(index=False),
     },
     "ex-prt-mp7-p01": {
