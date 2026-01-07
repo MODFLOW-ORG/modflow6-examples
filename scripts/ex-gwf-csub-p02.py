@@ -264,7 +264,7 @@ def analytical_solution(z, t, dh=1.0, b0=1.0, ssk=100.0, vk=0.025, n=100, silent
 
 # Set figure properties specific to the problem
 figure_size = (6.8, 3.4)
-arrow_props = dict(facecolor="black", arrowstyle="-", lw=0.5)
+arrow_props = {"facecolor": "black", "arrowstyle": "-", "lw": 0.5}
 
 
 def plot_grid(sim, silent=True):

@@ -51,7 +51,7 @@ jobs:
           echo "ref=$ref" >> $GITHUB_OUTPUT
 
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.set_ref.outputs.ref }}
 
@@ -88,13 +88,13 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: modflow6-examples
           ref: ${{ needs.set_options.outputs.ref }}
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
@@ -114,22 +114,27 @@ jobs:
           sudo tar xvzf pandoc-2.11.2-linux-amd64.tar.gz --strip-components=1 -C /usr/local
           pandoc --version
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.3
         with:
-          environment-file: modflow6-examples/environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
+          pixi-version: v0.41.4
+          manifest-path: modflow6-examples/pixi.toml
 
       - name: Set up headless display
         uses: pyvista/setup-headless-display-action@v4
 
       - name: Create Jupyter kernel
-        run: python -m ipykernel install --name python_kernel --user
+        working-directory: modflow6-examples
+        run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --ref ${{ needs.set_options.outputs.mf6_ref }} --no-backup
+        working-directory: modflow6-examples
+        run: |
+          cmd="pixi run python -m flopy.mf6.utils.generate_classes --ref ${{ needs.set_options.outputs.mf6_ref }}"
+          if [[ "${{ needs.set_options.outputs.mf6_ref }}" == "refs/heads/master" ]]; then
+            cmd="$cmd --releasemode"
+          fi
+          eval "$cmd"
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -137,25 +142,25 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          meson install -C builddir
-          meson test --verbose --no-rebuild -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson install -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
           cp bin/* ~/.local/bin/modflow/
       
       - name: Run notebooks, make plots
         working-directory: modflow6-examples/autotest
-        run: pytest -v -n=auto --durations=0 test_notebooks.py --plot
+        run: pixi run pytest -v -n=auto --durations=0 test_notebooks.py --plot
 
       - name: Run postprocessing
         working-directory: modflow6-examples/scripts
-        run: python create-doc-tables.py
+        run: pixi run python create-doc-tables.py
 
       - name: Create Markdown tables
         working-directory: modflow6-examples/etc
-        run: python ci_create_examples_rst.py
+        run: pixi run python ci_create_examples_rst.py
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: rtd-files-for-${{ needs.set_options.outputs.sha }}
           path: |
@@ -182,7 +187,7 @@ jobs:
       )
     steps:
       - name: Checkout MODFLOW6 examples repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Trigger RTD build
         uses: dfm/rtds-action@v1

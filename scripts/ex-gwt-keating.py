@@ -76,8 +76,8 @@ porosity = 0.1  # Porosity of mobile domain (unitless)
 obs1 = (49, 1, 119)  # Layer, row, and column for observation 1
 obs2 = (77, 1, 359)  # Layer, row, and column for observation 2
 
-obs1 = tuple([i - 1 for i in obs1])
-obs2 = tuple([i - 1 for i in obs2])
+obs1 = tuple(i - 1 for i in obs1)
+obs2 = tuple(i - 1 for i in obs2)
 seconds_to_days = 24.0 * 60.0 * 60.0
 permeability_to_conductivity = 1000.0 * 9.81 / 1.0e-3 * seconds_to_days
 hka = hka * permeability_to_conductivity
@@ -326,7 +326,12 @@ def build_mf6prt():
     ccs = list(
         zip(prt.modelgrid.xcellcenters.ravel(), prt.modelgrid.ycellcenters.ravel())
     )
-    prpdata = [(nn, *ids[nn], *ccs[nn], 0.5) for nn in nns]
+    prpdata = [
+        (nn, *ids[nn], *ccs[nn], 0.5)
+        for nn in nns
+        if ccs[nn][0] > 4200.0 and ccs[nn][0] < 4800.0
+    ]
+    prpdata = [(i, *row[1:]) for i, row in enumerate(prpdata)]
     prp = flopy.mf6.ModflowPrtprp(
         prt,
         pname="prp1a",
@@ -351,6 +356,7 @@ def build_mf6prt():
         saverecord=[("BUDGET", "ALL")],
     )
     pd = [
+        ("GWFGRID", Path(f"../{gwf_ws.name}/flow.dis.grb")),
         ("GWFHEAD", Path(f"../{gwf_ws.name}/flow.hds")),
         ("GWFBUDGET", Path(f"../{gwf_ws.name}/flow.bud")),
     ]

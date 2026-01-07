@@ -27,25 +27,18 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW 6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.3
         with:
-          environment-file: environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
+          pixi-version: v0.41.4
 
-      - name: Lint
-        run: ruff check .
-
-      - name: Format
-        run: ruff format . --check
+      - name: Check format
+        run: pixi run check-format
 
       - name: Check spelling
-        run: codespell
-        # add false-positives to etc/codespell.ignore
+        run: pixi run check-spelling
 
   dist:
     name: Build example models
@@ -56,29 +49,29 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: modflow6-examples
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.3
         with:
-          environment-file: modflow6-examples/environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
+          pixi-version: v0.41.4
+          manifest-path: modflow6-examples/pixi.toml
 
       - name: Create Jupyter kernel
-        run: python -m ipykernel install --name python_kernel --user
+        working-directory: modflow6-examples
+        run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --ref develop --no-backup
+        working-directory: modflow6-examples
+        run: pixi run update-flopy --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -86,9 +79,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          meson install -C builddir
-          meson test --verbose --no-rebuild -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson install -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
 
       - name: Install MODFLOW 6
         working-directory: modflow6
@@ -97,7 +90,7 @@ jobs:
       - name: Create example models
         working-directory: modflow6-examples/autotest
         # run the scripts via pytest without running the models, just build input files
-        run: pytest -v -n=auto --durations=0 test_scripts.py --init
+        run: pixi run pytest -v -n=auto --durations=0 test_scripts.py --init
 
       - name: Make zipfile
         working-directory: modflow6-examples
@@ -107,7 +100,7 @@ jobs:
         shell: python
 
       - name: Upload zipfile
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.DISTNAME }}.zip
           path: modflow6-examples/${{ env.DISTNAME }}.zip
@@ -123,21 +116,27 @@ jobs:
       MPLBACKEND: agg
     steps:
       - name: Checkout MODFLOW 6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: modflow6-examples
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
 
       - name: Checkout usgslatex
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/usgslatex
           path: usgslatex
+
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.9.3
+        with:
+          pixi-version: v0.41.4
+          manifest-path: modflow6-examples/pixi.toml
 
       - name: Install LaTeX and extra fonts
         run: |
@@ -148,22 +147,16 @@ jobs:
         working-directory: usgslatex/usgsLaTeX
         run: sudo ./install.sh --all-users
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
-        with:
-          environment-file: modflow6-examples/environment.yml
-          cache-downloads: true
-          cache-environment: true
-          init-shell: bash
-
       - name: Set up headless display
         uses: pyvista/setup-headless-display-action@v4
 
       - name: Create Jupyter kernel
-        run: python -m ipykernel install --name python_kernel --user
+        working-directory: modflow6-examples
+        run: pixi run python -m ipykernel install --name python_kernel --user
 
       - name: Update FloPy classes
-        run: python -m flopy.mf6.utils.generate_classes --ref develop --no-backup
+        working-directory: modflow6-examples
+        run: pixi run update-flopy --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -171,9 +164,9 @@ jobs:
       - name: Build MODFLOW 6
         working-directory: modflow6
         run: |
-          meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
-          meson install -C builddir
-          meson test --verbose --no-rebuild -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson setup builddir -Ddebug=false --prefix=$(pwd) --libdir=bin
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson install -C builddir
+          pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
 
       - name: Install MODFLOW 6
         working-directory: modflow6
@@ -181,11 +174,11 @@ jobs:
 
       - name: Run examples, make plots
         working-directory: modflow6-examples/autotest
-        run: pytest -v -n=auto --durations=0 test_scripts.py --plot
+        run: pixi run pytest -v -n=auto --durations=0 test_scripts.py --plot
 
       - name: Run postprocessing
         working-directory: modflow6-examples/scripts
-        run: python create-doc-tables.py
+        run: pixi run python create-doc-tables.py
 
       - name: Build PDF document
         working-directory: modflow6-examples/doc
@@ -196,7 +189,7 @@ jobs:
         run: mv doc/${{ env.DISTNAME }}.pdf ${{ env.DISTNAME }}.pdf
 
       - name: Upload PDF document
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.DISTNAME}}.pdf
           path: modflow6-examples/${{ env.DISTNAME }}.pdf
@@ -208,7 +201,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Get current time
         uses: josStorer/get-current-time@v2
@@ -217,13 +210,13 @@ jobs:
           format: MM/DD/YYYY HH:mm
 
       - name: Download ${{ env.DISTNAME }}.pdf
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           name: ${{ env.DISTNAME }}.pdf
           path: ${{ env.TAG }}
 
       - name: Download ${{ env.DISTNAME }}.zip
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           name: ${{ env.DISTNAME }}.zip
           path: ${{ env.TAG }}

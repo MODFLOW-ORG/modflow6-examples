@@ -67,6 +67,7 @@ prt_ws.mkdir(exist_ok=True, parents=True)
 mp7_ws.mkdir(exist_ok=True, parents=True)
 
 # Define output file names
+gridfile = f"{gwf_name}.dis.grb"
 headfile = f"{gwf_name}.hds"
 budgetfile = f"{gwf_name}.cbb"
 budgetfile_prt = f"{prt_name}.cbb"
@@ -435,6 +436,7 @@ def build_prt_model():
     flopy.mf6.ModflowPrtfmi(
         prt,
         packagedata=[
+            ("GWFGRID", Path(f"../{gwf_ws.name}/{gridfile}")),
             ("GWFHEAD", Path(f"../{gwf_ws.name}/{headfile}")),
             ("GWFBUDGET", Path(f"../{gwf_ws.name}/{budgetfile}")),
         ],
@@ -709,7 +711,7 @@ def plot_pathpoints_3d(gwf, mf6pl, title=None):
             3000,
             3500,
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     riv_mesh = pv.Box(
@@ -719,7 +721,7 @@ def plot_pathpoints_3d(gwf, mf6pl, title=None):
             gwf.modelgrid.extent[2],
             gwf.modelgrid.extent[3],
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     wel_mesh = pv.Box(bounds=(4500, 5000, 5000, 5500, 220 * vert_exag, top * vert_exag))

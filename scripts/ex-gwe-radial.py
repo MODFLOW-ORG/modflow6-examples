@@ -976,7 +976,7 @@ def plot_temperature(sim, idx, scen_txt, vel_txt):
         )
 
         for label in labels:
-            label.set_bbox(dict(facecolor="white", pad=1, ec="none"))
+            label.set_bbox({"facecolor": "white", "pad": 1, "ec": "none"})
 
         bhe = plt.Circle((0.0, 0.0), 0.075, fc=(1, 0, 0, 0.4), ec=(0, 0, 0, 1), lw=2)
         ax.add_patch(bhe)

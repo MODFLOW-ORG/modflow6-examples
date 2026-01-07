@@ -19,6 +19,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from flopy.utils.lgrutil import Lgr
 from modflow_devtools.misc import get_env, timed
 
 # Example name and workspace paths. If this example is running
@@ -76,39 +77,20 @@ nstp = [1]
 tsmult = [1.0, 1.0, 1.0]
 tdis_ds = list(zip(perlen, nstp, tsmult))
 
-# create the disv grid
-# outer grid
+# create the outer grid
 nlay = 1
 nrow = ncol = 7
 delr = 100.0 * np.ones(ncol)
 delc = 100.0 * np.ones(nrow)
 tp = np.zeros((nrow, ncol))
 bt = -100.0 * np.ones((nlay, nrow, ncol))
-idomain = np.ones((nlay, nrow, ncol))
-idomain[:, 2:5, 2:5] = 0
-sg1 = flopy.discretization.StructuredGrid(
-    delr=delr, delc=delc, top=tp, botm=bt, idomain=idomain
-)
-# inner grid
-nlay = 1
-nrow = ncol = 9
-delr = 100.0 / 3.0 * np.ones(ncol)
-delc = 100.0 / 3.0 * np.ones(nrow)
-tp = np.zeros((nrow, ncol))
-bt = -100 * np.ones((nlay, nrow, ncol))
-idomain = np.ones((nlay, nrow, ncol))
-sg2 = flopy.discretization.StructuredGrid(
-    delr=delr,
-    delc=delc,
-    top=tp,
-    botm=bt,
-    xoff=200.0,
-    yoff=200,
-    idomain=idomain,
-)
+parent_grid = flopy.discretization.StructuredGrid(delr=delr, delc=delc, top=tp, botm=bt)
 
-# get the disv grid arguments
-gridprops = flopy.utils.cvfdutil.gridlist_to_disv_gridprops([sg1, sg2])
+# refine the grid and get the disv grid arguments
+refine_mask = np.ones((nlay, nrow, ncol))
+refine_mask[:, 2:5, 2:5] = 0
+lgr = Lgr.from_parent_grid(parent_grid, refine_mask=refine_mask)
+grid_props = lgr.to_disv_gridprops()
 
 # Solver parameters
 nouter = 50
@@ -140,10 +122,7 @@ def build_models(sim_name, xt3d):
     flopy.mf6.ModflowGwfdisv(
         gwf,
         length_units=length_units,
-        nlay=nlay,
-        top=top,
-        botm=botm,
-        **gridprops,
+        **grid_props,
     )
     flopy.mf6.ModflowGwfnpf(
         gwf,

@@ -185,8 +185,8 @@ def build_models(sim_name):
     y = radius * np.sin(theta)
     hole = [(x, y) for x, y in zip(x, y)]
     p = Polygon(outer, holes=[hole])
-    ix = GridIntersect(gwf.modelgrid, method="vertex", rtree=True)
-    result = ix.intersect(p)
+    ix = GridIntersect(gwf.modelgrid)
+    result = ix.intersect(p, geo_dataframe=False)
     ghb_cellids = np.array(result["cellids"], dtype=int)
 
     ghb_spd = []

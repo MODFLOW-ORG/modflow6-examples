@@ -66,7 +66,7 @@ See the [FloPy documentation](https://flopy.readthedocs.io/en/stable/md/get_modf
 FloPy and MODFLOW 6 versions must be kept in sync for FloPy to properly generate and consume MF6 input/output files. To update FloPy from some branch of the [MODFLOW 6 repository](https://github.com/MODFLOW-ORG/modflow6), for instance the `develop` branch:
 
 ```shell
-python -m flopy.mf6.utils.generate_classes --ref develop --no-backup
+python -m flopy.mf6.utils.generate_classes --ref develop
 ```
 
 The `--owner` and `--repo` arguments can be used to select an alternative repository (e.g. your fork). See [the FloPy documentation](https://flopy.readthedocs.io/en/stable/md/generate_classes.html) for more info.
@@ -319,10 +319,14 @@ To add a new example:
 
 ## Releasing the examples
 
-Steps to create a release include:
+GitHub Actions automatically creates a new release whenever code is merged into the `master` branch of this repository. To trigger a release, merge (don't squash) a PR from `develop` into `master`.
 
-1. Generate model input files, disabling model runs and plots &mdash; e.g. from the `autotest/` directory, run `pytest -v -n auto test_scripts.py`. **Note**: if model runs are enabled, the size of the `examples/` directory will balloon from double-digit MB to several GB. We only distribute input files, not output files.
-2. Build the PDF documentation as described above.
-5. Release the documentation PDF and a zip archive of model input files.
+GitHub Actions will run the following steps:
 
-These should not be necessary to perform manually, as GitHub Actions automatically creates a new release whenever code is merged into the `master` branch of this repository.
+1. Build MF6 from the target branch.
+2. Regenerate flopy modules suitable for this version of MF6.
+3. Generate example model input files. (We only distribute input files, not output files.)
+4. Build the PDF documentation as described above.
+5. Create a draft release and upload the documentation PDF and a zip archive of model input files as assets.
+
+Inspect and publish the release. After publishing, it is necessary to manually trigger a rebuild of the ReadTheDocs site. This can be done by starting the `rtd` workflow from the GitHub Actions web UI, specifying `refs/heads/master` for both the examples and MF6 repos in the dialog. (The workflow should be used from the `develop` branch.)
