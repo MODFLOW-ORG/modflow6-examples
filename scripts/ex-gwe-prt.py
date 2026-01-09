@@ -143,17 +143,17 @@ def build_gwf_sim(name):
 
     # identify cells on left edge
     line = LineString([(xmin, ymin), (xmin, ymax)])
-    cells_left = gi.intersect(line)["cellids"]
+    cells_left = gi.intersect(line, geo_dataframe=False)["cellids"]
     cells_left = np.array(list(cells_left))
 
     # identify cells on right edge
     line = LineString([(xmax, ymin), (xmax, ymax)])
-    cells_right = gi.intersect(line)["cellids"]
+    cells_right = gi.intersect(line, geo_dataframe=False)["cellids"]
     cells_right = np.array(list(cells_right))
 
     # identify cells on bottom edge
     line = LineString([(xmin, ymin), (xmax, ymin)])
-    cells_bottom = gi.intersect(line)["cellids"]
+    cells_bottom = gi.intersect(line, geo_dataframe=False)["cellids"]
     cells_bottom = np.array(list(cells_bottom))
 
     # identify well cell
@@ -539,13 +539,13 @@ def plot_results(gwf_sim, gwe_sim, prt_sim, silent=True):
                     xycoords="data",
                     xytext=(30, -20),
                     textcoords="offset points",
-                    bbox=dict(boxstyle="round", fc="1.0", alpha=0.66),
-                    arrowprops=dict(
-                        arrowstyle="->",
-                        shrinkA=0,
-                        shrinkB=5,
-                        connectionstyle="angle,angleA=0,angleB=135,rad=40",
-                    ),
+                    bbox={"boxstyle": "round", "fc": "1.0", "alpha": 0.66},
+                    arrowprops={
+                        "arrowstyle": "->",
+                        "shrinkA": 0,
+                        "shrinkB": 5,
+                        "connectionstyle": "angle,angleA=0,angleB=135,rad=40",
+                    },
                 )
             else:
                 ax.annotate(
@@ -554,13 +554,13 @@ def plot_results(gwf_sim, gwe_sim, prt_sim, silent=True):
                     xycoords="data",
                     xytext=(-75, 10),
                     textcoords="offset points",
-                    bbox=dict(boxstyle="round", fc="1.0", alpha=0.66),
-                    arrowprops=dict(
-                        arrowstyle="->",
-                        shrinkA=0,
-                        shrinkB=5,
-                        connectionstyle="angle,angleA=0,angleB=135,rad=30",
-                    ),
+                    bbox={"boxstyle": "round", "fc": "1.0", "alpha": 0.66},
+                    arrowprops={
+                        "arrowstyle": "->",
+                        "shrinkA": 0,
+                        "shrinkB": 5,
+                        "connectionstyle": "angle,angleA=0,angleB=135,rad=30",
+                    },
                 )
 
         # Setup 2 additional plots relating the particle's x-position with temperature

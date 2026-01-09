@@ -1,3 +1,4 @@
+# %%
 # ## Backward Particle Tracking, Quad-Refined Grid, Steady-State Flow
 #
 # Application of a MODFLOW 6 particle-tracking (PRT) model
@@ -313,7 +314,7 @@ def build_gwf_sim():
     )
 
     # GridIntersect object for setting up boundary conditions
-    ix = GridIntersect(gwf.modelgrid, method="vertex", rtree=True)
+    ix = GridIntersect(gwf.modelgrid)
 
     # Instantiate the MODFLOW 6 gwf initial conditions package
     flopy.mf6.ModflowGwfic(gwf, pname="ic", strt=riv_h)
@@ -338,15 +339,15 @@ def build_gwf_sim():
     )
 
     # Instantiate the MODFLOW 6 gwf well package
-    welcells = ix.intersects(MultiPoint(wel_coords))
-    welcells = [icpl for (icpl,) in welcells]
+    welcells = ix.intersects(MultiPoint(wel_coords), dataframe=False)
+    welcells = welcells["cellids"].astype(int)
     welspd = [[(2, icpl), wel_q[idx]] for idx, icpl in enumerate(welcells)]
     flopy.mf6.ModflowGwfwel(gwf, print_input=True, stress_period_data=welspd)
 
     # Instantiate the MODFLOW 6 gwf river package
     riverline = [(Lx - 1.0, Ly), (Lx - 1.0, 0.0)]
-    rivcells = ix.intersects(LineString(riverline))
-    rivcells = [icpl for (icpl,) in rivcells]
+    rivcells = ix.intersects(LineString(riverline), dataframe=False)
+    rivcells = rivcells["cellids"].astype(int)
     rivspd = [
         [(0, icpl), riv_h, riv_c, riv_z, riv_iface, riv_iflowface] for icpl in rivcells
     ]
@@ -1034,7 +1035,7 @@ def plot_3d(gwf, pathlines, endpoints=None, title=None):
             gwf.modelgrid.extent[2],
             gwf.modelgrid.extent[3],
             220 * vert_exag,
-            gwf.output.head().get_data()[(0, 0, ncol - 1)] * vert_exag,
+            gwf.output.head().get_data()[0, 0, ncol - 1] * vert_exag,
         ]
     )
     wel_mesh = pv.Box(bounds=(4700, 4800, 5200, 5300, 0, 200 * vert_exag))

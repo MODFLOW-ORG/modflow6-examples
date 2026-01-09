@@ -27,10 +27,10 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW 6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup pixi
-        uses: prefix-dev/setup-pixi@v0.9.1
+        uses: prefix-dev/setup-pixi@v0.9.3
         with:
           pixi-version: v0.41.4
 
@@ -49,18 +49,18 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: modflow6-examples
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
 
       - name: Setup pixi
-        uses: prefix-dev/setup-pixi@v0.9.1
+        uses: prefix-dev/setup-pixi@v0.9.3
         with:
           pixi-version: v0.41.4
           manifest-path: modflow6-examples/pixi.toml
@@ -100,7 +100,7 @@ jobs:
         shell: python
 
       - name: Upload zipfile
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.DISTNAME }}.zip
           path: modflow6-examples/${{ env.DISTNAME }}.zip
@@ -116,24 +116,24 @@ jobs:
       MPLBACKEND: agg
     steps:
       - name: Checkout MODFLOW 6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: modflow6-examples
 
       - name: Checkout MODFLOW 6
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/modflow6
           path: modflow6
 
       - name: Checkout usgslatex
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: MODFLOW-ORG/usgslatex
           path: usgslatex
 
       - name: Setup pixi
-        uses: prefix-dev/setup-pixi@v0.9.1
+        uses: prefix-dev/setup-pixi@v0.9.3
         with:
           pixi-version: v0.41.4
           manifest-path: modflow6-examples/pixi.toml
@@ -189,7 +189,7 @@ jobs:
         run: mv doc/${{ env.DISTNAME }}.pdf ${{ env.DISTNAME }}.pdf
 
       - name: Upload PDF document
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.DISTNAME}}.pdf
           path: modflow6-examples/${{ env.DISTNAME }}.pdf
@@ -201,7 +201,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Get current time
         uses: josStorer/get-current-time@v2
@@ -210,13 +210,13 @@ jobs:
           format: MM/DD/YYYY HH:mm
 
       - name: Download ${{ env.DISTNAME }}.pdf
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           name: ${{ env.DISTNAME }}.pdf
           path: ${{ env.TAG }}
 
       - name: Download ${{ env.DISTNAME }}.zip
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           name: ${{ env.DISTNAME }}.zip
           path: ${{ env.TAG }}

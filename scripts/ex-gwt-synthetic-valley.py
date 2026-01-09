@@ -344,8 +344,10 @@ lake_vg_grid = flopy.discretization.VertexGrid(
 
 # +
 # intersect stream features with the grid
-ixs = flopy.utils.GridIntersect(voronoi_grid, method="vertex")
-sg_result = ixs.intersect(LineString(sg_densify), sort_by_cellid=False)
+ixs = flopy.utils.GridIntersect(voronoi_grid)
+sg_result = ixs.intersect(
+    LineString(sg_densify), sort_by_cellid=False, geo_dataframe=False
+)
 
 # build sfr package datasets
 sfr_plt_array = np.zeros(voronoi_grid.ncpl, dtype=int)
@@ -686,7 +688,13 @@ contour_gwt_label_dict = {
 clabel_dict = {"inline": True, "fmt": "%1.0f", "fontsize": 6, "inline_spacing": 0.5}
 font_dict = {"fontsize": 5, "color": "black"}
 grid_dict = {"lw": 0.25, "color": "0.5"}
-arrowprops = dict(arrowstyle="-", edgecolor="red", lw=0.5, shrinkA=0.15, shrinkB=0.15)
+arrowprops = {
+    "arrowstyle": "-",
+    "edgecolor": "red",
+    "lw": 0.5,
+    "shrinkA": 0.15,
+    "shrinkB": 0.15,
+}
 river_dict = {"color": "blue", "linestyle": "-", "linewidth": 1}
 lake_cmap = colors.ListedColormap(["cyan"])
 clay_cmap = colors.ListedColormap(["brown"])

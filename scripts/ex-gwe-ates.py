@@ -724,7 +724,7 @@ def build_model(sim_name, verts, cell2d, top, botm):
         xt3d_off=True,
         alh=al,
         ath1=ath1,
-        ktw=ktw,
+        ktw=ktw * unitconv,
         kts=kts,
         pname="CND",
         filename=f"{gwename}.cnd",

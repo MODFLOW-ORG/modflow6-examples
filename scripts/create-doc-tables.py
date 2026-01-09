@@ -246,7 +246,7 @@ def get_ordered_examples(verbose=True):
     if verbose:
         print("creating a ordered list of examples from the LaTeX document")
     # get order of examples from body.text
-    ex_regex = re.compile("\\\\input{sections/(.*?)\\}")
+    ex_regex = re.compile(r"\\input{sections/(.*?)\}")
     ex_order = []
     pth = proj_root / "doc" / "body.tex"
     with open(pth) as f:
@@ -645,7 +645,7 @@ def build_tex_tables(ex_dict):
                     paks.append(pak)
 
             # eliminate any duplicate packages
-            paks = sorted(list(set(paks)))
+            paks = sorted(set(paks))
 
             # separate examples by a line
             if isinstance(ex_number, int):
