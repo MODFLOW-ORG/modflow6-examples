@@ -299,7 +299,7 @@ def merge_bc_mean(boundaries):
     return mean.values.tolist()
 
 
-def create_grid(grid_type):
+def create_grid(grid_type, ws=None):
     """Create grid based on the specified type.
 
     Args:
@@ -319,7 +319,9 @@ def create_grid(grid_type):
         return ncpl, nvert, vertices, cell2d
     elif grid_type == "triangle":
         active_domain = [(0, 0), (Length, 0), (Length, Width), (0, Width)]
-        tri = Triangle(angle=30, maximum_area=delc * delr * 1.5, model_ws=workspace)
+        tri = Triangle(
+            angle=30, maximum_area=delc * delr * 1.5, model_ws=ws or workspace
+        )
         tri.add_polygon(active_domain)
         tri.build()
 
@@ -332,7 +334,7 @@ def create_grid(grid_type):
     elif grid_type == "voronoi":
         active_domain = [(0, 0), (Length, 0), (Length, Width), (0, Width)]
         tri = Triangle(
-            angle=30, maximum_area=delc * delr / 1.5 * 1.2, model_ws=workspace
+            angle=30, maximum_area=delc * delr / 1.5 * 1.2, model_ws=ws or workspace
         )
         tri.add_polygon(active_domain)
         tri.build()
@@ -408,7 +410,7 @@ def build_mf6gwf(grid_type):
 
     flopy.mf6.ModflowGwfic(gwf, strt=0.0, export_array_ascii=True)
 
-    ncpl, nvert, vertices, cell2d = create_grid(grid_type)
+    ncpl, nvert, vertices, cell2d = create_grid(grid_type, ws=sim_ws)
     flopy.mf6.ModflowGwfdisv(
         gwf,
         nlay=nlay,
@@ -566,7 +568,7 @@ def build_mf6gwt(grid_type, scheme, wave_func):
         printrecord=[("CONCENTRATION", "LAST"), ("BUDGET", "LAST")],
     )
 
-    ncpl, nvert, vertices, cell2d = create_grid(grid_type)
+    ncpl, nvert, vertices, cell2d = create_grid(grid_type, ws=sim_ws)
     flopy.mf6.ModflowGwtdisv(
         gwt,
         nlay=nlay,
