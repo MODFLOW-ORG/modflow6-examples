@@ -127,7 +127,7 @@ rclose = 1e-6  # Residual closure criterion
 # Grid and scheme definitions
 grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulations)
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
-wave_functions = ["sin²-wave", "step-wave", "square-wave"]  # 3 test functions
+wave_functions = ["sin2-wave", "step-wave", "square-wave"]  # 3 test functions
 
 # Compute discharge components
 angle = math.radians(angledeg)
@@ -164,7 +164,7 @@ def exact_solution_concentration(x, y, analytical):
 
     Args:
         x, y: Spatial coordinates (cm)
-        analytical: Signal type ('sin²-wave', 'step-wave', 'square-wave')
+        analytical: Signal type ('sin2-wave', 'step-wave', 'square-wave')
 
     Returns:
         Concentration values [dimensionless, 0-1]
@@ -182,7 +182,7 @@ def inlet_signal(y, signal_name):
 
     Args:
         y: y-coordinate values
-        signal_name: Type of signal ('step-wave', 'square-wave', 'sin²-wave')
+        signal_name: Type of signal ('step-wave', 'square-wave', 'sin2-wave')
 
     Returns:
         Concentration values based on the signal type
@@ -195,7 +195,7 @@ def inlet_signal(y, signal_name):
             return np.where(
                 np.abs(y) < profile_width / 2, np.ones(y.shape), np.zeros(y.shape)
             )
-        case "sin²-wave":
+        case "sin2-wave":
             return np.power(np.cos(math.pi * clipped_y / profile_width), 2)
         case _:
             raise ValueError("Unknown signal name")
