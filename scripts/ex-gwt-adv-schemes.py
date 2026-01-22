@@ -8,7 +8,7 @@
 # where C is concentration [g/cm³] and **q** is the specific discharge field = (qx, qy) = (0.354, 0.354) cm/s at 45°. The problem is configured with no dispersion or diffusion terms, making it a perfect test case for numerical scheme performance since an analytical solution exists.
 #
 # **Problem Setup:**
-# - Domain: 100cm x 100cm square with uniform flow at 45° angle
+# - Domain: 100cm x 100cm square with uniform flow at a 45° angle
 # - Boundary conditions: Prescribed concentrations on inflow boundaries
 # - Time: 300 seconds with adaptive time stepping (initial dt = 5s)
 # - Physics: Pure advection without mixing processes (analytical solution available)
@@ -127,7 +127,7 @@ rclose = 1e-6  # Residual closure criterion
 # Grid and scheme definitions
 grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulations)
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
-wave_functions = ["sin2-wave", "step-wave", "square-wave"]  # 3 test functions
+wave_functions = ["sin²-wave", "step-wave", "square-wave"]  # 3 test functions
 
 # Compute discharge components
 angle = math.radians(angledeg)
@@ -153,6 +153,19 @@ OFFSET_POINTS = "offset points"
 # Note: At t=300s, the pattern has fully advected through the domain
 
 
+def convert_superscript(text):
+    map = {
+        "¹": "1",
+        "²": "2",
+        "³": "3",
+    }
+    trans_table = str.maketrans(
+        "".join(map.keys()) + "".join(map.keys()),
+        "".join(map.values()) + "".join(map.values()),
+    )
+    return text.translate(trans_table)
+
+
 # %%
 def exact_solution_concentration(x, y, analytical):
     """Calculate exact concentration at any point in the domain.
@@ -164,7 +177,7 @@ def exact_solution_concentration(x, y, analytical):
 
     Args:
         x, y: Spatial coordinates (cm)
-        analytical: Signal type ('sin2-wave', 'step-wave', 'square-wave')
+        analytical: Signal type ('sin²-wave', 'step-wave', 'square-wave')
 
     Returns:
         Concentration values [dimensionless, 0-1]
@@ -182,7 +195,7 @@ def inlet_signal(y, signal_name):
 
     Args:
         y: y-coordinate values
-        signal_name: Type of signal ('step-wave', 'square-wave', 'sin2-wave')
+        signal_name: Type of signal ('step-wave', 'square-wave', 'sin²-wave')
 
     Returns:
         Concentration values based on the signal type
@@ -195,7 +208,7 @@ def inlet_signal(y, signal_name):
             return np.where(
                 np.abs(y) < profile_width / 2, np.ones(y.shape), np.zeros(y.shape)
             )
-        case "sin2-wave":
+        case "sin²-wave":
             return np.power(np.cos(math.pi * clipped_y / profile_width), 2)
         case _:
             raise ValueError("Unknown signal name")
@@ -510,7 +523,7 @@ def build_mf6gwf(grid_type):
 
 
 def build_mf6gwt(grid_type, scheme, wave_func):
-    pathname = f"trans_{grid_type}_{wave_func}_{scheme}"
+    pathname = f"trans_{grid_type}_{convert_superscript(wave_func)}_{scheme}"
     gwtname = "trans"
     gwfname = f"flow_{grid_type}"
     sim_ws = workspace / sim_name / Path(pathname)
@@ -644,7 +657,7 @@ def plot_flows(gwf_sims):
         fig, axs = plt.subplots(
             1, len(gwf_sims), dpi=300, figsize=figure_size, tight_layout=True
         )
-        fig.suptitle("Head - flow angle 45")
+        fig.suptitle("Head [cm] - flow angle 45 degrees")
 
         for idx, (grid, sim) in enumerate(gwf_sims.items()):
             plot_flow(sim, axs[idx])
@@ -699,7 +712,7 @@ def plot_concentrations(gwt_sims):
                 figsize=(7, 7 * len(schemes) / (len(grids) + 1)),
                 tight_layout=True,
             )
-            fig.suptitle(f"Concentration - {wave_func}")
+            fig.suptitle(f"Concentration [g/cm³] - {wave_func}")
 
             for idx_scheme, scheme in enumerate(schemes):
                 for idx_grid, grid in enumerate(grids):
@@ -736,7 +749,7 @@ def plot_concentrations(gwt_sims):
             if plot_show:
                 plt.show()
             if plot_save:
-                fname = f"{sim_name}-{wave_func}-conc.png"
+                fname = f"{sim_name}-{convert_superscript(wave_func)}-conc.png"
                 fpth = figs_path / fname
                 fig.savefig(fpth)
 
