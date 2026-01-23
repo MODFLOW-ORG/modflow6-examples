@@ -137,6 +137,7 @@ qy = specific_discharge * math.cos(angle)  # y-component of specific discharge (
 AXES_FRACTION = "axes fraction"
 OFFSET_POINTS = "offset points"
 
+
 # %% [markdown]
 # # Analytical Solution
 #
@@ -151,21 +152,6 @@ OFFSET_POINTS = "offset points"
 # - Rotated coordinate: y' = sin(-θ)·x + cos(-θ)·y
 # - Concentration: C(x,y,t) = inlet_signal(y' - v·t)
 # Note: At t=300s, the pattern has fully advected through the domain
-
-
-def convert_superscript(text):
-    map = {
-        "¹": "1",
-        "²": "2",
-        "³": "3",
-    }
-    trans_table = str.maketrans(
-        "".join(map.keys()),
-        "".join(map.values()),
-    )
-    return text.translate(trans_table)
-
-
 # %%
 def exact_solution_concentration(x, y, analytical):
     """Calculate exact concentration at any point in the domain.
@@ -520,6 +506,19 @@ def build_mf6gwf(grid_type):
     )
 
     return sim
+
+
+def convert_superscript(text):
+    map = {
+        "¹": "1",
+        "²": "2",
+        "³": "3",
+    }
+    trans_table = str.maketrans(
+        "".join(map.keys()),
+        "".join(map.values()),
+    )
+    return text.translate(trans_table)
 
 
 def build_mf6gwt(grid_type, scheme, wave_func):
