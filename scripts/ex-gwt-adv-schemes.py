@@ -8,7 +8,7 @@
 # where C is concentration [g/cm³] and **q** is the specific discharge field = (qx, qy) = (0.354, 0.354) cm/s at 45°. The problem is configured with no dispersion or diffusion terms, making it a perfect test case for numerical scheme performance since an analytical solution exists.
 #
 # **Problem Setup:**
-# - Domain: 100cm x 100cm square with uniform flow at 45° angle
+# - Domain: 100cm x 100cm square with uniform flow at a 45° angle
 # - Boundary conditions: Prescribed concentrations on inflow boundaries
 # - Time: 300 seconds with adaptive time stepping (initial dt = 5s)
 # - Physics: Pure advection without mixing processes (analytical solution available)
@@ -129,6 +129,11 @@ grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulati
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
 wave_functions = ["sin²-wave", "step-wave", "square-wave"]  # 3 test functions
 
+# Abbreviations for model names (to fit MF6's 16-character limit)
+grid_abbrev = {"structured": "s", "triangle": "t", "voronoi": "v"}
+wave_abbrev = {"sin2-wave": "sin2", "step-wave": "step", "square-wave": "sqr"}
+scheme_abbrev = {"upstream": "up", "central": "cen", "tvd": "tvd", "utvd": "utvd"}
+
 # Compute discharge components
 angle = math.radians(angledeg)
 qx = specific_discharge * math.cos(angle)  # x-component of specific discharge (cm/s)
@@ -136,6 +141,7 @@ qy = specific_discharge * math.cos(angle)  # y-component of specific discharge (
 
 AXES_FRACTION = "axes fraction"
 OFFSET_POINTS = "offset points"
+
 
 # %% [markdown]
 # # Analytical Solution
@@ -151,8 +157,6 @@ OFFSET_POINTS = "offset points"
 # - Rotated coordinate: y' = sin(-θ)·x + cos(-θ)·y
 # - Concentration: C(x,y,t) = inlet_signal(y' - v·t)
 # Note: At t=300s, the pattern has fully advected through the domain
-
-
 # %%
 def exact_solution_concentration(x, y, analytical):
     """Calculate exact concentration at any point in the domain.
@@ -378,7 +382,7 @@ def axis_aligned_segment_length(polygon, axis="y", value=0):
 
 # %%
 def build_mf6gwf(grid_type):
-    gwfname = f"flow_{grid_type}"
+    gwfname = f"gwf_{grid_type}"
     sim_ws = workspace / sim_name / Path(gwfname)
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
@@ -509,10 +513,26 @@ def build_mf6gwf(grid_type):
     return sim
 
 
+def convert_superscript(text):
+    map = {
+        "¹": "1",
+        "²": "2",
+        "³": "3",
+    }
+    trans_table = str.maketrans(
+        "".join(map.keys()),
+        "".join(map.values()),
+    )
+    return text.translate(trans_table)
+
+
 def build_mf6gwt(grid_type, scheme, wave_func):
-    pathname = f"trans_{grid_type}_{wave_func}_{scheme}"
-    gwtname = "trans"
-    gwfname = f"flow_{grid_type}"
+    # Use abbreviated names for model name (16-char MF6 limit)
+    wave_converted = convert_superscript(wave_func)
+    gwtname = f"gwt_{grid_abbrev[grid_type]}_{wave_abbrev[wave_converted]}_{scheme_abbrev[scheme]}"
+    # Use descriptive name for workspace
+    pathname = f"gwt_{grid_type}_{wave_converted}_{scheme}"
+    gwfname = f"gwf_{grid_type}"
     sim_ws = workspace / sim_name / Path(pathname)
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
@@ -644,7 +664,7 @@ def plot_flows(gwf_sims):
         fig, axs = plt.subplots(
             1, len(gwf_sims), dpi=300, figsize=figure_size, tight_layout=True
         )
-        fig.suptitle("Head - flow angle 45")
+        fig.suptitle("Head [cm] - flow angle 45 degrees")
 
         for idx, (grid, sim) in enumerate(gwf_sims.items()):
             plot_flow(sim, axs[idx])
@@ -699,7 +719,7 @@ def plot_concentrations(gwt_sims):
                 figsize=(7, 7 * len(schemes) / (len(grids) + 1)),
                 tight_layout=True,
             )
-            fig.suptitle(f"Concentration - {wave_func}")
+            fig.suptitle(f"Concentration [g/cm³] - {wave_func}")
 
             for idx_scheme, scheme in enumerate(schemes):
                 for idx_grid, grid in enumerate(grids):
@@ -736,7 +756,7 @@ def plot_concentrations(gwt_sims):
             if plot_show:
                 plt.show()
             if plot_save:
-                fname = f"{sim_name}-{wave_func}-conc.png"
+                fname = f"{sim_name}-{convert_superscript(wave_func)}-conc.png"
                 fpth = figs_path / fname
                 fig.savefig(fpth)
 
