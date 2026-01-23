@@ -160,8 +160,8 @@ def convert_superscript(text):
         "³": "3",
     }
     trans_table = str.maketrans(
-        "".join(map.keys()) + "".join(map.keys()),
-        "".join(map.values()) + "".join(map.values()),
+        "".join(map.keys()),
+        "".join(map.values()),
     )
     return text.translate(trans_table)
 
