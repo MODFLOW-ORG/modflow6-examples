@@ -391,7 +391,7 @@ def axis_aligned_segment_length(polygon, axis="y", value=0):
 
 # %%
 def build_mf6gwf(grid_type):
-    gwfname = f"flow_{grid_type}"
+    gwfname = f"gwf_{grid_type}"
     sim_ws = workspace / sim_name / Path(gwfname)
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
@@ -523,9 +523,9 @@ def build_mf6gwf(grid_type):
 
 
 def build_mf6gwt(grid_type, scheme, wave_func):
-    pathname = f"trans_{grid_type}_{convert_superscript(wave_func)}_{scheme}"
-    gwtname = "trans"
-    gwfname = f"flow_{grid_type}"
+    gwtname = f"gwt_{grid_type}_{convert_superscript(wave_func)}_{scheme}"
+    pathname = gwtname
+    gwfname = f"gwf_{grid_type}"
     sim_ws = workspace / sim_name / Path(pathname)
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
 
