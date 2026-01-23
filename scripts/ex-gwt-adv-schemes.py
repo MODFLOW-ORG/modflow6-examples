@@ -129,6 +129,11 @@ grids = ["structured", "triangle", "voronoi"]  # 3 grid types (36 total simulati
 schemes = ["upstream", "central", "tvd", "utvd"]  # 4 advection schemes
 wave_functions = ["sin²-wave", "step-wave", "square-wave"]  # 3 test functions
 
+# Abbreviations for model names (to fit MF6's 16-character limit)
+grid_abbrev = {"structured": "s", "triangle": "t", "voronoi": "v"}
+wave_abbrev = {"sin2-wave": "sin2", "step-wave": "step", "square-wave": "sqr"}
+scheme_abbrev = {"upstream": "up", "central": "cen", "tvd": "tvd", "utvd": "utvd"}
+
 # Compute discharge components
 angle = math.radians(angledeg)
 qx = specific_discharge * math.cos(angle)  # x-component of specific discharge (cm/s)
@@ -522,8 +527,11 @@ def convert_superscript(text):
 
 
 def build_mf6gwt(grid_type, scheme, wave_func):
-    gwtname = f"gwt_{grid_type}_{convert_superscript(wave_func)}_{scheme}"
-    pathname = gwtname
+    # Use abbreviated names for model name (16-char MF6 limit)
+    wave_converted = convert_superscript(wave_func)
+    gwtname = f"gwt_{grid_abbrev[grid_type]}_{wave_abbrev[wave_converted]}_{scheme_abbrev[scheme]}"
+    # Use descriptive name for workspace
+    pathname = f"gwt_{grid_type}_{wave_converted}_{scheme}"
     gwfname = f"gwf_{grid_type}"
     sim_ws = workspace / sim_name / Path(pathname)
     sim = flopy.mf6.MFSimulation(sim_name=sim_name, sim_ws=sim_ws, exe_name="mf6")
