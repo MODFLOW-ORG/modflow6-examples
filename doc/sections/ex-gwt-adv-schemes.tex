@@ -22,7 +22,7 @@ The spatial discretization uses three different grid types to test scheme perfor
 \item \textbf{Voronoi grid}: Grid using Voronoi cells derived from triangular cells
 \end{itemize}
 
-\noindent The simulation time spans 300 seconds using adaptive time stepping with an initial time step of 5 seconds and a Courant number of 0.7. The Courant number is a dimensionless quantity representing the fraction of a cell that fluid travels in a single time step. A value less or equal to 1 is required for stability of the central-difference scheme. A relatively high Courant number is chosen here specifically to challenge the central difference scheme and demonstrate its potential for oscillatory behavior on discontinuous functions. Four advection schemes are compared:
+\noindent The simulation time spans 300 seconds using adaptive time stepping with an initial time step of 5 seconds and a Courant number of 0.7. The Courant number is a dimensionless quantity representing the fraction of a cell that fluid travels in a single time step. A value less or equal to 1 is required for stability. A relatively high Courant number is chosen here specifically to challenge the central difference scheme and demonstrate its potential for oscillatory behavior on discontinuous functions. Four advection schemes are compared:
 \begin{itemize}
 \item \textbf{Upstream}: First-order accurate, stable but diffusive scheme
 \item \textbf{Central difference}: Second-order accurate but prone to oscillations on discontinuities
@@ -102,7 +102,7 @@ The results from these simulations provide several key findings that can be used
 \begin{enumerate}
 \item \textbf{Grid-dependent performance}: The central difference scheme performed reasonably on the structured grid but became unstable on the triangular and Voronoi grids, particularly for the discontinuous input concentration profiles. This demonstrates the critical importance of considering grid type when selecting numerical schemes.
 
-\item \textbf{Courant number sensitivity}: The central difference scheme's stability was highly sensitive to the Courant number. At Courant = 0.7, it exhibited undershoots leading to negative concentrations on smooth functions and oscillartory instability for the discontinuous inflow concentration profiles. Reducing the Courant number by reducing the time step size mitigated these issues for the smooth inflow concentration profile but at the cost of computational efficiency.
+\item \textbf{Courant number sensitivity}: The central difference scheme's stability was highly sensitive to the Courant number. At Courant = 0.7, it exhibited undershoots leading to negative concentrations on smooth functions and oscillartory instability for the discontinuous inflow concentration profiles. Reducing the Courant number mitigated these issues for the smooth inflow concentration profile but at the cost of computational efficiency.
 
 \item \textbf{UTVD scheme as overall best choice}: The UTVD scheme consistently outperformed all others across grid types and inflow concentration profiles. It was the least dissipative scheme that maintained stability, and is the only stable scheme that approached the maximum values of analytical solutions for sharp discontinuities.
 
