@@ -18,34 +18,29 @@ NOTEBOOKS_PATH = PROJ_ROOT / ".doc" / "_notebooks"
 SNAPSHOT_CONFIG: dict[str, dict[str, Callable[[Path], NDArray]]] = {
     # TODO: support multiple snapshot files. this is a dictionary to leave the door open for that.
     "ex-gwt-keating": {
-        "mf6prt/track.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "mf6prt/track.trk.csv": lambda p: (
+            pd.read_csv(p).drop("name", axis=1).round(2).to_records(index=False)
+        ),
     },
     "ex-prt-mp7-p01": {
-        "prt/mp7-p01-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p01-prt.trk.csv": lambda p: (
+            pd.read_csv(p).drop("name", axis=1).round(2).to_records(index=False)
+        ),
     },
     "ex-prt-mp7-p02": {
-        "prt/mp7-p02-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p02-prt.trk.csv": lambda p: (
+            pd.read_csv(p).drop("name", axis=1).round(2).to_records(index=False)
+        ),
     },
     "ex-prt-mp7-p03": {
-        "prt/mp7-p03-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p03-prt.trk.csv": lambda p: (
+            pd.read_csv(p).drop("name", axis=1).round(2).to_records(index=False)
+        ),
     },
     "ex-prt-mp7-p04": {
-        "prt/mp7-p04-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p04-prt.trk.csv": lambda p: (
+            pd.read_csv(p).drop("name", axis=1).round(2).to_records(index=False)
+        ),
     },
 }
 
