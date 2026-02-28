@@ -258,7 +258,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/snuggs-1.4.7-pyhd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/spirv-tools-2025.5-hb700be7_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/sqlite-3.51.2-h04a0ce9_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-5.1.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.9.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tbb-2022.3.0-hb700be7_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h366c992_103.conda
@@ -320,7 +320,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/4e/8c/f3147f5c4b73e7550fe5f9352eaa956ae838d5c51eb58e7a25b9f3e2643b/decorator-5.2.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c1/ea/53f2148663b321f21b5a606bd5f191517cf40b7072c0497d3c92c4a13b1e/executing-2.2.1-py2.py3-none-any.whl
-      - pypi: git+https://github.com/modflowpy/flopy#ef597740dcad877d3a3feda8f4e95e4bc1575a15
+      - pypi: git+https://github.com/modflowpy/flopy#2ac89a243e6e56dc08b88e7567ae8cfd18c9b499
       - pypi: https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/82/b9/e73d5d9f405cba7706c539aa8b311b49d4c2f3d698d9c12f815231169c71/ipykernel-7.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3d/aa/898dec789a05731cd5a9f50605b7b44a72bd198fd0d4528e11fc610177cc/ipython-9.10.0-py3-none-any.whl
@@ -623,7 +623,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/snuggs-1.4.7-pyhd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/spirv-tools-2025.5-hfefdfc9_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sqlite-3.51.2-hf1c7be2_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-5.1.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.9.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tbb-2022.3.0-hfefdfc9_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tk-8.6.13-noxft_h0dc03b3_103.conda
@@ -687,7 +687,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/4e/8c/f3147f5c4b73e7550fe5f9352eaa956ae838d5c51eb58e7a25b9f3e2643b/decorator-5.2.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c1/ea/53f2148663b321f21b5a606bd5f191517cf40b7072c0497d3c92c4a13b1e/executing-2.2.1-py2.py3-none-any.whl
-      - pypi: git+https://github.com/modflowpy/flopy#ef597740dcad877d3a3feda8f4e95e4bc1575a15
+      - pypi: git+https://github.com/modflowpy/flopy#2ac89a243e6e56dc08b88e7567ae8cfd18c9b499
       - pypi: https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/82/b9/e73d5d9f405cba7706c539aa8b311b49d4c2f3d698d9c12f815231169c71/ipykernel-7.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3d/aa/898dec789a05731cd5a9f50605b7b44a72bd198fd0d4528e11fc610177cc/ipython-9.10.0-py3-none-any.whl
@@ -969,7 +969,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/snuggs-1.4.7-pyhd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/spirv-tools-2025.5-h06b67a2_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/sqlite-3.51.2-h5af3ad2_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-5.1.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.9.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/tbb-2022.3.0-h06b67a2_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/tk-8.6.13-h7142dee_3.conda
@@ -1015,7 +1015,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/4e/8c/f3147f5c4b73e7550fe5f9352eaa956ae838d5c51eb58e7a25b9f3e2643b/decorator-5.2.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c1/ea/53f2148663b321f21b5a606bd5f191517cf40b7072c0497d3c92c4a13b1e/executing-2.2.1-py2.py3-none-any.whl
-      - pypi: git+https://github.com/modflowpy/flopy#ef597740dcad877d3a3feda8f4e95e4bc1575a15
+      - pypi: git+https://github.com/modflowpy/flopy#2ac89a243e6e56dc08b88e7567ae8cfd18c9b499
       - pypi: https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/82/b9/e73d5d9f405cba7706c539aa8b311b49d4c2f3d698d9c12f815231169c71/ipykernel-7.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3d/aa/898dec789a05731cd5a9f50605b7b44a72bd198fd0d4528e11fc610177cc/ipython-9.10.0-py3-none-any.whl
@@ -1297,7 +1297,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/snuggs-1.4.7-pyhd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/spirv-tools-2025.5-h4ddebb9_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sqlite-3.51.2-h77b7338_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-5.1.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.9.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tbb-2022.3.0-h4ddebb9_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tk-8.6.13-h010d191_3.conda
@@ -1343,7 +1343,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/4e/8c/f3147f5c4b73e7550fe5f9352eaa956ae838d5c51eb58e7a25b9f3e2643b/decorator-5.2.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c1/ea/53f2148663b321f21b5a606bd5f191517cf40b7072c0497d3c92c4a13b1e/executing-2.2.1-py2.py3-none-any.whl
-      - pypi: git+https://github.com/modflowpy/flopy#ef597740dcad877d3a3feda8f4e95e4bc1575a15
+      - pypi: git+https://github.com/modflowpy/flopy#2ac89a243e6e56dc08b88e7567ae8cfd18c9b499
       - pypi: https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/82/b9/e73d5d9f405cba7706c539aa8b311b49d4c2f3d698d9c12f815231169c71/ipykernel-7.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3d/aa/898dec789a05731cd5a9f50605b7b44a72bd198fd0d4528e11fc610177cc/ipython-9.10.0-py3-none-any.whl
@@ -1629,7 +1629,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/win-64/spirv-tools-2025.5-h49e36cd_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/sqlite-3.51.2-hdb435a2_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/svt-av1-4.0.1-hac47afa_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-5.1.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.9.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/tbb-2022.3.0-h3155e25_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/tk-8.6.13-h6ed50ae_3.conda
@@ -1678,7 +1678,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/4e/8c/f3147f5c4b73e7550fe5f9352eaa956ae838d5c51eb58e7a25b9f3e2643b/decorator-5.2.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c1/ea/53f2148663b321f21b5a606bd5f191517cf40b7072c0497d3c92c4a13b1e/executing-2.2.1-py2.py3-none-any.whl
-      - pypi: git+https://github.com/modflowpy/flopy#ef597740dcad877d3a3feda8f4e95e4bc1575a15
+      - pypi: git+https://github.com/modflowpy/flopy#2ac89a243e6e56dc08b88e7567ae8cfd18c9b499
       - pypi: https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/82/b9/e73d5d9f405cba7706c539aa8b311b49d4c2f3d698d9c12f815231169c71/ipykernel-7.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3d/aa/898dec789a05731cd5a9f50605b7b44a72bd198fd0d4528e11fc610177cc/ipython-9.10.0-py3-none-any.whl
@@ -1739,8 +1739,6 @@ packages:
   - libgomp >=7.5.0
   constrains:
   - openmp_impl <0.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -1754,8 +1752,6 @@ packages:
   - libgomp >=7.5.0
   constrains:
   - openmp_impl <0.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -1767,8 +1763,6 @@ packages:
   md5: eaac87c21aff3ed21ad9656697bb8326
   depends:
   - llvm-openmp >=9.0.1
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -1780,8 +1774,6 @@ packages:
   md5: a44032f282e7d2acdeb1c240308052dd
   depends:
   - llvm-openmp >=9.0.1
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -1797,8 +1789,6 @@ packages:
   constrains:
   - openmp_impl <0.0a0
   - msys2-conda-epoch <0.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -1841,8 +1831,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - yarl >=1.17.0,<2.0
-  arch: x86_64
-  platform: linux
   license: MIT AND Apache-2.0
   license_family: Apache
   purls:
@@ -1864,8 +1852,6 @@ packages:
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
   - yarl >=1.17.0,<2.0
-  arch: aarch64
-  platform: linux
   license: MIT AND Apache-2.0
   license_family: Apache
   purls:
@@ -1886,8 +1872,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - yarl >=1.17.0,<2.0
-  arch: x86_64
-  platform: osx
   license: MIT AND Apache-2.0
   license_family: Apache
   purls:
@@ -1909,8 +1893,6 @@ packages:
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
   - yarl >=1.17.0,<2.0
-  arch: arm64
-  platform: osx
   license: MIT AND Apache-2.0
   license_family: Apache
   purls:
@@ -1933,8 +1915,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - yarl >=1.17.0,<2.0
-  arch: x86_64
-  platform: win
   license: MIT AND Apache-2.0
   license_family: Apache
   purls:
@@ -1965,8 +1945,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-or-later
   license_family: GPL
   purls: []
@@ -1977,8 +1955,6 @@ packages:
   md5: 4a98cbc4ade694520227402ff8880630
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-or-later
   license_family: GPL
   purls: []
@@ -1991,8 +1967,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -2031,8 +2005,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -2043,8 +2015,6 @@ packages:
   md5: 1ef6c06fec1b6f5ee99ffe2152e53568
   depends:
   - libgcc-ng >=12
-  arch: aarch64
-  platform: linux
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -2086,8 +2056,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - python_abi 3.13.* *_cp313
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause AND MIT AND EPL-2.0
   purls:
   - pkg:pypi/backports-zstd?source=hash-mapping
@@ -2102,8 +2070,6 @@ packages:
   - python 3.12.* *_cpython
   - zstd >=1.5.7,<1.6.0a0
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause AND MIT AND EPL-2.0
   purls:
   - pkg:pypi/backports-zstd?source=hash-mapping
@@ -2117,8 +2083,6 @@ packages:
   - __osx >=10.13
   - python_abi 3.13.* *_cp313
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause AND MIT AND EPL-2.0
   purls:
   - pkg:pypi/backports-zstd?source=hash-mapping
@@ -2133,8 +2097,6 @@ packages:
   - __osx >=11.0
   - zstd >=1.5.7,<1.6.0a0
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause AND MIT AND EPL-2.0
   purls:
   - pkg:pypi/backports-zstd?source=hash-mapping
@@ -2150,8 +2112,6 @@ packages:
   - ucrt >=10.0.20348.0
   - python_abi 3.13.* *_cp313
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause AND MIT AND EPL-2.0
   purls:
   - pkg:pypi/backports-zstd?source=hash-mapping
@@ -2284,8 +2244,6 @@ packages:
   - lz4-c >=1.10.0,<1.11.0a0
   - snappy >=1.2.1,<1.3.0a0
   - zstd >=1.5.6,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2301,8 +2259,6 @@ packages:
   - lz4-c >=1.10.0,<1.11.0a0
   - snappy >=1.2.1,<1.3.0a0
   - zstd >=1.5.6,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2318,8 +2274,6 @@ packages:
   - lz4-c >=1.10.0,<1.11.0a0
   - snappy >=1.2.1,<1.3.0a0
   - zstd >=1.5.6,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2335,8 +2289,6 @@ packages:
   - lz4-c >=1.10.0,<1.11.0a0
   - snappy >=1.2.1,<1.3.0a0
   - zstd >=1.5.6,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2353,8 +2305,6 @@ packages:
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
   - zstd >=1.5.6,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2402,8 +2352,6 @@ packages:
   - libbrotlidec 1.2.0 hb03c661_1
   - libbrotlienc 1.2.0 hb03c661_1
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -2417,8 +2365,6 @@ packages:
   - libbrotlidec 1.2.0 he30d5cf_1
   - libbrotlienc 1.2.0 he30d5cf_1
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -2432,8 +2378,6 @@ packages:
   - brotli-bin 1.2.0 h8616949_1
   - libbrotlidec 1.2.0 h8616949_1
   - libbrotlienc 1.2.0 h8616949_1
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -2447,8 +2391,6 @@ packages:
   - brotli-bin 1.2.0 hc919400_1
   - libbrotlidec 1.2.0 hc919400_1
   - libbrotlienc 1.2.0 hc919400_1
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -2464,8 +2406,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -2479,8 +2419,6 @@ packages:
   - libbrotlidec 1.2.0 hb03c661_1
   - libbrotlienc 1.2.0 hb03c661_1
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -2493,8 +2431,6 @@ packages:
   - libbrotlidec 1.2.0 he30d5cf_1
   - libbrotlienc 1.2.0 he30d5cf_1
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -2507,8 +2443,6 @@ packages:
   - __osx >=10.13
   - libbrotlidec 1.2.0 h8616949_1
   - libbrotlienc 1.2.0 h8616949_1
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -2521,8 +2455,6 @@ packages:
   - __osx >=11.0
   - libbrotlidec 1.2.0 hc919400_1
   - libbrotlienc 1.2.0 hc919400_1
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -2537,8 +2469,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -2555,8 +2485,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - libbrotlicommon 1.2.0 hb03c661_1
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -2574,8 +2502,6 @@ packages:
   - python_abi 3.12.* *_cp312
   constrains:
   - libbrotlicommon 1.2.0 he30d5cf_1
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -2592,8 +2518,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - libbrotlicommon 1.2.0 h8616949_1
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -2611,8 +2535,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - libbrotlicommon 1.2.0 hc919400_1
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -2630,8 +2552,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - libbrotlicommon 1.2.0 hfd05255_1
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -2644,8 +2564,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: bzip2-1.0.6
   license_family: BSD
   purls: []
@@ -2656,8 +2574,6 @@ packages:
   md5: 840d8fc0d7b3209be93080bc20e07f2d
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: bzip2-1.0.6
   license_family: BSD
   purls: []
@@ -2668,8 +2584,6 @@ packages:
   md5: 4173ac3b19ec0a4f400b4f782910368b
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: bzip2-1.0.6
   license_family: BSD
   purls: []
@@ -2680,8 +2594,6 @@ packages:
   md5: 620b85a3f45526a8bc4d23fd78fc22f0
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: bzip2-1.0.6
   license_family: BSD
   purls: []
@@ -2694,8 +2606,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: bzip2-1.0.6
   license_family: BSD
   purls: []
@@ -2707,8 +2617,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -2719,8 +2627,6 @@ packages:
   md5: 1dfbec0d08f112103405756181304c16
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -2731,8 +2637,6 @@ packages:
   md5: fc9a153c57c9f070bebaa7eef30a8f17
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -2743,8 +2647,6 @@ packages:
   md5: bcb3cba70cf1eec964a03b4ba7775f01
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -2791,8 +2693,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxrender >=0.9.12,<0.10.0a0
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-only or MPL-1.1
   purls: []
   size: 989514
@@ -2819,8 +2719,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxrender >=0.9.12,<0.10.0a0
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-only or MPL-1.1
   purls: []
   size: 927045
@@ -2841,8 +2739,6 @@ packages:
   - libpng >=1.6.53,<1.7.0a0
   - libzlib >=1.3.1,<2.0a0
   - pixman >=0.46.4,<1.0a0
-  arch: x86_64
-  platform: osx
   license: LGPL-2.1-only or MPL-1.1
   purls: []
   size: 896676
@@ -2863,8 +2759,6 @@ packages:
   - libpng >=1.6.53,<1.7.0a0
   - libzlib >=1.3.1,<2.0a0
   - pixman >=0.46.4,<1.0a0
-  arch: arm64
-  platform: osx
   license: LGPL-2.1-only or MPL-1.1
   purls: []
   size: 900035
@@ -2886,8 +2780,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-only or MPL-1.1
   purls: []
   size: 1537783
@@ -2937,8 +2829,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libstdcxx >=14
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2951,8 +2841,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2964,8 +2852,6 @@ packages:
   depends:
   - libcxx >=19
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2977,8 +2863,6 @@ packages:
   depends:
   - libcxx >=19
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -2994,8 +2878,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -3103,8 +2985,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3121,8 +3001,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3138,8 +3016,6 @@ packages:
   - libcxx >=19
   - __osx >=10.13
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3156,8 +3032,6 @@ packages:
   - __osx >=11.0
   - python 3.13.* *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3174,8 +3048,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3223,8 +3095,6 @@ packages:
   - libstdcxx >=13
   - libxcrypt >=4.4.36
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause-Attribution
   license_family: BSD
   purls: []
@@ -3240,8 +3110,6 @@ packages:
   - libstdcxx >=13
   - libxcrypt >=4.4.36
   - openssl >=3.5.5,<4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause-Attribution
   license_family: BSD
   purls: []
@@ -3256,8 +3124,6 @@ packages:
   - libcxx >=19
   - libntlm >=1.8,<2.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause-Attribution
   license_family: BSD
   purls: []
@@ -3272,8 +3138,6 @@ packages:
   - libcxx >=19
   - libntlm >=1.8,<2.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause-Attribution
   license_family: BSD
   purls: []
@@ -3286,8 +3150,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -3303,8 +3165,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - libglib >=2.86.2,<3.0a0
   - libexpat >=2.7.3,<3.0a0
-  arch: x86_64
-  platform: linux
   license: AFL-2.1 OR GPL-2.0-or-later
   purls: []
   size: 447649
@@ -3318,8 +3178,6 @@ packages:
   - libglib >=2.86.2,<3.0a0
   - libzlib >=1.3.1,<2.0a0
   - libexpat >=2.7.3,<3.0a0
-  arch: aarch64
-  platform: linux
   license: AFL-2.1 OR GPL-2.0-or-later
   purls: []
   size: 480416
@@ -3383,8 +3241,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -3396,8 +3252,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -3409,8 +3263,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -3422,8 +3274,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -3436,8 +3286,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -3515,8 +3363,6 @@ packages:
   - x265 >=3.5,<3.6.0a0
   constrains:
   - __cuda  >=12.8
-  arch: x86_64
-  platform: win
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -3548,8 +3394,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - shapely
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3572,8 +3416,6 @@ packages:
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
   - shapely
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3595,8 +3437,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - shapely
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3619,8 +3459,6 @@ packages:
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
   - shapely
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3643,8 +3481,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -3662,13 +3498,13 @@ packages:
   - pkg:pypi/flaky?source=hash-mapping
   size: 22239
   timestamp: 1736040820816
-- pypi: git+https://github.com/modflowpy/flopy#ef597740dcad877d3a3feda8f4e95e4bc1575a15
+- pypi: git+https://github.com/modflowpy/flopy#2ac89a243e6e56dc08b88e7567ae8cfd18c9b499
   name: flopy
   version: 3.11.0.dev0
   requires_dist:
   - matplotlib>=1.4.0
   - numpy>=1.20.3,<3.0
-  - pandas>=2.0.0,<3.0
+  - pandas>=2.0.0
   - boltons ; extra == 'codegen'
   - jinja2>=3.0 ; extra == 'codegen'
   - modflow-devtools>=1.7.0 ; extra == 'codegen'
@@ -3809,8 +3645,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -3822,8 +3656,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -3835,8 +3667,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -3848,8 +3678,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -3862,8 +3690,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -3928,8 +3754,6 @@ packages:
   - libgcc >=14
   - libuuid >=2.41.3,<3.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -3945,8 +3769,6 @@ packages:
   - libgcc >=14
   - libuuid >=2.41.3,<3.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -3961,8 +3783,6 @@ packages:
   - libfreetype >=2.14.1
   - libfreetype6 >=2.14.1
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -3977,8 +3797,6 @@ packages:
   - libfreetype >=2.14.1
   - libfreetype6 >=2.14.1
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -3996,8 +3814,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -4036,8 +3852,6 @@ packages:
   - munkres
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -4055,8 +3869,6 @@ packages:
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
   - unicodedata2 >=15.1.0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -4072,8 +3884,6 @@ packages:
   - munkres
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -4090,8 +3900,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -4109,8 +3917,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -4146,8 +3952,6 @@ packages:
   depends:
   - libfreetype 2.14.1 ha770c72_0
   - libfreetype6 2.14.1 h73754d4_0
-  arch: x86_64
-  platform: linux
   license: GPL-2.0-only OR FTL
   purls: []
   size: 173114
@@ -4158,8 +3962,6 @@ packages:
   depends:
   - libfreetype 2.14.1 h8af1aa0_0
   - libfreetype6 2.14.1 hdae7a39_0
-  arch: aarch64
-  platform: linux
   license: GPL-2.0-only OR FTL
   purls: []
   size: 173174
@@ -4170,8 +3972,6 @@ packages:
   depends:
   - libfreetype 2.14.1 h694c41f_0
   - libfreetype6 2.14.1 h6912278_0
-  arch: x86_64
-  platform: osx
   license: GPL-2.0-only OR FTL
   purls: []
   size: 173969
@@ -4182,8 +3982,6 @@ packages:
   depends:
   - libfreetype 2.14.1 hce30654_0
   - libfreetype6 2.14.1 h6da58f4_0
-  arch: arm64
-  platform: osx
   license: GPL-2.0-only OR FTL
   purls: []
   size: 173399
@@ -4194,8 +3992,6 @@ packages:
   depends:
   - libfreetype 2.14.1 h57928b3_0
   - libfreetype6 2.14.1 hdbac1cb_0
-  arch: x86_64
-  platform: win
   license: GPL-2.0-only OR FTL
   purls: []
   size: 184553
@@ -4209,8 +4005,6 @@ packages:
   - libgcc >=13
   - libiconv >=1.17,<2.0a0
   - minizip >=4.0.7,<5.0a0
-  arch: x86_64
-  platform: linux
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -4224,8 +4018,6 @@ packages:
   - libgcc >=13
   - libiconv >=1.17,<2.0a0
   - minizip >=4.0.7,<5.0a0
-  arch: aarch64
-  platform: linux
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -4239,8 +4031,6 @@ packages:
   - libexpat >=2.6.4,<3.0a0
   - libiconv >=1.17,<2.0a0
   - minizip >=4.0.7,<5.0a0
-  arch: x86_64
-  platform: osx
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -4254,8 +4044,6 @@ packages:
   - libexpat >=2.6.4,<3.0a0
   - libiconv >=1.17,<2.0a0
   - minizip >=4.0.7,<5.0a0
-  arch: arm64
-  platform: osx
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -4271,8 +4059,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -4285,8 +4071,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   purls: []
   size: 64394
@@ -4300,8 +4084,6 @@ packages:
   - libstdcxx >=14
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -4317,8 +4099,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -4333,8 +4113,6 @@ packages:
   - libcxx >=19
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -4350,8 +4128,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -4367,8 +4143,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -4388,8 +4162,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   license_family: LGPL
   purls: []
@@ -4434,8 +4206,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-only
   purls: []
   size: 1974942
@@ -4446,8 +4216,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-only
   purls: []
   size: 1938302
@@ -4458,8 +4226,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: LGPL-2.1-only
   purls: []
   size: 1631280
@@ -4470,8 +4236,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: LGPL-2.1-only
   purls: []
   size: 1530844
@@ -4483,8 +4247,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-only
   purls: []
   size: 1772787
@@ -4494,8 +4256,6 @@ packages:
   md5: 3bf7b9fd5a7136126e0234db4b87c8b6
   depends:
   - libgcc-ng >=12
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -4506,8 +4266,6 @@ packages:
   md5: 2f809afaf0ba1ea4135dce158169efac
   depends:
   - libgcc-ng >=12
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -4516,8 +4274,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/osx-64/giflib-5.2.2-h10d778d_0.conda
   sha256: 2c825df829097536314a195ae5cacaa8695209da6b4400135a65d8e23c008ff8
   md5: 03e8c9b4d3da5f3d6eabdd020c2d63ac
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -4526,8 +4282,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/osx-arm64/giflib-5.2.2-h93a5062_0.conda
   sha256: 843b3f364ff844137e37d5c0a181f11f6d51adcedd216f019d074e5aa5d7e09c
   md5: 95fa1486c77505330c20f7202492b913
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -4565,8 +4319,6 @@ packages:
   - libgcc-ng >=12
   - libpng >=1.6.43,<1.7.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4579,8 +4331,6 @@ packages:
   - libgcc-ng >=12
   - libpng >=1.6.43,<1.7.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4595,8 +4345,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4612,8 +4360,6 @@ packages:
   - libglu >=9.0.3,<9.1.0a0
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4628,8 +4374,6 @@ packages:
   - libglu >=9.0.3,<9.1.0a0
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4640,8 +4384,6 @@ packages:
   md5: eb83196b38ed1b0e3043a332bc3c4f0d
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4652,8 +4394,6 @@ packages:
   md5: 13c0abed8df38b7e9678b7713559202a
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4666,8 +4406,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4681,8 +4419,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4695,8 +4431,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4708,8 +4442,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4721,8 +4453,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4734,8 +4464,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4748,8 +4476,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
@@ -4784,8 +4510,6 @@ packages:
   - libglib >=2.86.3,<3.0a0
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -4805,8 +4529,6 @@ packages:
   - libglib >=2.86.3,<3.0a0
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -4826,8 +4548,6 @@ packages:
   - libfreetype6 >=2.14.1
   - libglib >=2.86.3,<3.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -4847,8 +4567,6 @@ packages:
   - libfreetype6 >=2.14.1
   - libglib >=2.86.3,<3.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -4869,8 +4587,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -4884,8 +4600,6 @@ packages:
   - libjpeg-turbo >=3.0.0,<4.0a0
   - libstdcxx-ng >=12
   - libzlib >=1.2.13,<2.0.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4899,8 +4613,6 @@ packages:
   - libjpeg-turbo >=3.0.0,<4.0a0
   - libstdcxx-ng >=12
   - libzlib >=1.2.13,<2.0.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4913,8 +4625,6 @@ packages:
   - libcxx >=15.0.7
   - libjpeg-turbo >=3.0.0,<4.0a0
   - libzlib >=1.2.13,<2.0.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4927,8 +4637,6 @@ packages:
   - libcxx >=15.0.7
   - libjpeg-turbo >=3.0.0,<4.0a0
   - libzlib >=1.2.13,<2.0.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4943,8 +4651,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4963,8 +4669,6 @@ packages:
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -4982,8 +4686,6 @@ packages:
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -5001,8 +4703,6 @@ packages:
   - libgfortran5 >=14.3.0
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -5020,8 +4720,6 @@ packages:
   - libgfortran5 >=14.3.0
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -5038,8 +4736,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -5074,8 +4770,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5087,8 +4781,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5099,8 +4791,6 @@ packages:
   md5: 30334add4de016489b731c6662511684
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5111,8 +4801,6 @@ packages:
   md5: 1e93aca311da0210e660d2247812fa02
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5125,8 +4813,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -5336,8 +5022,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5348,8 +5032,6 @@ packages:
   md5: 9c23430bcadd724434a88657abbeef46
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5360,8 +5042,6 @@ packages:
   md5: 2c5a3c42de607dda0cfa0edd541fd279
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5372,8 +5052,6 @@ packages:
   md5: 94f14ef6157687c30feb44e1abecd577
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5386,8 +5064,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libstdcxx >=13
-  arch: x86_64
-  platform: linux
   license: LicenseRef-Public-Domain OR MIT
   purls: []
   size: 169093
@@ -5398,8 +5074,6 @@ packages:
   depends:
   - libgcc >=13
   - libstdcxx >=13
-  arch: aarch64
-  platform: linux
   license: LicenseRef-Public-Domain OR MIT
   purls: []
   size: 162312
@@ -5410,8 +5084,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=18
-  arch: x86_64
-  platform: osx
   license: LicenseRef-Public-Domain OR MIT
   purls: []
   size: 145556
@@ -5422,8 +5094,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=18
-  arch: arm64
-  platform: osx
   license: LicenseRef-Public-Domain OR MIT
   purls: []
   size: 145287
@@ -5435,8 +5105,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: LicenseRef-Public-Domain OR MIT
   purls: []
   size: 342126
@@ -5551,8 +5219,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 134088
@@ -5562,8 +5228,6 @@ packages:
   md5: e7df0aab10b9cbb73ab2a467ebfaf8c7
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 129048
@@ -5577,8 +5241,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -5593,8 +5255,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -5609,8 +5269,6 @@ packages:
   - __osx >=10.13
   - libcxx >=19
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -5626,8 +5284,6 @@ packages:
   - python 3.13.* *_cp313
   - __osx >=11.0
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -5646,8 +5302,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -5665,8 +5319,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5682,8 +5334,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - openssl >=3.5.5,<4.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5698,8 +5348,6 @@ packages:
   - libedit >=3.1.20250104,<3.2.0a0
   - libedit >=3.1.20250104,<4.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5714,8 +5362,6 @@ packages:
   - libedit >=3.1.20250104,<3.2.0a0
   - libedit >=3.1.20250104,<4.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5729,8 +5375,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -5743,8 +5387,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vs2015_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: LGPL-2.0-only
   license_family: LGPL
   purls: []
@@ -5758,8 +5400,6 @@ packages:
   - libgcc >=14
   - libjpeg-turbo >=3.1.2,<4.0a0
   - libtiff >=4.7.1,<4.8.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5772,8 +5412,6 @@ packages:
   - libgcc >=14
   - libjpeg-turbo >=3.1.2,<4.0a0
   - libtiff >=4.7.1,<4.8.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -5786,8 +5424,6 @@ packages:
   - __osx >=10.13
   - libjpeg-turbo >=3.1.2,<4.0a0
   - libtiff >=4.7.1,<4.8.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5800,8 +5436,6 @@ packages:
   - __osx >=11.0
   - libjpeg-turbo >=3.1.2,<4.0a0
   - libtiff >=4.7.1,<4.8.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -5816,8 +5450,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -5831,8 +5463,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - binutils_impl_linux-64 2.45.1
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only
   license_family: GPL
   purls: []
@@ -5845,8 +5475,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - binutils_impl_linux-aarch64 2.45.1
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only
   license_family: GPL
   purls: []
@@ -5859,8 +5487,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libstdcxx >=13
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -5872,8 +5498,6 @@ packages:
   depends:
   - libgcc >=13
   - libstdcxx >=13
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -5885,8 +5509,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=18
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -5898,8 +5520,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=18
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -5912,8 +5532,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -5926,8 +5544,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -5939,8 +5555,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -5952,8 +5566,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -5965,8 +5577,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -5979,8 +5589,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6001,8 +5609,6 @@ packages:
   - lzo >=2.10,<3.0a0
   - openssl >=3.5.4,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6022,8 +5628,6 @@ packages:
   - lzo >=2.10,<3.0a0
   - openssl >=3.5.4,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6044,8 +5648,6 @@ packages:
   - lzo >=2.10,<3.0a0
   - openssl >=3.5.4,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6066,8 +5668,6 @@ packages:
   - lzo >=2.10,<3.0a0
   - openssl >=3.5.4,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6089,8 +5689,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6109,8 +5707,6 @@ packages:
   - libcblas   3.11.0   5*_openblas
   - blas 2.305   openblas
   - liblapacke 3.11.0   5*_openblas
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6129,8 +5725,6 @@ packages:
   - liblapack  3.11.0   5*_openblas
   - liblapacke 3.11.0   5*_openblas
   - blas 2.305   openblas
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6149,8 +5743,6 @@ packages:
   - libcblas   3.11.0   5*_openblas
   - mkl <2026
   - liblapacke 3.11.0   5*_openblas
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6169,8 +5761,6 @@ packages:
   - liblapacke 3.11.0   5*_openblas
   - blas 2.305   openblas
   - mkl <2026
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6187,8 +5777,6 @@ packages:
   - libcblas   3.11.0   5*_mkl
   - blas 2.305   mkl
   - liblapacke 3.11.0   5*_mkl
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6200,8 +5788,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6212,8 +5798,6 @@ packages:
   md5: 8ec1d03f3000108899d1799d9964f281
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6224,8 +5808,6 @@ packages:
   md5: f157c098841474579569c85a60ece586
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6236,8 +5818,6 @@ packages:
   md5: 006e7ddd8a110771134fcc4e1e3a6ffa
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6250,8 +5830,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -6264,8 +5842,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libbrotlicommon 1.2.0 hb03c661_1
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6277,8 +5853,6 @@ packages:
   depends:
   - libbrotlicommon 1.2.0 he30d5cf_1
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6290,8 +5864,6 @@ packages:
   depends:
   - __osx >=10.13
   - libbrotlicommon 1.2.0 h8616949_1
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6303,8 +5875,6 @@ packages:
   depends:
   - __osx >=11.0
   - libbrotlicommon 1.2.0 hc919400_1
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6318,8 +5888,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -6332,8 +5900,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libbrotlicommon 1.2.0 hb03c661_1
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6345,8 +5911,6 @@ packages:
   depends:
   - libbrotlicommon 1.2.0 he30d5cf_1
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6358,8 +5922,6 @@ packages:
   depends:
   - __osx >=10.13
   - libbrotlicommon 1.2.0 h8616949_1
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6371,8 +5933,6 @@ packages:
   depends:
   - __osx >=11.0
   - libbrotlicommon 1.2.0 hc919400_1
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6386,8 +5946,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -6403,8 +5961,6 @@ packages:
   - liblapacke 3.11.0   5*_openblas
   - blas 2.305   openblas
   - liblapack  3.11.0   5*_openblas
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6420,8 +5976,6 @@ packages:
   - liblapack  3.11.0   5*_openblas
   - liblapacke 3.11.0   5*_openblas
   - blas 2.305   openblas
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6437,8 +5991,6 @@ packages:
   - liblapack  3.11.0   5*_openblas
   - blas 2.305   openblas
   - liblapacke 3.11.0   5*_openblas
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6454,8 +6006,6 @@ packages:
   - liblapacke 3.11.0   5*_openblas
   - liblapack  3.11.0   5*_openblas
   - blas 2.305   openblas
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6471,8 +6021,6 @@ packages:
   - liblapack  3.11.0   5*_mkl
   - liblapacke 3.11.0   5*_mkl
   - blas 2.305   mkl
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -6485,8 +6033,6 @@ packages:
   - __osx >=10.13
   - libcxx >=19.1.7
   - libllvm19 >=19.1.7,<19.2.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6499,8 +6045,6 @@ packages:
   - __osx >=11.0
   - libcxx >=19.1.7
   - libllvm19 >=19.1.7,<19.2.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6514,8 +6058,6 @@ packages:
   - libgcc >=14
   - libllvm22 >=22.1.0,<22.2.0a0
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6528,8 +6070,6 @@ packages:
   - libgcc >=14
   - libllvm22 >=22.1.0,<22.2.0a0
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6543,8 +6083,6 @@ packages:
   - libgcc >=14
   - libllvm22 >=22.1.0,<22.2.0a0
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6557,8 +6095,6 @@ packages:
   - libgcc >=14
   - libllvm22 >=22.1.0,<22.2.0a0
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6571,8 +6107,6 @@ packages:
   - __osx >=11.0
   - libcxx >=22.1.0
   - libllvm22 >=22.1.0,<22.2.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6585,8 +6119,6 @@ packages:
   - __osx >=11.0
   - libcxx >=22.1.0
   - libllvm22 >=22.1.0,<22.2.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6601,8 +6133,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6617,8 +6147,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -6632,8 +6160,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -6651,8 +6177,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: curl
   license_family: MIT
   purls: []
@@ -6669,8 +6193,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: curl
   license_family: MIT
   purls: []
@@ -6687,8 +6209,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: curl
   license_family: MIT
   purls: []
@@ -6705,8 +6225,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: curl
   license_family: MIT
   purls: []
@@ -6722,8 +6240,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: curl
   license_family: MIT
   purls: []
@@ -6734,8 +6250,6 @@ packages:
   md5: 836389b6b9ae58f3fbcf7cafebd5c7f2
   depends:
   - __osx >=11.0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6746,8 +6260,6 @@ packages:
   md5: e9c56daea841013e7774b5cd46f41564
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -6759,8 +6271,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6771,8 +6281,6 @@ packages:
   md5: a9138815598fe6b91a1d6782ca657b0c
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6783,8 +6291,6 @@ packages:
   md5: 31aa65919a729dc48180893f62c25221
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6795,8 +6301,6 @@ packages:
   md5: a6130c709305cd9828b4e1bd9ba0000c
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -6809,8 +6313,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -6823,8 +6325,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libpciaccess >=0.18,<0.19.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6836,8 +6336,6 @@ packages:
   depends:
   - libgcc >=14
   - libpciaccess >=0.18,<0.19.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6851,8 +6349,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - ncurses >=6.5,<7.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6865,8 +6361,6 @@ packages:
   - ncurses
   - libgcc >=13
   - ncurses >=6.5,<7.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6879,8 +6373,6 @@ packages:
   - ncurses
   - __osx >=10.13
   - ncurses >=6.5,<7.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6893,8 +6385,6 @@ packages:
   - ncurses
   - __osx >=11.0
   - ncurses >=6.5,<7.0a0
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6906,8 +6396,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libglvnd 1.7.0 ha4b6fd6_2
-  arch: x86_64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 44840
@@ -6917,8 +6405,6 @@ packages:
   md5: cf105bce884e4ef8c8ccdca9fe6695e7
   depends:
   - libglvnd 1.7.0 hd24410f_2
-  arch: aarch64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 53551
@@ -6928,8 +6414,6 @@ packages:
   md5: 172bf1cd1ff8629f2b1179945ed45055
   depends:
   - libgcc-ng >=12
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6940,8 +6424,6 @@ packages:
   md5: a9a13cb143bbaa477b1ebaefbe47a302
   depends:
   - libgcc-ng >=12
-  arch: aarch64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6950,8 +6432,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/osx-64/libev-4.33-h10d778d_2.conda
   sha256: 0d238488564a7992942aa165ff994eca540f687753b4f0998b29b4e4d030ff43
   md5: 899db79329439820b7e8f8de41bca902
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6960,8 +6440,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/osx-arm64/libev-4.33-h93a5062_2.conda
   sha256: 95cecb3902fbe0399c3a7e67a5bed1db813e5ab0e22f4023a5e0f722f2cc214f
   md5: 36d33e440c31857372a72137f78bacf5
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -6975,8 +6453,6 @@ packages:
   - libgcc >=14
   constrains:
   - expat 2.7.4.*
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -6989,8 +6465,6 @@ packages:
   - libgcc >=14
   constrains:
   - expat 2.7.4.*
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -7003,8 +6477,6 @@ packages:
   - __osx >=10.13
   constrains:
   - expat 2.7.4.*
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -7017,8 +6489,6 @@ packages:
   - __osx >=11.0
   constrains:
   - expat 2.7.4.*
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -7033,8 +6503,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - expat 2.7.4.*
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -7046,8 +6514,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -7058,8 +6524,6 @@ packages:
   md5: 2f364feefb6a7c00423e80dcb12db62a
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -7070,8 +6534,6 @@ packages:
   md5: 66a0dc7464927d0853b590b6f53ba3ea
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -7082,8 +6544,6 @@ packages:
   md5: 43c04d9cb46ef176bb2a4c77e324d599
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -7096,8 +6556,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -7108,8 +6566,6 @@ packages:
   md5: f4084e4e6577797150f9b04a4560ceb0
   depends:
   - libfreetype6 >=2.14.1
-  arch: x86_64
-  platform: linux
   license: GPL-2.0-only OR FTL
   purls: []
   size: 7664
@@ -7119,8 +6575,6 @@ packages:
   md5: 1e61fb236ccd3d6ccaf9e91cb2d7e12d
   depends:
   - libfreetype6 >=2.14.1
-  arch: aarch64
-  platform: linux
   license: GPL-2.0-only OR FTL
   purls: []
   size: 7753
@@ -7130,8 +6584,6 @@ packages:
   md5: e0e2edaf5e0c71b843e25a7ecc451cc9
   depends:
   - libfreetype6 >=2.14.1
-  arch: x86_64
-  platform: osx
   license: GPL-2.0-only OR FTL
   purls: []
   size: 7780
@@ -7141,8 +6593,6 @@ packages:
   md5: f35fb38e89e2776994131fbf961fa44b
   depends:
   - libfreetype6 >=2.14.1
-  arch: arm64
-  platform: osx
   license: GPL-2.0-only OR FTL
   purls: []
   size: 7810
@@ -7152,8 +6602,6 @@ packages:
   md5: 3235024fe48d4087721797ebd6c9d28c
   depends:
   - libfreetype6 >=2.14.1
-  arch: x86_64
-  platform: win
   license: GPL-2.0-only OR FTL
   purls: []
   size: 8109
@@ -7168,8 +6616,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - freetype >=2.14.1
-  arch: x86_64
-  platform: linux
   license: GPL-2.0-only OR FTL
   purls: []
   size: 386739
@@ -7183,8 +6629,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - freetype >=2.14.1
-  arch: aarch64
-  platform: linux
   license: GPL-2.0-only OR FTL
   purls: []
   size: 423210
@@ -7198,8 +6642,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - freetype >=2.14.1
-  arch: x86_64
-  platform: osx
   license: GPL-2.0-only OR FTL
   purls: []
   size: 374993
@@ -7213,8 +6655,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - freetype >=2.14.1
-  arch: arm64
-  platform: osx
   license: GPL-2.0-only OR FTL
   purls: []
   size: 346703
@@ -7230,8 +6670,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - freetype >=2.14.1
-  arch: x86_64
-  platform: win
   license: GPL-2.0-only OR FTL
   purls: []
   size: 340264
@@ -7245,8 +6683,6 @@ packages:
   constrains:
   - libgcc-ng ==15.2.0=*_18
   - libgomp 15.2.0 he0feb66_18
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7260,8 +6696,6 @@ packages:
   constrains:
   - libgcc-ng ==15.2.0=*_18
   - libgomp 15.2.0 h8acb6b2_18
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7275,8 +6709,6 @@ packages:
   constrains:
   - libgcc-ng ==15.2.0=*_18
   - libgomp 15.2.0 18
-  arch: x86_64
-  platform: osx
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7290,8 +6722,6 @@ packages:
   constrains:
   - libgcc-ng ==15.2.0=*_18
   - libgomp 15.2.0 18
-  arch: arm64
-  platform: osx
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7307,8 +6737,6 @@ packages:
   - libgcc-ng ==15.2.0=*_18
   - msys2-conda-epoch <0.0a0
   - libgomp 15.2.0 h8ee18e1_18
-  arch: x86_64
-  platform: win
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7319,8 +6747,6 @@ packages:
   md5: d5e96b1ed75ca01906b3d2469b4ce493
   depends:
   - libgcc 15.2.0 he0feb66_18
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7331,8 +6757,6 @@ packages:
   md5: 4feebd0fbf61075a1a9c2e9b3936c257
   depends:
   - libgcc 15.2.0 h8acb6b2_18
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7375,8 +6799,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - libgdal 3.12.2.*
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -7418,8 +6840,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - libgdal 3.12.2.*
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -7461,8 +6881,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - libgdal 3.12.2.*
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -7504,8 +6922,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - libgdal 3.12.2.*
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -7546,8 +6962,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - libgdal 3.12.2.*
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -7560,8 +6974,6 @@ packages:
   - libgfortran5 15.2.0 h68bc16d_18
   constrains:
   - libgfortran-ng ==15.2.0=*_18
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7574,8 +6986,6 @@ packages:
   - libgfortran5 15.2.0 h1b7bec0_18
   constrains:
   - libgfortran-ng ==15.2.0=*_18
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7588,8 +6998,6 @@ packages:
   - libgfortran5 15.2.0 hd16e46c_18
   constrains:
   - libgfortran-ng ==15.2.0=*_18
-  arch: x86_64
-  platform: osx
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7602,8 +7010,6 @@ packages:
   - libgfortran5 15.2.0 hdae7583_18
   constrains:
   - libgfortran-ng ==15.2.0=*_18
-  arch: arm64
-  platform: osx
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7617,8 +7023,6 @@ packages:
   - libgcc >=15.2.0
   constrains:
   - libgfortran 15.2.0
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7631,8 +7035,6 @@ packages:
   - libgcc >=15.2.0
   constrains:
   - libgfortran 15.2.0
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7645,8 +7047,6 @@ packages:
   - libgcc >=15.2.0
   constrains:
   - libgfortran 15.2.0
-  arch: x86_64
-  platform: osx
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7659,8 +7059,6 @@ packages:
   - libgcc >=15.2.0
   constrains:
   - libgfortran 15.2.0
-  arch: arm64
-  platform: osx
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7673,8 +7071,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libglvnd 1.7.0 ha4b6fd6_2
   - libglx 1.7.0 ha4b6fd6_2
-  arch: x86_64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 134712
@@ -7685,8 +7081,6 @@ packages:
   depends:
   - libglvnd 1.7.0 hd24410f_2
   - libglx 1.7.0 hd24410f_2
-  arch: aarch64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 145442
@@ -7703,8 +7097,6 @@ packages:
   - pcre2 >=10.47,<10.48.0a0
   constrains:
   - glib 2.86.4 *_1
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 4398701
@@ -7720,8 +7112,6 @@ packages:
   - pcre2 >=10.47,<10.48.0a0
   constrains:
   - glib 2.86.4 *_1
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 4512186
@@ -7738,8 +7128,6 @@ packages:
   - pcre2 >=10.47,<10.48.0a0
   constrains:
   - glib 2.86.4 *_1
-  arch: x86_64
-  platform: osx
   license: LGPL-2.1-or-later
   purls: []
   size: 4186085
@@ -7756,8 +7144,6 @@ packages:
   - pcre2 >=10.47,<10.48.0a0
   constrains:
   - glib 2.86.4 *_1
-  arch: arm64
-  platform: osx
   license: LGPL-2.1-or-later
   purls: []
   size: 4108927
@@ -7776,8 +7162,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - glib 2.86.4 *_1
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   purls: []
   size: 4095369
@@ -7790,8 +7174,6 @@ packages:
   - libgcc >=13
   - libopengl >=1.7.0,<2.0a0
   - libstdcxx >=13
-  arch: x86_64
-  platform: linux
   license: SGI-B-2.0
   purls: []
   size: 325262
@@ -7803,8 +7185,6 @@ packages:
   - libgcc >=13
   - libopengl >=1.7.0,<2.0a0
   - libstdcxx >=13
-  arch: aarch64
-  platform: linux
   license: SGI-B-2.0
   purls: []
   size: 310655
@@ -7814,8 +7194,6 @@ packages:
   md5: 434ca7e50e40f4918ab701e3facd59a0
   depends:
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 132463
@@ -7823,8 +7201,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/libglvnd-1.7.0-hd24410f_2.conda
   sha256: 57ec3898a923d4bcc064669e90e8abfc4d1d945a13639470ba5f3748bd3090da
   md5: 9e115653741810778c9a915a2f8439e7
-  arch: aarch64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 152135
@@ -7836,8 +7212,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libglvnd 1.7.0 ha4b6fd6_2
   - xorg-libx11 >=1.8.10,<2.0a0
-  arch: x86_64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 75504
@@ -7848,8 +7222,6 @@ packages:
   depends:
   - libglvnd 1.7.0 hd24410f_2
   - xorg-libx11 >=1.8.9,<2.0a0
-  arch: aarch64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 77736
@@ -7859,8 +7231,6 @@ packages:
   md5: 239c5e9546c38a1e884d69effcf4c882
   depends:
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7869,8 +7239,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/libgomp-15.2.0-h8acb6b2_18.conda
   sha256: fc716f11a6a8525e27a5d332ef6a689210b0d2a4dd1133edc0f530659aa9faa6
   md5: 4faa39bf919939602e594253bd673958
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7883,8 +7251,6 @@ packages:
   - libwinpthread >=12.0.0.r4.gg4f2fc60ca
   constrains:
   - msys2-conda-epoch <0.0a0
-  arch: x86_64
-  platform: win
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -7899,8 +7265,6 @@ packages:
   - libstdcxx >=14
   - libxml2
   - libxml2-16 >=2.14.6
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -7914,8 +7278,6 @@ packages:
   - libstdcxx >=14
   - libxml2
   - libxml2-16 >=2.14.6
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -7929,8 +7291,6 @@ packages:
   - libcxx >=19
   - libxml2
   - libxml2-16 >=2.14.6
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -7944,8 +7304,6 @@ packages:
   - libcxx >=19
   - libxml2
   - libxml2-16 >=2.14.6
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -7961,8 +7319,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -7975,8 +7331,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: Apache-2.0 OR BSD-3-Clause
   purls: []
   size: 1448617
@@ -7987,8 +7341,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0 OR BSD-3-Clause
   purls: []
   size: 1180000
@@ -7999,8 +7351,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 OR BSD-3-Clause
   purls: []
   size: 1003288
@@ -8011,8 +7361,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: Apache-2.0 OR BSD-3-Clause
   purls: []
   size: 581579
@@ -8024,8 +7372,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0 OR BSD-3-Clause
   purls: []
   size: 536186
@@ -8036,8 +7382,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-only
   purls: []
   size: 790176
@@ -8047,8 +7391,6 @@ packages:
   md5: 5a86bf847b9b926f3a4f203339748d78
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-only
   purls: []
   size: 791226
@@ -8058,8 +7400,6 @@ packages:
   md5: 210a85a1119f97ea7887188d176db135
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: LGPL-2.1-only
   purls: []
   size: 737846
@@ -8069,8 +7409,6 @@ packages:
   md5: 4d5a7445f0b25b6a3ddbb56e790f5251
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: LGPL-2.1-only
   purls: []
   size: 750379
@@ -8082,8 +7420,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-only
   purls: []
   size: 696926
@@ -8094,8 +7430,6 @@ packages:
   depends:
   - __osx >=10.13
   - libiconv >=1.18,<2.0a0
-  arch: x86_64
-  platform: osx
   license: LGPL-2.1-or-later
   purls: []
   size: 96909
@@ -8106,8 +7440,6 @@ packages:
   depends:
   - __osx >=11.0
   - libiconv >=1.18,<2.0a0
-  arch: arm64
-  platform: osx
   license: LGPL-2.1-or-later
   purls: []
   size: 90957
@@ -8117,8 +7449,6 @@ packages:
   md5: 2cf0cf76cc15d360dfa2f17fd6cf9772
   depends:
   - libiconv >=1.17,<2.0a0
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   purls: []
   size: 95568
@@ -8131,8 +7461,6 @@ packages:
   - libgcc >=14
   constrains:
   - jpeg <0.0.0a
-  arch: x86_64
-  platform: linux
   license: IJG AND BSD-3-Clause AND Zlib
   purls: []
   size: 633710
@@ -8144,8 +7472,6 @@ packages:
   - libgcc >=14
   constrains:
   - jpeg <0.0.0a
-  arch: aarch64
-  platform: linux
   license: IJG AND BSD-3-Clause AND Zlib
   purls: []
   size: 691818
@@ -8157,8 +7483,6 @@ packages:
   - __osx >=10.13
   constrains:
   - jpeg <0.0.0a
-  arch: x86_64
-  platform: osx
   license: IJG AND BSD-3-Clause AND Zlib
   purls: []
   size: 586189
@@ -8170,8 +7494,6 @@ packages:
   - __osx >=11.0
   constrains:
   - jpeg <0.0.0a
-  arch: arm64
-  platform: osx
   license: IJG AND BSD-3-Clause AND Zlib
   purls: []
   size: 551197
@@ -8185,8 +7507,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - jpeg <0.0.0a
-  arch: x86_64
-  platform: win
   license: IJG AND BSD-3-Clause AND Zlib
   purls: []
   size: 841783
@@ -8201,8 +7521,6 @@ packages:
   - libhwy >=1.3.0,<1.4.0a0
   - libbrotlienc >=1.2.0,<1.3.0a0
   - libbrotlidec >=1.2.0,<1.3.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8217,8 +7535,6 @@ packages:
   - libbrotlienc >=1.2.0,<1.3.0a0
   - libbrotlidec >=1.2.0,<1.3.0a0
   - libhwy >=1.3.0,<1.4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8233,8 +7549,6 @@ packages:
   - libhwy >=1.3.0,<1.4.0a0
   - libbrotlienc >=1.2.0,<1.3.0a0
   - libbrotlidec >=1.2.0,<1.3.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8249,8 +7563,6 @@ packages:
   - libbrotlienc >=1.2.0,<1.3.0a0
   - libbrotlidec >=1.2.0,<1.3.0a0
   - libhwy >=1.3.0,<1.4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8266,8 +7578,6 @@ packages:
   - libbrotlienc >=1.2.0,<1.3.0a0
   - libbrotlidec >=1.2.0,<1.3.0a0
   - libhwy >=1.3.0,<1.4.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8283,8 +7593,6 @@ packages:
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
   - uriparser >=0.9.8,<1.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8299,8 +7607,6 @@ packages:
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
   - uriparser >=0.9.8,<1.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8315,8 +7621,6 @@ packages:
   - libexpat >=2.7.1,<3.0a0
   - libzlib >=1.3.1,<2.0a0
   - uriparser >=0.9.8,<1.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8331,8 +7635,6 @@ packages:
   - libexpat >=2.7.1,<3.0a0
   - libzlib >=1.3.1,<2.0a0
   - uriparser >=0.9.8,<1.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8348,8 +7650,6 @@ packages:
   - uriparser >=0.9.8,<1.0a0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8365,8 +7665,6 @@ packages:
   - blas 2.305   openblas
   - liblapacke 3.11.0   5*_openblas
   - libcblas   3.11.0   5*_openblas
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8382,8 +7680,6 @@ packages:
   - liblapacke 3.11.0   5*_openblas
   - blas 2.305   openblas
   - libcblas   3.11.0   5*_openblas
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8399,8 +7695,6 @@ packages:
   - libcblas   3.11.0   5*_openblas
   - blas 2.305   openblas
   - liblapacke 3.11.0   5*_openblas
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8416,8 +7710,6 @@ packages:
   - libcblas   3.11.0   5*_openblas
   - blas 2.305   openblas
   - liblapacke 3.11.0   5*_openblas
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8433,8 +7725,6 @@ packages:
   - libcblas   3.11.0   5*_mkl
   - blas 2.305   mkl
   - liblapacke 3.11.0   5*_mkl
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -8450,8 +7740,6 @@ packages:
   - libxml2-16 >=2.14.5
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8467,8 +7755,6 @@ packages:
   - libxml2-16 >=2.14.5
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8485,8 +7771,6 @@ packages:
   - libxml2-16 >=2.14.5
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8502,8 +7786,6 @@ packages:
   - libxml2-16 >=2.14.5
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8519,8 +7801,6 @@ packages:
   - libxml2-16 >=2.14.5
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8536,8 +7816,6 @@ packages:
   - libxml2-16 >=2.14.5
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8554,8 +7832,6 @@ packages:
   - libxml2-16 >=2.14.6
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8571,8 +7847,6 @@ packages:
   - libxml2-16 >=2.14.6
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8588,8 +7862,6 @@ packages:
   - libxml2-16 >=2.14.6
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8605,8 +7877,6 @@ packages:
   - libxml2-16 >=2.14.6
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: Apache
   purls: []
@@ -8620,8 +7890,6 @@ packages:
   - libgcc >=14
   constrains:
   - xz 5.8.2.*
-  arch: x86_64
-  platform: linux
   license: 0BSD
   purls: []
   size: 113207
@@ -8633,8 +7901,6 @@ packages:
   - libgcc >=14
   constrains:
   - xz 5.8.2.*
-  arch: aarch64
-  platform: linux
   license: 0BSD
   purls: []
   size: 125916
@@ -8646,8 +7912,6 @@ packages:
   - __osx >=10.13
   constrains:
   - xz 5.8.2.*
-  arch: x86_64
-  platform: osx
   license: 0BSD
   purls: []
   size: 105482
@@ -8659,8 +7923,6 @@ packages:
   - __osx >=11.0
   constrains:
   - xz 5.8.2.*
-  arch: arm64
-  platform: osx
   license: 0BSD
   purls: []
   size: 92242
@@ -8674,8 +7936,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - xz 5.8.2.*
-  arch: x86_64
-  platform: win
   license: 0BSD
   purls: []
   size: 106169
@@ -8686,8 +7946,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -8698,8 +7956,6 @@ packages:
   md5: ec88ba8a245855935b871a7324373105
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -8710,8 +7966,6 @@ packages:
   md5: 57c4be259f5e0b99a5983799a228ae55
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -8724,8 +7978,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -8751,8 +8003,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -8777,8 +8027,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -8802,8 +8050,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -8827,8 +8073,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.5,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -8852,8 +8096,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -8871,8 +8113,6 @@ packages:
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.2,<4.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -8889,8 +8129,6 @@ packages:
   - libstdcxx >=14
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.2,<4.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -8907,8 +8145,6 @@ packages:
   - libev >=4.33,<5.0a0
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.2,<4.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -8925,8 +8161,6 @@ packages:
   - libev >=4.33,<5.0a0
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.2,<4.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -8938,8 +8172,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-only
   license_family: GPL
   purls: []
@@ -8950,8 +8182,6 @@ packages:
   md5: d5d58b2dc3e57073fe22303f5fed4db7
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-only
   license_family: GPL
   purls: []
@@ -8963,8 +8193,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 33418
@@ -8974,8 +8202,6 @@ packages:
   md5: 835c7c4137821de5c309f4266a51ba89
   depends:
   - libgcc-ng >=9.3.0
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 39449
@@ -8985,8 +8211,6 @@ packages:
   md5: 23d706dbe90b54059ad86ff826677f39
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: LGPL-2.1-or-later
   purls: []
   size: 33742
@@ -8996,8 +8220,6 @@ packages:
   md5: c90c1d3bd778f5ec0d4bb4ef36cbd5b6
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: LGPL-2.1-or-later
   purls: []
   size: 31099
@@ -9008,8 +8230,6 @@ packages:
   depends:
   - libgcc >=13
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9020,8 +8240,6 @@ packages:
   md5: 319df383ae401c40970ee4e9bc836c7a
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9032,8 +8250,6 @@ packages:
   md5: d0f30c7fe90d08e9bd9c13cd60be6400
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9044,8 +8260,6 @@ packages:
   md5: 29b8b11f6d7e6bd0e76c029dcf9dd024
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9061,8 +8275,6 @@ packages:
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9078,8 +8290,6 @@ packages:
   - libgfortran5 >=14.3.0
   constrains:
   - openblas >=0.3.30,<0.3.31.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9094,8 +8304,6 @@ packages:
   - libgfortran5 >=14.3.0
   constrains:
   - openblas >=0.3.30,<0.3.31.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9111,8 +8319,6 @@ packages:
   - llvm-openmp >=19.1.7
   constrains:
   - openblas >=0.3.30,<0.3.31.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9128,8 +8334,6 @@ packages:
   - llvm-openmp >=19.1.7
   constrains:
   - openblas >=0.3.30,<0.3.31.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9141,8 +8345,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libglvnd 1.7.0 ha4b6fd6_2
-  arch: x86_64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 50757
@@ -9152,8 +8354,6 @@ packages:
   md5: cf9d12bfab305e48d095a4c79002c922
   depends:
   - libglvnd 1.7.0 hd24410f_2
-  arch: aarch64
-  platform: linux
   license: LicenseRef-libglvnd
   purls: []
   size: 56355
@@ -9165,8 +8365,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9178,8 +8376,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -9190,8 +8386,6 @@ packages:
   md5: 5044e160c5306968d956c2a0a2a440d6
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -9204,8 +8398,6 @@ packages:
   - libgcc >=14
   - __glibc >=2.17,<3.0.a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: zlib-acknowledgement
   purls: []
   size: 317669
@@ -9216,8 +8408,6 @@ packages:
   depends:
   - libgcc >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: zlib-acknowledgement
   purls: []
   size: 340156
@@ -9228,8 +8418,6 @@ packages:
   depends:
   - __osx >=10.13
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: zlib-acknowledgement
   purls: []
   size: 298943
@@ -9240,8 +8428,6 @@ packages:
   depends:
   - __osx >=11.0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: zlib-acknowledgement
   purls: []
   size: 288950
@@ -9254,8 +8440,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: win
   license: zlib-acknowledgement
   purls: []
   size: 383155
@@ -9270,8 +8454,6 @@ packages:
   - libgcc >=14
   - openldap >=2.6.10,<2.7.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: linux
   license: PostgreSQL
   purls: []
   size: 2865686
@@ -9285,8 +8467,6 @@ packages:
   - libgcc >=14
   - openldap >=2.6.10,<2.7.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: aarch64
-  platform: linux
   license: PostgreSQL
   purls: []
   size: 2854221
@@ -9300,8 +8480,6 @@ packages:
   - krb5 >=1.22.2,<1.23.0a0
   - openldap >=2.6.10,<2.7.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: osx
   license: PostgreSQL
   purls: []
   size: 2561593
@@ -9315,8 +8493,6 @@ packages:
   - krb5 >=1.22.2,<1.23.0a0
   - openldap >=2.6.10,<2.7.0a0
   - openssl >=3.5.5,<4.0a0
-  arch: arm64
-  platform: osx
   license: PostgreSQL
   purls: []
   size: 2705141
@@ -9333,8 +8509,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   purls: []
   size: 2877820
@@ -9347,8 +8521,6 @@ packages:
   - geos >=3.14.1,<3.14.2.0a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -9361,8 +8533,6 @@ packages:
   - geos >=3.14.1,<3.14.2.0a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -9375,8 +8545,6 @@ packages:
   - __osx >=10.13
   - geos >=3.14.1,<3.14.2.0a0
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -9389,8 +8557,6 @@ packages:
   - __osx >=11.0
   - geos >=3.14.1,<3.14.2.0a0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -9404,8 +8570,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -9430,8 +8594,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - sqlite
   - zlib
-  arch: x86_64
-  platform: linux
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -9455,8 +8617,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - sqlite
   - zlib
-  arch: aarch64
-  platform: linux
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -9481,8 +8641,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - sqlite
   - zlib
-  arch: x86_64
-  platform: osx
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -9507,8 +8665,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - sqlite
   - zlib
-  arch: arm64
-  platform: osx
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -9533,8 +8689,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - zlib
-  arch: x86_64
-  platform: win
   license: MPL-1.1
   license_family: MOZILLA
   purls: []
@@ -9548,8 +8702,6 @@ packages:
   - icu >=78.2,<79.0a0
   - libgcc >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: blessing
   purls: []
   size: 942808
@@ -9561,8 +8713,6 @@ packages:
   - icu >=78.2,<79.0a0
   - libgcc >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: blessing
   purls: []
   size: 944688
@@ -9573,8 +8723,6 @@ packages:
   depends:
   - __osx >=10.13
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: blessing
   purls: []
   size: 987506
@@ -9586,8 +8734,6 @@ packages:
   - __osx >=11.0
   - icu >=78.2,<79.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: blessing
   purls: []
   size: 909777
@@ -9599,8 +8745,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: blessing
   purls: []
   size: 1291616
@@ -9613,8 +8757,6 @@ packages:
   - libgcc >=13
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9627,8 +8769,6 @@ packages:
   - libgcc >=13
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9641,8 +8781,6 @@ packages:
   - __osx >=10.13
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9654,8 +8792,6 @@ packages:
   depends:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9670,8 +8806,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9685,8 +8819,6 @@ packages:
   - libgcc 15.2.0 he0feb66_18
   constrains:
   - libstdcxx-ng ==15.2.0=*_18
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -9699,8 +8831,6 @@ packages:
   - libgcc 15.2.0 h8acb6b2_18
   constrains:
   - libstdcxx-ng ==15.2.0=*_18
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -9711,8 +8841,6 @@ packages:
   md5: 6235adb93d064ecdf3d44faee6f468de
   depends:
   - libstdcxx 15.2.0 h934c35e_18
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -9723,8 +8851,6 @@ packages:
   md5: 699d294376fe18d80b7ce7876c3a875d
   depends:
   - libstdcxx 15.2.0 hef695bb_18
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only WITH GCC-exception-3.1
   license_family: GPL
   purls: []
@@ -9739,8 +8865,6 @@ packages:
   - libogg >=1.3.5,<1.4.0a0
   - libvorbis 1.3.*
   - libvorbis >=1.3.7,<1.4.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9755,8 +8879,6 @@ packages:
   - libogg >=1.3.5,<1.4.0a0
   - libvorbis 1.3.*
   - libvorbis >=1.3.7,<1.4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9771,8 +8893,6 @@ packages:
   - libogg >=1.3.5,<1.4.0a0
   - libvorbis 1.3.*
   - libvorbis >=1.3.7,<1.4.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9787,8 +8907,6 @@ packages:
   - libogg >=1.3.5,<1.4.0a0
   - libvorbis 1.3.*
   - libvorbis >=1.3.7,<1.4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9803,8 +8921,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9824,8 +8940,6 @@ packages:
   - libwebp-base >=1.6.0,<2.0a0
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: HPND
   purls: []
   size: 435273
@@ -9843,8 +8957,6 @@ packages:
   - libwebp-base >=1.6.0,<2.0a0
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: HPND
   purls: []
   size: 488407
@@ -9862,8 +8974,6 @@ packages:
   - libwebp-base >=1.6.0,<2.0a0
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: HPND
   purls: []
   size: 404591
@@ -9881,8 +8991,6 @@ packages:
   - libwebp-base >=1.6.0,<2.0a0
   - libzlib >=1.3.1,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: HPND
   purls: []
   size: 373892
@@ -9900,8 +9008,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: HPND
   purls: []
   size: 993166
@@ -9916,8 +9022,6 @@ packages:
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   purls: []
   size: 118204
@@ -9928,8 +9032,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9940,8 +9042,6 @@ packages:
   md5: cf2861212053d05f27ec49c3784ff8bb
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9957,8 +9057,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - libogg >=1.3.5,<1.4.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9972,8 +9070,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - libogg >=1.3.5,<1.4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -9987,8 +9083,6 @@ packages:
   - libcxx >=19
   - __osx >=10.13
   - libogg >=1.3.5,<1.4.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10002,8 +9096,6 @@ packages:
   - libcxx >=19
   - __osx >=11.0
   - libogg >=1.3.5,<1.4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10021,8 +9113,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - libogg >=1.3.5,<1.4.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10039,8 +9129,6 @@ packages:
   - xorg-libxrandr >=1.5.5,<2.0a0
   constrains:
   - libvulkan-headers 1.4.341.0.*
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -10056,8 +9144,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   constrains:
   - libvulkan-headers 1.4.341.0.*
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -10072,8 +9158,6 @@ packages:
   - ucrt >=10.0.20348.0
   constrains:
   - libvulkan-headers 1.4.341.0.*
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -10087,8 +9171,6 @@ packages:
   - libgcc >=14
   constrains:
   - libwebp 1.6.0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10101,8 +9183,6 @@ packages:
   - libgcc >=14
   constrains:
   - libwebp 1.6.0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10115,8 +9195,6 @@ packages:
   - __osx >=10.13
   constrains:
   - libwebp 1.6.0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10129,8 +9207,6 @@ packages:
   - __osx >=11.0
   constrains:
   - libwebp 1.6.0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10145,8 +9221,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - libwebp 1.6.0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10160,8 +9234,6 @@ packages:
   constrains:
   - pthreads-win32 <0.0a0
   - msys2-conda-epoch <0.0a0
-  arch: x86_64
-  platform: win
   license: MIT AND BSD-3-Clause-Clear
   purls: []
   size: 36621
@@ -10175,8 +9247,6 @@ packages:
   - pthread-stubs
   - xorg-libxau >=1.0.11,<2.0a0
   - xorg-libxdmcp
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10190,8 +9260,6 @@ packages:
   - pthread-stubs
   - xorg-libxau >=1.0.11,<2.0a0
   - xorg-libxdmcp
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10205,8 +9273,6 @@ packages:
   - pthread-stubs
   - xorg-libxau >=1.0.11,<2.0a0
   - xorg-libxdmcp
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10220,8 +9286,6 @@ packages:
   - pthread-stubs
   - xorg-libxau >=1.0.11,<2.0a0
   - xorg-libxdmcp
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10237,8 +9301,6 @@ packages:
   - ucrt >=10.0.20348.0
   - xorg-libxau >=1.0.11,<2.0a0
   - xorg-libxdmcp
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -10249,8 +9311,6 @@ packages:
   md5: 5aa797f8787fe7a17d1b0821485b5adc
   depends:
   - libgcc-ng >=12
-  arch: x86_64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 100393
@@ -10260,8 +9320,6 @@ packages:
   md5: b4df5d7d4b63579d081fd3a4cf99740e
   depends:
   - libgcc-ng >=12
-  arch: aarch64
-  platform: linux
   license: LGPL-2.1-or-later
   purls: []
   size: 114269
@@ -10278,8 +9336,6 @@ packages:
   - libxml2-16 >=2.14.6
   - xkeyboard-config
   - xorg-libxau >=1.0.12,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT/X11 Derivative
   license_family: MIT
   purls: []
@@ -10296,8 +9352,6 @@ packages:
   - libxml2-16 >=2.14.6
   - xkeyboard-config
   - xorg-libxau >=1.0.12,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT/X11 Derivative
   license_family: MIT
   purls: []
@@ -10314,8 +9368,6 @@ packages:
   - liblzma >=5.8.1,<6.0a0
   - libxml2-16 2.15.1 hca6bf5a_1
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10331,8 +9383,6 @@ packages:
   - liblzma >=5.8.1,<6.0a0
   - libxml2-16 2.15.1 h79dcc73_1
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10348,8 +9398,6 @@ packages:
   - liblzma >=5.8.1,<6.0a0
   - libxml2-16 2.15.1 he456531_1
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10365,8 +9413,6 @@ packages:
   - liblzma >=5.8.1,<6.0a0
   - libxml2-16 2.15.1 h5ef1a60_1
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10384,8 +9430,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -10403,8 +9447,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - libxml2 2.15.1
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10421,8 +9463,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - libxml2 2.15.1
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10439,8 +9479,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - libxml2 2.15.1
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10457,8 +9495,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - libxml2 2.15.1
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10477,8 +9513,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - libxml2 2.15.1
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -10496,8 +9530,6 @@ packages:
   - libxml2 2.15.1 he237659_1
   - libxml2-16 2.15.1 hca6bf5a_1
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10514,8 +9546,6 @@ packages:
   - libxml2 2.15.1 h825857f_1
   - libxml2-16 2.15.1 h79dcc73_1
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10532,8 +9562,6 @@ packages:
   - libxml2 2.15.1 h24ca049_1
   - libxml2-16 2.15.1 he456531_1
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10550,8 +9578,6 @@ packages:
   - libxml2 2.15.1 h8d039ee_1
   - libxml2-16 2.15.1 h5ef1a60_1
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -10570,8 +9596,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -10585,8 +9609,6 @@ packages:
   - libgcc >=14
   - libxml2
   - libxml2-16 >=2.14.6
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10599,8 +9621,6 @@ packages:
   - libgcc >=14
   - libxml2
   - libxml2-16 >=2.14.6
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -10615,8 +9635,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -10631,8 +9649,6 @@ packages:
   - libgcc >=13
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.3.2,<4.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10646,8 +9662,6 @@ packages:
   - libgcc >=13
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.3.2,<4.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10661,8 +9675,6 @@ packages:
   - bzip2 >=1.0.8,<2.0a0
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.3.2,<4.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10676,8 +9688,6 @@ packages:
   - bzip2 >=1.0.8,<2.0a0
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.3.2,<4.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10693,8 +9703,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -10708,8 +9716,6 @@ packages:
   - libgcc >=13
   constrains:
   - zlib 1.3.1 *_2
-  arch: x86_64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -10722,8 +9728,6 @@ packages:
   - libgcc >=13
   constrains:
   - zlib 1.3.1 *_2
-  arch: aarch64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -10736,8 +9740,6 @@ packages:
   - __osx >=10.13
   constrains:
   - zlib 1.3.1 *_2
-  arch: x86_64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -10750,8 +9752,6 @@ packages:
   - __osx >=11.0
   constrains:
   - zlib 1.3.1 *_2
-  arch: arm64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -10766,8 +9766,6 @@ packages:
   - vc14_runtime >=14.29.30139
   constrains:
   - zlib 1.3.1 *_2
-  arch: x86_64
-  platform: win
   license: Zlib
   license_family: Other
   purls: []
@@ -10781,8 +9779,6 @@ packages:
   constrains:
   - openmp 22.1.0|22.1.0.*
   - intel-openmp <0.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: APACHE
   purls: []
@@ -10796,8 +9792,6 @@ packages:
   constrains:
   - openmp 22.1.0|22.1.0.*
   - intel-openmp <0.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0 WITH LLVM-exception
   license_family: APACHE
   purls: []
@@ -10813,8 +9807,6 @@ packages:
   constrains:
   - openmp 22.1.0|22.1.0.*
   - intel-openmp <0.0a0
-  arch: x86_64
-  platform: win
   license: Apache-2.0 WITH LLVM-exception
   license_family: APACHE
   purls: []
@@ -10853,8 +9845,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libstdcxx >=13
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -10866,8 +9856,6 @@ packages:
   depends:
   - libgcc >=13
   - libstdcxx >=13
-  arch: aarch64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -10879,8 +9867,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=18
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -10892,8 +9878,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=18
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -10906,8 +9890,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -10919,8 +9901,6 @@ packages:
   depends:
   - libgcc >=14
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -10931,8 +9911,6 @@ packages:
   md5: 97af2e332449dd9e92ad7db93b02e918
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -10943,8 +9921,6 @@ packages:
   md5: 5a047b9aa4be1dcdb62bd561d9eb6ceb
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -10955,8 +9931,6 @@ packages:
   md5: e56eaa1beab0e7fed559ae9c0264dd88
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -10972,8 +9946,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -11032,8 +10004,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - jinja2 >=3.0.0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -11049,8 +10019,6 @@ packages:
   - python_abi 3.12.* *_cp312
   constrains:
   - jinja2 >=3.0.0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -11066,8 +10034,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - jinja2 >=3.0.0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -11084,8 +10050,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - jinja2 >=3.0.0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -11103,8 +10067,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - jinja2 >=3.0.0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -11120,8 +10082,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - tornado >=5
-  arch: x86_64
-  platform: linux
   license: PSF-2.0
   license_family: PSF
   purls: []
@@ -11136,8 +10096,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python_abi 3.12.* *_cp312
   - tornado >=5
-  arch: aarch64
-  platform: linux
   license: PSF-2.0
   license_family: PSF
   purls: []
@@ -11151,8 +10109,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - tornado >=5
-  arch: x86_64
-  platform: osx
   license: PSF-2.0
   license_family: PSF
   purls: []
@@ -11166,8 +10122,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - tornado >=5
-  arch: arm64
-  platform: osx
   license: PSF-2.0
   license_family: PSF
   purls: []
@@ -11182,8 +10136,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - tornado >=5
-  arch: x86_64
-  platform: win
   license: PSF-2.0
   license_family: PSF
   purls: []
@@ -11212,8 +10164,6 @@ packages:
   - python_abi 3.13.* *_cp313
   - qhull >=2020.2,<2020.3.0a0
   - tk >=8.6.13,<8.7.0a0
-  arch: x86_64
-  platform: linux
   license: PSF-2.0
   license_family: PSF
   purls:
@@ -11243,8 +10193,6 @@ packages:
   - python_abi 3.12.* *_cp312
   - qhull >=2020.2,<2020.3.0a0
   - tk >=8.6.13,<8.7.0a0
-  arch: aarch64
-  platform: linux
   license: PSF-2.0
   license_family: PSF
   purls:
@@ -11272,8 +10220,6 @@ packages:
   - python-dateutil >=2.7
   - python_abi 3.13.* *_cp313
   - qhull >=2020.2,<2020.3.0a0
-  arch: x86_64
-  platform: osx
   license: PSF-2.0
   license_family: PSF
   purls:
@@ -11302,8 +10248,6 @@ packages:
   - python-dateutil >=2.7
   - python_abi 3.13.* *_cp313
   - qhull >=2020.2,<2020.3.0a0
-  arch: arm64
-  platform: osx
   license: PSF-2.0
   license_family: PSF
   purls:
@@ -11332,8 +10276,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: PSF-2.0
   license_family: PSF
   purls:
@@ -11392,8 +10334,6 @@ packages:
   - xorg-libxrandr >=1.5.4,<2.0a0
   - xorg-libxshmfence >=1.3.3,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   track_features:
   - mesalib
   license: MIT
@@ -11417,8 +10357,6 @@ packages:
   - xorg-libxrandr >=1.5.4,<2.0a0
   - xorg-libxshmfence >=1.3.3,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   track_features:
   - mesalib
   license: MIT
@@ -11441,8 +10379,6 @@ packages:
   - xorg-libxrandr >=1.5.4,<2.0a0
   - xorg-libxshmfence >=1.3.3,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   track_features:
   - mesalib
   license: MIT
@@ -11465,8 +10401,6 @@ packages:
   - xorg-libxrandr >=1.5.4,<2.0a0
   - xorg-libxshmfence >=1.3.3,<2.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   track_features:
   - mesalib
   license: MIT
@@ -11484,8 +10418,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   track_features:
   - mesalib
   license: MIT
@@ -11547,8 +10479,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -11566,8 +10496,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: aarch64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -11585,8 +10513,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -11604,8 +10530,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - openssl >=3.5.0,<4.0a0
   - zstd >=1.5.7,<1.6.0a0
-  arch: arm64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -11622,8 +10546,6 @@ packages:
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
   - zstd >=1.5.7,<1.6.0a0
-  arch: x86_64
-  platform: win
   license: Zlib
   license_family: Other
   purls: []
@@ -11645,8 +10567,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LicenseRef-IntelSimplifiedSoftwareOct2022
   license_family: Proprietary
   purls: []
@@ -11778,8 +10698,6 @@ packages:
   - libstdcxx >=14
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -11795,8 +10713,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -11811,8 +10727,6 @@ packages:
   - libcxx >=19
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -11828,8 +10742,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -11845,8 +10757,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -11861,8 +10771,6 @@ packages:
   - libgcc >=14
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -11877,8 +10785,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -11892,8 +10798,6 @@ packages:
   - __osx >=10.13
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -11908,8 +10812,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -11925,8 +10827,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -11951,8 +10851,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libstdcxx >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -11964,8 +10862,6 @@ packages:
   depends:
   - libgcc >=13
   - libstdcxx >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -11978,8 +10874,6 @@ packages:
   - __osx >=10.13
   - libcxx >=18
   - llvm-openmp >=18.1.8
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -11992,8 +10886,6 @@ packages:
   - __osx >=11.0
   - libcxx >=18
   - llvm-openmp >=18.1.8
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -12006,8 +10898,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -12174,8 +11064,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: X11 AND BSD-3-Clause
   purls: []
   size: 891641
@@ -12185,8 +11073,6 @@ packages:
   md5: 182afabe009dc78d8b73100255ee6868
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: X11 AND BSD-3-Clause
   purls: []
   size: 926034
@@ -12196,8 +11082,6 @@ packages:
   md5: ced34dd9929f491ca6dab6a2927aff25
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: X11 AND BSD-3-Clause
   purls: []
   size: 822259
@@ -12207,8 +11091,6 @@ packages:
   md5: 068d497125e4bf8a66bf707254fff5ae
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: X11 AND BSD-3-Clause
   purls: []
   size: 797030
@@ -12262,8 +11144,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -12275,8 +11155,6 @@ packages:
   depends:
   - libstdcxx >=14
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -12288,8 +11166,6 @@ packages:
   depends:
   - libcxx >=19
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -12301,8 +11177,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -12318,8 +11192,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -12330,8 +11202,6 @@ packages:
   md5: 16c2a0e9c4a166e53632cfca4f68d020
   constrains:
   - nlohmann_json-abi ==3.12.0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -12342,8 +11212,6 @@ packages:
   md5: 6cbb2594cea5f2cc2907170655852ba9
   constrains:
   - nlohmann_json-abi ==3.12.0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -12354,8 +11222,6 @@ packages:
   md5: 97d7a1cda5546cb0bbdefa3777cb9897
   constrains:
   - nlohmann_json-abi ==3.12.0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -12366,8 +11232,6 @@ packages:
   md5: 755cfa6c08ed7b7acbee20ccbf15a47c
   constrains:
   - nlohmann_json-abi ==3.12.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -12378,8 +11242,6 @@ packages:
   md5: 24a9dde77833cc48289ef92b4e724da4
   constrains:
   - nlohmann_json-abi ==3.12.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -12399,8 +11261,6 @@ packages:
   - libblas >=3.9.0,<4.0a0
   constrains:
   - numpy-base <0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12421,8 +11281,6 @@ packages:
   - libblas >=3.9.0,<4.0a0
   constrains:
   - numpy-base <0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12442,8 +11300,6 @@ packages:
   - libcblas >=3.9.0,<4.0a0
   constrains:
   - numpy-base <0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12464,8 +11320,6 @@ packages:
   - python_abi 3.13.* *_cp313
   constrains:
   - numpy-base <0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12486,8 +11340,6 @@ packages:
   - libcblas >=3.9.0,<4.0a0
   constrains:
   - numpy-base <0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12501,8 +11353,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -12518,8 +11368,6 @@ packages:
   - libstdcxx >=14
   - libtiff >=4.7.1,<4.8.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -12534,8 +11382,6 @@ packages:
   - libstdcxx >=14
   - libtiff >=4.7.1,<4.8.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -12550,8 +11396,6 @@ packages:
   - libpng >=1.6.50,<1.7.0a0
   - libtiff >=4.7.1,<4.8.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -12566,8 +11410,6 @@ packages:
   - libpng >=1.6.50,<1.7.0a0
   - libtiff >=4.7.1,<4.8.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -12583,8 +11425,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
@@ -12600,8 +11440,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: linux
   license: OLDAP-2.8
   license_family: BSD
   purls: []
@@ -12616,8 +11454,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - openssl >=3.5.5,<4.0a0
-  arch: aarch64
-  platform: linux
   license: OLDAP-2.8
   license_family: BSD
   purls: []
@@ -12632,8 +11468,6 @@ packages:
   - krb5 >=1.22.2,<1.23.0a0
   - libcxx >=19
   - openssl >=3.5.5,<4.0a0
-  arch: x86_64
-  platform: osx
   license: OLDAP-2.8
   license_family: BSD
   purls: []
@@ -12648,8 +11482,6 @@ packages:
   - krb5 >=1.22.2,<1.23.0a0
   - libcxx >=19
   - openssl >=3.5.5,<4.0a0
-  arch: arm64
-  platform: osx
   license: OLDAP-2.8
   license_family: BSD
   purls: []
@@ -12662,8 +11494,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - ca-certificates
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -12675,8 +11505,6 @@ packages:
   depends:
   - ca-certificates
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -12688,8 +11516,6 @@ packages:
   depends:
   - __osx >=10.13
   - ca-certificates
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -12701,8 +11527,6 @@ packages:
   depends:
   - __osx >=11.0
   - ca-certificates
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -12716,8 +11540,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -12781,8 +11603,6 @@ packages:
   - numexpr >=2.8.4
   - pyxlsb >=1.0.10
   - tabulate >=0.9.0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12835,8 +11655,6 @@ packages:
   - lxml >=4.9.2
   - html5lib >=1.1
   - bottleneck >=1.3.6
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12888,8 +11706,6 @@ packages:
   - sqlalchemy >=2.0.0
   - python-calamine >=0.1.7
   - psycopg2 >=2.9.6
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12942,8 +11758,6 @@ packages:
   - xarray >=2022.12.0
   - numexpr >=2.8.4
   - odfpy >=1.4.1
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -12996,8 +11810,6 @@ packages:
   - html5lib >=1.1
   - numexpr >=2.8.4
   - pyqt5 >=5.15.9
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -13027,8 +11839,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: LGPL-2.1-or-later
   purls: []
   size: 454854
@@ -13063,8 +11873,6 @@ packages:
   - bzip2 >=1.0.8,<2.0a0
   - libgcc >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -13077,8 +11885,6 @@ packages:
   - bzip2 >=1.0.8,<2.0a0
   - libgcc >=14
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -13091,8 +11897,6 @@ packages:
   - __osx >=10.13
   - bzip2 >=1.0.8,<2.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -13105,8 +11909,6 @@ packages:
   - __osx >=11.0
   - bzip2 >=1.0.8,<2.0a0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -13121,8 +11923,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -13152,8 +11952,6 @@ packages:
   - libjpeg-turbo >=3.1.2,<4.0a0
   - libxcb >=1.17.0,<2.0a0
   - lcms2 >=2.18,<3.0a0
-  arch: x86_64
-  platform: linux
   license: HPND
   purls:
   - pkg:pypi/pillow?source=compressed-mapping
@@ -13177,8 +11975,6 @@ packages:
   - libfreetype6 >=2.14.1
   - zlib-ng >=2.3.3,<2.4.0a0
   - lcms2 >=2.18,<3.0a0
-  arch: aarch64
-  platform: linux
   license: HPND
   purls:
   - pkg:pypi/pillow?source=hash-mapping
@@ -13201,8 +11997,6 @@ packages:
   - tk >=8.6.13,<8.7.0a0
   - openjpeg >=2.5.4,<3.0a0
   - zlib-ng >=2.3.3,<2.4.0a0
-  arch: x86_64
-  platform: osx
   license: HPND
   purls:
   - pkg:pypi/pillow?source=hash-mapping
@@ -13226,8 +12020,6 @@ packages:
   - openjpeg >=2.5.4,<3.0a0
   - lcms2 >=2.18,<3.0a0
   - libwebp-base >=1.6.0,<2.0a0
-  arch: arm64
-  platform: osx
   license: HPND
   purls:
   - pkg:pypi/pillow?source=compressed-mapping
@@ -13252,8 +12044,6 @@ packages:
   - libwebp-base >=1.6.0,<2.0a0
   - libxcb >=1.17.0,<2.0a0
   - tk >=8.6.13,<8.7.0a0
-  arch: x86_64
-  platform: win
   license: HPND
   purls:
   - pkg:pypi/pillow?source=hash-mapping
@@ -13291,8 +12081,6 @@ packages:
   - libstdcxx >=14
   - libgcc >=14
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13305,8 +12093,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13318,8 +12104,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13331,8 +12115,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13348,8 +12130,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -13408,8 +12188,6 @@ packages:
   - libsqlite >=3.51.2,<4.0a0
   constrains:
   - proj4 ==999999999999
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13429,8 +12207,6 @@ packages:
   - libsqlite >=3.51.2,<4.0a0
   constrains:
   - proj4 ==999999999999
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13450,8 +12226,6 @@ packages:
   - libsqlite >=3.51.2,<4.0a0
   constrains:
   - proj4 ==999999999999
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13471,8 +12245,6 @@ packages:
   - libtiff >=4.7.1,<4.8.0a0
   constrains:
   - proj4 ==999999999999
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13493,8 +12265,6 @@ packages:
   - libcurl >=8.18.0,<9.0a0
   constrains:
   - proj4 ==999999999999
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -13515,8 +12285,6 @@ packages:
   - libgcc >=13
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -13531,8 +12299,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -13546,8 +12312,6 @@ packages:
   - __osx >=10.13
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -13562,8 +12326,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -13579,8 +12341,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls:
@@ -13813,8 +12573,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13825,8 +12583,6 @@ packages:
   md5: bb5a90c93e3bac3d5690acf76b4a6386
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13837,8 +12593,6 @@ packages:
   md5: 8bcf980d2c6b17094961198284b8e862
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13849,8 +12603,6 @@ packages:
   md5: 415816daf82e0b23a736a069a75e9da7
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13863,8 +12615,6 @@ packages:
   - libgcc >=13
   - libwinpthread >=12.0.0.r4.gg4f2fc60ca
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -13881,8 +12631,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libstdcxx >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13894,8 +12642,6 @@ packages:
   depends:
   - libgcc >=13
   - libstdcxx >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -13907,8 +12653,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=18
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13920,8 +12664,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=18
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -13934,8 +12676,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -14001,8 +12741,6 @@ packages:
   - packaging
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14021,8 +12759,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14040,8 +12776,6 @@ packages:
   - packaging
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14060,8 +12794,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14080,8 +12812,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -14110,8 +12840,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14127,8 +12855,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - python >=3.12,<3.13.0a0
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14144,8 +12870,6 @@ packages:
   - proj >=9.7.0,<9.8.0a0
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14162,8 +12886,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14181,8 +12903,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -14197,8 +12917,6 @@ packages:
   - libgcc >=14
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14212,8 +12930,6 @@ packages:
   - libgcc >=14
   - python >=3.12,<3.13.0a0
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14227,8 +12943,6 @@ packages:
   - __osx >=10.13
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14243,8 +12957,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14260,8 +12972,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -14298,8 +13008,6 @@ packages:
   - python_abi 3.13.* *_cp313
   - qt6-main 6.10.2.*
   - qt6-main >=6.10.2,<6.11.0a0
-  arch: x86_64
-  platform: linux
   license: LGPL-3.0-only
   license_family: LGPL
   purls:
@@ -14324,8 +13032,6 @@ packages:
   - python_abi 3.12.* *_cp312
   - qt6-main 6.10.2.*
   - qt6-main >=6.10.2,<6.11.0a0
-  arch: aarch64
-  platform: linux
   license: LGPL-3.0-only
   license_family: LGPL
   purls:
@@ -14349,8 +13055,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: LGPL-3.0-only
   license_family: LGPL
   purls:
@@ -14480,8 +13184,6 @@ packages:
   - readline >=8.3,<9.0a0
   - tk >=8.6.13,<8.7.0a0
   - tzdata
-  arch: x86_64
-  platform: linux
   license: Python-2.0
   purls: []
   size: 37364553
@@ -14510,8 +13212,6 @@ packages:
   - tzdata
   constrains:
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Python-2.0
   purls: []
   size: 13798340
@@ -14535,8 +13235,6 @@ packages:
   - readline >=8.3,<9.0a0
   - tk >=8.6.13,<8.7.0a0
   - tzdata
-  arch: x86_64
-  platform: osx
   license: Python-2.0
   purls: []
   size: 17570178
@@ -14561,8 +13259,6 @@ packages:
   - readline >=8.3,<9.0a0
   - tk >=8.6.13,<8.7.0a0
   - tzdata
-  arch: arm64
-  platform: osx
   license: Python-2.0
   purls: []
   size: 12770674
@@ -14587,8 +13283,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Python-2.0
   purls: []
   size: 16535316
@@ -14781,8 +13475,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: win
   license: PSF-2.0
   license_family: PSF
   purls:
@@ -14798,8 +13490,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - yaml >=0.2.5,<0.3.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14815,8 +13505,6 @@ packages:
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
   - yaml >=0.2.5,<0.3.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -14831,8 +13519,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
   - yaml >=0.2.5,<0.3.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14848,8 +13534,6 @@ packages:
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
   - yaml >=0.2.5,<0.3.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -14866,8 +13550,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - yaml >=0.2.5,<0.3.0a0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -14909,8 +13591,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc-ng >=12
   - libstdcxx-ng >=12
-  arch: x86_64
-  platform: linux
   license: LicenseRef-Qhull
   purls: []
   size: 552937
@@ -14921,8 +13601,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libstdcxx-ng >=12
-  arch: aarch64
-  platform: linux
   license: LicenseRef-Qhull
   purls: []
   size: 554571
@@ -14933,8 +13611,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=16
-  arch: x86_64
-  platform: osx
   license: LicenseRef-Qhull
   purls: []
   size: 528122
@@ -14945,8 +13621,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=16
-  arch: arm64
-  platform: osx
   license: LicenseRef-Qhull
   purls: []
   size: 516376
@@ -14958,8 +13632,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: LicenseRef-Qhull
   purls: []
   size: 1377020
@@ -15026,8 +13698,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - qt 6.10.2
-  arch: x86_64
-  platform: linux
   license: LGPL-3.0-only
   purls: []
   size: 56550801
@@ -15093,8 +13763,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - qt 6.10.2
-  arch: aarch64
-  platform: linux
   license: LGPL-3.0-only
   purls: []
   size: 58893291
@@ -15128,8 +13796,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - qt 6.10.2
-  arch: x86_64
-  platform: osx
   license: LGPL-3.0-only
   license_family: LGPL
   purls: []
@@ -15164,8 +13830,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - qt 6.10.2
-  arch: arm64
-  platform: osx
   license: LGPL-3.0-only
   purls: []
   size: 46935096
@@ -15200,8 +13864,6 @@ packages:
   - zstd >=1.5.7,<1.6.0a0
   constrains:
   - qt 6.10.2
-  arch: x86_64
-  platform: win
   license: LGPL-3.0-only
   purls: []
   size: 86110363
@@ -15226,8 +13888,6 @@ packages:
   - python_abi 3.13.* *_cp313
   - setuptools >=0.9.8
   - snuggs >=1.4.1
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15254,8 +13914,6 @@ packages:
   - python_abi 3.12.* *_cp312
   - setuptools >=0.9.8
   - snuggs >=1.4.1
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15281,8 +13939,6 @@ packages:
   - python_abi 3.13.* *_cp313
   - setuptools >=0.9.8
   - snuggs >=1.4.1
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15309,8 +13965,6 @@ packages:
   - python_abi 3.13.* *_cp313
   - setuptools >=0.9.8
   - snuggs >=1.4.1
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15337,8 +13991,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15371,8 +14023,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - ncurses >=6.5,<7.0a0
-  arch: x86_64
-  platform: linux
   license: GPL-3.0-only
   license_family: GPL
   purls: []
@@ -15384,8 +14034,6 @@ packages:
   depends:
   - libgcc >=14
   - ncurses >=6.5,<7.0a0
-  arch: aarch64
-  platform: linux
   license: GPL-3.0-only
   license_family: GPL
   purls: []
@@ -15397,8 +14045,6 @@ packages:
   depends:
   - __osx >=10.13
   - ncurses >=6.5,<7.0a0
-  arch: x86_64
-  platform: osx
   license: GPL-3.0-only
   license_family: GPL
   purls: []
@@ -15410,8 +14056,6 @@ packages:
   depends:
   - __osx >=11.0
   - ncurses >=6.5,<7.0a0
-  arch: arm64
-  platform: osx
   license: GPL-3.0-only
   license_family: GPL
   purls: []
@@ -15507,8 +14151,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -15523,8 +14165,6 @@ packages:
   - libgcc >=14
   - python 3.12.* *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -15538,8 +14178,6 @@ packages:
   - python
   - __osx >=10.13
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -15554,8 +14192,6 @@ packages:
   - python 3.13.* *_cp313
   - __osx >=11.0
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -15571,8 +14207,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -15589,8 +14223,6 @@ packages:
   - libgcc >=14
   constrains:
   - __glibc >=2.17
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -15606,8 +14238,6 @@ packages:
   - libgcc >=14
   constrains:
   - __glibc >=2.17
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -15623,8 +14253,6 @@ packages:
   - __osx >=11.0
   constrains:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -15640,8 +14268,6 @@ packages:
   - __osx >=11.0
   constrains:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -15657,8 +14283,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -15680,8 +14304,6 @@ packages:
   - libstdcxx >=14
   - python_abi 3.13.* *_cp313
   - numpy >=1.23,<3
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15703,8 +14325,6 @@ packages:
   - python 3.12.* *_cpython
   - python_abi 3.12.* *_cp312
   - numpy >=1.23,<3
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15725,8 +14345,6 @@ packages:
   - __osx >=10.13
   - python_abi 3.13.* *_cp313
   - numpy >=1.23,<3
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15748,8 +14366,6 @@ packages:
   - libcxx >=19
   - python_abi 3.13.* *_cp313
   - numpy >=1.23,<3
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15770,8 +14386,6 @@ packages:
   - ucrt >=10.0.20348.0
   - numpy >=1.23,<3
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15795,8 +14409,6 @@ packages:
   - numpy >=1.25.2
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15820,8 +14432,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15844,8 +14454,6 @@ packages:
   - numpy >=1.25.2
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15869,8 +14477,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15892,8 +14498,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -15922,8 +14526,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - sdl3 >=3.2.22,<4.0a0
-  arch: x86_64
-  platform: win
   license: Zlib
   purls: []
   size: 572101
@@ -15937,8 +14539,6 @@ packages:
   - ucrt >=10.0.20348.0
   - libvulkan-loader >=1.4.341.0,<2.0a0
   - libusb >=1.0.29,<2.0a0
-  arch: x86_64
-  platform: win
   license: Zlib
   purls: []
   size: 1669623
@@ -15974,8 +14574,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -15991,8 +14589,6 @@ packages:
   - numpy >=1.23,<3
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -16008,8 +14604,6 @@ packages:
   - numpy >=1.23,<3
   - python >=3.12,<3.13.0a0
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -16025,8 +14619,6 @@ packages:
   - numpy >=1.23,<3
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -16043,8 +14635,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -16062,8 +14652,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -16078,8 +14666,6 @@ packages:
   - libgcc >=14
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -16094,8 +14680,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls:
@@ -16109,8 +14693,6 @@ packages:
   - __osx >=10.13
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -16125,8 +14707,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls:
@@ -16142,8 +14722,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls:
@@ -16181,8 +14759,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libstdcxx >=14
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16195,8 +14771,6 @@ packages:
   - libgcc >=14
   - libstdcxx >=14
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16208,8 +14782,6 @@ packages:
   depends:
   - libcxx >=19
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16221,8 +14793,6 @@ packages:
   depends:
   - libcxx >=19
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16238,8 +14808,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16392,8 +14960,6 @@ packages:
   - libstdcxx >=14
   constrains:
   - spirv-headers >=1.4.335.0,<1.4.335.1.0a0
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16407,8 +14973,6 @@ packages:
   - libstdcxx >=14
   constrains:
   - spirv-headers >=1.4.335.0,<1.4.335.1.0a0
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16422,8 +14986,6 @@ packages:
   - libcxx >=19
   constrains:
   - spirv-headers >=1.4.335.0,<1.4.335.1.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16437,8 +14999,6 @@ packages:
   - libcxx >=19
   constrains:
   - spirv-headers >=1.4.335.0,<1.4.335.1.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16453,8 +15013,6 @@ packages:
   - vc14_runtime >=14.44.35208
   constrains:
   - spirv-headers >=1.4.335.0,<1.4.335.1.0a0
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16471,8 +15029,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - ncurses >=6.5,<7.0a0
   - readline >=8.3,<9.0a0
-  arch: x86_64
-  platform: linux
   license: blessing
   purls: []
   size: 183298
@@ -16487,8 +15043,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - ncurses >=6.5,<7.0a0
   - readline >=8.3,<9.0a0
-  arch: aarch64
-  platform: linux
   license: blessing
   purls: []
   size: 189123
@@ -16502,8 +15056,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - ncurses >=6.5,<7.0a0
   - readline >=8.3,<9.0a0
-  arch: x86_64
-  platform: osx
   license: blessing
   purls: []
   size: 174119
@@ -16518,8 +15070,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   - ncurses >=6.5,<7.0a0
   - readline >=8.3,<9.0a0
-  arch: arm64
-  platform: osx
   license: blessing
   purls: []
   size: 165840
@@ -16532,8 +15082,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: blessing
   purls: []
   size: 400812
@@ -16558,25 +15106,23 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-2-Clause
   license_family: BSD
   purls: []
   size: 1808810
   timestamp: 1769664619287
-- conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-5.1.0-pyhd8ed1ab_0.conda
-  sha256: 0b61d76a7a6ad991ab1bcd198c50227063409eed30b8849bae77f9b746a224fe
-  md5: f4e2aaf23de846118f3df0f6eb1a7951
+- conda: https://conda.anaconda.org/conda-forge/noarch/syrupy-4.9.1-pyhd8ed1ab_0.conda
+  sha256: 62f549992509c3d1a0ecedd7a4784972c2542f23ec1c49ada92027c156cd31a5
+  md5: f8e0fc78b3292b215266c19cdddaa6ab
   depends:
-  - pytest >=8.0.0,<9.0.0
-  - python >=3.10,<4.0
-  license: MIT
-  license_family: MIT
+  - pytest >=7.0.0,<9.0.0
+  - python >=3.9,<4.0
+  license: Apache-2.0
+  license_family: APACHE
   purls:
   - pkg:pypi/syrupy?source=hash-mapping
-  size: 46674
-  timestamp: 1769388195873
+  size: 47524
+  timestamp: 1742814070006
 - conda: https://conda.anaconda.org/conda-forge/linux-64/tbb-2022.3.0-hb700be7_2.conda
   sha256: 975710e4b7f1b13c3c30b7fbf21e22f50abe0463b6b47a231582fdedcc45c961
   md5: 8f7278ca5f7456a974992a8b34284737
@@ -16585,8 +15131,6 @@ packages:
   - libgcc >=14
   - libhwloc >=2.12.2,<2.12.3.0a0
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16599,8 +15143,6 @@ packages:
   - libgcc >=14
   - libhwloc >=2.12.2,<2.12.3.0a0
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16613,8 +15155,6 @@ packages:
   - __osx >=10.13
   - libcxx >=19
   - libhwloc >=2.12.2,<2.12.3.0a0
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16627,8 +15167,6 @@ packages:
   - __osx >=11.0
   - libcxx >=19
   - libhwloc >=2.12.2,<2.12.3.0a0
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16642,8 +15180,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: APACHE
   purls: []
@@ -16680,8 +15216,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: x86_64
-  platform: linux
   license: TCL
   license_family: BSD
   purls: []
@@ -16695,8 +15229,6 @@ packages:
   - libzlib >=1.3.1,<2.0a0
   constrains:
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: aarch64
-  platform: linux
   license: TCL
   license_family: BSD
   purls: []
@@ -16708,8 +15240,6 @@ packages:
   depends:
   - __osx >=10.13
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: TCL
   license_family: BSD
   purls: []
@@ -16721,8 +15251,6 @@ packages:
   depends:
   - __osx >=11.0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: TCL
   license_family: BSD
   purls: []
@@ -16735,8 +15263,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: TCL
   license_family: BSD
   purls: []
@@ -16773,8 +15299,6 @@ packages:
   - libgcc >=14
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -16788,8 +15312,6 @@ packages:
   - libgcc >=14
   - python >=3.12,<3.13.0a0
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -16803,8 +15325,6 @@ packages:
   - __osx >=11.0
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -16819,8 +15339,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -16836,8 +15354,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -16890,8 +15406,6 @@ packages:
   constrains:
   - vc14_runtime >=14.29.30037
   - vs2015_runtime >=14.29.30037
-  arch: x86_64
-  platform: win
   license: LicenseRef-MicrosoftWindowsSDK10
   purls: []
   size: 694692
@@ -16904,8 +15418,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -16918,8 +15430,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libstdcxx-ng >=12
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16931,8 +15441,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libstdcxx-ng >=12
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16944,8 +15452,6 @@ packages:
   depends:
   - __osx >=10.9
   - libcxx >=16
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16957,8 +15463,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=16
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16971,8 +15475,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -16996,8 +15498,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/utfcpp-4.09-ha770c72_0.conda
   sha256: 18f84366d84b83bb4b2a6e0ac4487a5b4ee33c531faa2d822027fddf8225eed5
   md5: 99884244028fe76046e3914f90d4ad05
-  arch: x86_64
-  platform: linux
   license: BSL-1.0
   purls: []
   size: 14226
@@ -17005,8 +15505,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/utfcpp-4.09-h8af1aa0_0.conda
   sha256: be28ea1049025975253f04875195b52d1a7b755a38d8f0039f072b9fa05499b5
   md5: daa98fd6d175e72d65c353b6b7504971
-  arch: aarch64
-  platform: linux
   license: BSL-1.0
   purls: []
   size: 14197
@@ -17014,8 +15512,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/osx-64/utfcpp-4.09-h694c41f_0.conda
   sha256: 05ba7c7a03d9bb8c58813c08f68419e48298dde839623c3ef9d86695cb613e04
   md5: 6cd5227f7138e460302f97d1a1549d84
-  arch: x86_64
-  platform: osx
   license: BSL-1.0
   purls: []
   size: 14226
@@ -17023,8 +15519,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/osx-arm64/utfcpp-4.09-hce30654_0.conda
   sha256: 598a2c7c38a8b3495efd354e5903a693059f0ee0d1b6af1a339ec09a7839737a
   md5: bf5e569456f850071049b692fe7ab755
-  arch: arm64
-  platform: osx
   license: BSL-1.0
   purls: []
   size: 14174
@@ -17032,8 +15526,6 @@ packages:
 - conda: https://conda.anaconda.org/conda-forge/win-64/utfcpp-4.09-h57928b3_0.conda
   sha256: 0de7c233d7d0ba91ecdc4de85f1894f45a20b55ed33371e7159ec42c81a5fb97
   md5: 6930bd6bf8290dbf83b2fecf42931971
-  arch: x86_64
-  platform: win
   license: BSL-1.0
   purls: []
   size: 14650
@@ -17043,8 +15535,6 @@ packages:
   md5: 1e610f2416b6acdd231c5f573d754a0f
   depends:
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   track_features:
   - vc14
   license: BSD-3-Clause
@@ -17060,8 +15550,6 @@ packages:
   - vcomp14 14.44.35208 h818238b_34
   constrains:
   - vs2015_runtime 14.44.35208.* *_34
-  arch: x86_64
-  platform: win
   license: LicenseRef-MicrosoftVisualCpp2015-2022Runtime
   license_family: Proprietary
   purls: []
@@ -17074,8 +15562,6 @@ packages:
   - ucrt >=10.0.20348.0
   constrains:
   - vs2015_runtime 14.44.35208.* *_34
-  arch: x86_64
-  platform: win
   license: LicenseRef-MicrosoftVisualCpp2015-2022Runtime
   license_family: Proprietary
   purls: []
@@ -17093,8 +15579,6 @@ packages:
   - glew >=2.2.0,<2.3.0a0
   - mesalib >=25.0.5,<25.1.0a0
   - hdf5 >=1.14.6,<1.14.7.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -17111,8 +15595,6 @@ packages:
   - glew >=2.2.0,<2.3.0a0
   - mesalib >=25.0.5,<25.1.0a0
   - hdf5 >=1.14.6,<1.14.7.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -17129,8 +15611,6 @@ packages:
   - mesalib >=25.0.5,<25.1.0a0
   - glew >=2.2.0,<2.3.0a0
   - hdf5 >=1.14.6,<1.14.7.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -17147,8 +15627,6 @@ packages:
   - hdf5 >=1.14.6,<1.14.7.0a0
   - glew >=2.2.0,<2.3.0a0
   - mesalib >=25.0.5,<25.1.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -17165,8 +15643,6 @@ packages:
   - mesalib >=25.0.5,<25.1.0a0
   - zfp >=1.0.1,<2.0a0
   - hdf5 >=1.14.6,<1.14.7.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -17177,8 +15653,6 @@ packages:
   md5: f276d1de4553e8fca1dfb6988551ebb4
   depends:
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -17233,8 +15707,6 @@ packages:
   - liblzma >=5.8.1,<6.0a0
   constrains:
   - libboost-headers >=1.88.0,<1.89.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -17290,8 +15762,6 @@ packages:
   - libglx >=1.7.0,<2.0a0
   constrains:
   - libboost-headers >=1.88.0,<1.89.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -17339,8 +15809,6 @@ packages:
   - qt6-main >=6.10.1,<6.11.0a0
   constrains:
   - libboost-headers >=1.88.0,<1.89.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -17389,8 +15857,6 @@ packages:
   - jsoncpp >=1.9.6,<1.9.7.0a0
   constrains:
   - libboost-headers >=1.88.0,<1.89.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -17441,8 +15907,6 @@ packages:
   - libfreetype6 >=2.14.1
   constrains:
   - libboost-headers >=1.88.0,<1.89.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls:
@@ -17458,8 +15922,6 @@ packages:
   - libffi >=3.5.2,<3.6.0a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17473,8 +15935,6 @@ packages:
   - libffi >=3.5.2,<3.6.0a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17542,8 +16002,6 @@ packages:
   depends:
   - vc >=14.1,<15
   - vs2015_runtime >=14.16.27033
-  arch: x86_64
-  platform: win
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -17555,8 +16013,6 @@ packages:
   depends:
   - vc >=14.1,<15
   - vs2015_runtime >=14.16.27033
-  arch: x86_64
-  platform: win
   license: GPL-2.0-or-later
   license_family: GPL
   purls: []
@@ -17569,8 +16025,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libxcb >=1.17.0,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17582,8 +16036,6 @@ packages:
   depends:
   - libgcc >=13
   - libxcb >=1.17.0,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17599,8 +16051,6 @@ packages:
   - libxcb >=1.17.0,<2.0a0
   - xcb-util-image >=0.4.0,<0.5.0a0
   - xcb-util-renderutil >=0.3.10,<0.4.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17615,8 +16065,6 @@ packages:
   - libxcb >=1.17.0,<2.0a0
   - xcb-util-image >=0.4.0,<0.5.0a0
   - xcb-util-renderutil >=0.3.10,<0.4.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17629,8 +16077,6 @@ packages:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
   - xcb-util >=0.4.1,<0.5.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17643,8 +16089,6 @@ packages:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
   - xcb-util >=0.4.1,<0.5.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17656,8 +16100,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17669,8 +16111,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17682,8 +16122,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17695,8 +16133,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17708,8 +16144,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17721,8 +16155,6 @@ packages:
   depends:
   - libgcc-ng >=12
   - libxcb >=1.16,<2.0.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17737,8 +16169,6 @@ packages:
   - libgcc >=14
   - libnsl >=2.0.1,<2.1.0a0
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -17752,8 +16182,6 @@ packages:
   - libgcc >=14
   - libnsl >=2.0.1,<2.1.0a0
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -17766,8 +16194,6 @@ packages:
   - __osx >=10.13
   - icu >=78.1,<79.0a0
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -17780,8 +16206,6 @@ packages:
   - __osx >=11.0
   - icu >=78.1,<79.0a0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -17794,8 +16218,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls: []
@@ -17808,8 +16230,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - xorg-libx11 >=1.8.13,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17821,8 +16241,6 @@ packages:
   depends:
   - libgcc >=14
   - xorg-libx11 >=1.8.13,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17849,8 +16267,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17861,8 +16277,6 @@ packages:
   md5: c8d8ec3e00cd0fd8a231789b91a7c5b7
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17876,8 +16290,6 @@ packages:
   - libgcc >=13
   - libuuid >=2.38.1,<3.0a0
   - xorg-libice >=1.1.2,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17890,8 +16302,6 @@ packages:
   - libgcc >=13
   - libuuid >=2.38.1,<3.0a0
   - xorg-libice >=1.1.2,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17904,8 +16314,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libxcb >=1.17.0,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17917,8 +16325,6 @@ packages:
   depends:
   - libgcc >=14
   - libxcb >=1.17.0,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17930,8 +16336,6 @@ packages:
   depends:
   - __osx >=10.13
   - libxcb >=1.17.0,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -17943,8 +16347,6 @@ packages:
   depends:
   - __osx >=11.0
   - libxcb >=1.17.0,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -17956,8 +16358,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17968,8 +16368,6 @@ packages:
   md5: 1c246e1105000c3660558459e2fd6d43
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -17980,8 +16378,6 @@ packages:
   md5: 47f1b8b4a76ebd0cd22bd7153e54a4dc
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -17992,8 +16388,6 @@ packages:
   md5: 78b548eed8227a689f93775d5d23ae09
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18006,8 +16400,6 @@ packages:
   - libgcc >=14
   - libwinpthread >=12.0.0.r4.gg4f2fc60ca
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -18021,8 +16413,6 @@ packages:
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxfixes >=6.0.2,<7.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18035,8 +16425,6 @@ packages:
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxfixes >=6.0.2,<7.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18051,8 +16439,6 @@ packages:
   - xorg-libx11 >=1.8.10,<2.0a0
   - xorg-libxfixes >=6.0.1,<7.0a0
   - xorg-libxrender >=0.9.11,<0.10.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18066,8 +16452,6 @@ packages:
   - xorg-libx11 >=1.8.9,<2.0a0
   - xorg-libxfixes >=6.0.1,<7.0a0
   - xorg-libxrender >=0.9.11,<0.10.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18082,8 +16466,6 @@ packages:
   - xorg-libx11 >=1.8.10,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxfixes >=6.0.1,<7.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18097,8 +16479,6 @@ packages:
   - xorg-libx11 >=1.8.9,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxfixes >=6.0.1,<7.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18110,8 +16490,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18122,8 +16500,6 @@ packages:
   md5: bff06dcde4a707339d66d45d96ceb2e2
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18134,8 +16510,6 @@ packages:
   md5: 435446d9d7db8e094d2c989766cfb146
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18146,8 +16520,6 @@ packages:
   md5: 9d1299ace1924aa8f4e0bc8e71dd0cf7
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18160,8 +16532,6 @@ packages:
   - libgcc >=14
   - libwinpthread >=12.0.0.r4.gg4f2fc60ca
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -18174,8 +16544,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18187,8 +16555,6 @@ packages:
   depends:
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18200,8 +16566,6 @@ packages:
   depends:
   - __osx >=10.13
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18213,8 +16577,6 @@ packages:
   depends:
   - __osx >=11.0
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18227,8 +16589,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18240,8 +16600,6 @@ packages:
   depends:
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18256,8 +16614,6 @@ packages:
   - xorg-libx11 >=1.8.10,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxfixes >=6.0.1,<7.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18271,8 +16627,6 @@ packages:
   - xorg-libx11 >=1.8.9,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxfixes >=6.0.1,<7.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18287,8 +16641,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxrender >=0.9.12,<0.10.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18302,8 +16654,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxrender >=0.9.12,<0.10.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18317,8 +16667,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxrender >=0.9.12,<0.10.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18332,8 +16680,6 @@ packages:
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxrender >=0.9.12,<0.10.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18346,8 +16692,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - xorg-libx11 >=1.8.10,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18359,8 +16703,6 @@ packages:
   depends:
   - libgcc >=13
   - xorg-libx11 >=1.8.10,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18372,8 +16714,6 @@ packages:
   depends:
   - __osx >=10.13
   - xorg-libx11 >=1.8.10,<2.0a0
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18385,8 +16725,6 @@ packages:
   depends:
   - __osx >=11.0
   - xorg-libx11 >=1.8.10,<2.0a0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18398,8 +16736,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18410,8 +16746,6 @@ packages:
   md5: c11f706a5072c34a559848f27d6c28c3
   depends:
   - libgcc >=13
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18422,8 +16756,6 @@ packages:
   md5: 0dc2164bc21746e059ad802ca56d4d63
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18434,8 +16766,6 @@ packages:
   md5: 02e7bdcf116337a0e919f179fd481cf3
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18450,8 +16780,6 @@ packages:
   - xorg-libx11 >=1.8.10,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxi >=1.7.10,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18465,8 +16793,6 @@ packages:
   - xorg-libx11 >=1.8.9,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
   - xorg-libxi >=1.7.10,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18480,8 +16806,6 @@ packages:
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18494,8 +16818,6 @@ packages:
   - libgcc >=14
   - xorg-libx11 >=1.8.12,<2.0a0
   - xorg-libxext >=1.3.6,<2.0a0
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18518,8 +16840,6 @@ packages:
   depends:
   - libgcc >=14
   - __glibc >=2.17,<3.0.a0
-  arch: x86_64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18530,8 +16850,6 @@ packages:
   md5: 032d8030e4a24fe1f72c74423a46fb88
   depends:
   - libgcc >=14
-  arch: aarch64
-  platform: linux
   license: MIT
   license_family: MIT
   purls: []
@@ -18542,8 +16860,6 @@ packages:
   md5: a645bb90997d3fc2aea0adf6517059bd
   depends:
   - __osx >=10.13
-  arch: x86_64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18554,8 +16870,6 @@ packages:
   md5: 78a0fe9e9c50d2c381e8ee47e3ea437d
   depends:
   - __osx >=11.0
-  arch: arm64
-  platform: osx
   license: MIT
   license_family: MIT
   purls: []
@@ -18571,8 +16885,6 @@ packages:
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  arch: x86_64
-  platform: win
   license: MIT
   license_family: MIT
   purls: []
@@ -18589,8 +16901,6 @@ packages:
   - propcache >=0.2.1
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -18608,8 +16918,6 @@ packages:
   - python >=3.12,<3.13.0a0
   - python >=3.12,<3.13.0a0 *_cpython
   - python_abi 3.12.* *_cp312
-  arch: aarch64
-  platform: linux
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -18626,8 +16934,6 @@ packages:
   - propcache >=0.2.1
   - python >=3.13,<3.14.0a0
   - python_abi 3.13.* *_cp313
-  arch: x86_64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -18645,8 +16951,6 @@ packages:
   - python >=3.13,<3.14.0a0
   - python >=3.13,<3.14.0a0 *_cp313
   - python_abi 3.13.* *_cp313
-  arch: arm64
-  platform: osx
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -18665,8 +16969,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Apache-2.0
   license_family: Apache
   purls:
@@ -18681,8 +16983,6 @@ packages:
   - _openmp_mutex >=4.5
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18695,8 +16995,6 @@ packages:
   - _openmp_mutex >=4.5
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18709,8 +17007,6 @@ packages:
   - __osx >=10.13
   - libcxx >=19
   - llvm-openmp >=19.1.7
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18723,8 +17019,6 @@ packages:
   - __osx >=11.0
   - libcxx >=19
   - llvm-openmp >=19.1.7
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18737,8 +17031,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18763,8 +17055,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=13
   - libzlib 1.3.1 hb9d3cd8_2
-  arch: x86_64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -18776,8 +17066,6 @@ packages:
   depends:
   - libgcc >=13
   - libzlib 1.3.1 h86ecc28_2
-  arch: aarch64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -18789,8 +17077,6 @@ packages:
   depends:
   - __osx >=10.13
   - libzlib 1.3.1 hd23fc13_2
-  arch: x86_64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -18802,8 +17088,6 @@ packages:
   depends:
   - __osx >=11.0
   - libzlib 1.3.1 h8359307_2
-  arch: arm64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -18817,8 +17101,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.2,<15
   - vc14_runtime >=14.29.30139
-  arch: x86_64
-  platform: win
   license: Zlib
   license_family: Other
   purls: []
@@ -18831,8 +17113,6 @@ packages:
   - __glibc >=2.17,<3.0.a0
   - libgcc >=14
   - libstdcxx >=14
-  arch: x86_64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -18844,8 +17124,6 @@ packages:
   depends:
   - libgcc >=14
   - libstdcxx >=14
-  arch: aarch64
-  platform: linux
   license: Zlib
   license_family: Other
   purls: []
@@ -18857,8 +17135,6 @@ packages:
   depends:
   - __osx >=10.13
   - libcxx >=19
-  arch: x86_64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -18870,8 +17146,6 @@ packages:
   depends:
   - __osx >=11.0
   - libcxx >=19
-  arch: arm64
-  platform: osx
   license: Zlib
   license_family: Other
   purls: []
@@ -18884,8 +17158,6 @@ packages:
   - ucrt >=10.0.20348.0
   - vc >=14.3,<15
   - vc14_runtime >=14.44.35208
-  arch: x86_64
-  platform: win
   license: Zlib
   license_family: Other
   purls: []
@@ -18897,8 +17169,6 @@ packages:
   depends:
   - __glibc >=2.17,<3.0.a0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18909,8 +17179,6 @@ packages:
   md5: c3655f82dcea2aa179b291e7099c1fcc
   depends:
   - libzlib >=1.3.1,<2.0a0
-  arch: aarch64
-  platform: linux
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18922,8 +17190,6 @@ packages:
   depends:
   - __osx >=10.13
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18935,8 +17201,6 @@ packages:
   depends:
   - __osx >=11.0
   - libzlib >=1.3.1,<2.0a0
-  arch: arm64
-  platform: osx
   license: BSD-3-Clause
   license_family: BSD
   purls: []
@@ -18950,8 +17214,6 @@ packages:
   - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   - libzlib >=1.3.1,<2.0a0
-  arch: x86_64
-  platform: win
   license: BSD-3-Clause
   license_family: BSD
   purls: []

@@ -87,7 +87,7 @@ rasterstats = "*"
 ruff = "*"
 scipy = "*"
 shapely = "*"
-syrupy = "*"
+syrupy = ">=4.9.1,<5"
 tomli = ">=2.2.1,<3"
 tomli-w = ">=1.2.0,<2"
 
