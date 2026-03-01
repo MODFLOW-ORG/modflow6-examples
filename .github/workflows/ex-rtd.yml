@@ -147,6 +147,9 @@ jobs:
           pixi run --manifest-path ../modflow6-examples/pixi.toml meson test --verbose --no-rebuild -C builddir
           cp bin/* ~/.local/bin/modflow/
       
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Run notebooks, make plots
         working-directory: modflow6-examples/autotest
         run: pixi run pytest -v -n=auto --durations=0 test_notebooks.py --plot
