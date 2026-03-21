@@ -1,10 +1,8 @@
 name: CI
 env:
   DISTNAME: mf6examples
-  TAG: current
+
 on:
-  schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC
   push:
     paths-ignore:
       - 'README.md'
@@ -193,72 +191,3 @@ jobs:
         with:
           name: ${{ env.DISTNAME}}.pdf
           path: modflow6-examples/${{ env.DISTNAME }}.pdf
-
-  # delete the latest if needed and make a new release
-  release:
-    name: Make a release
-    needs: [ dist, docs ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout MODFLOW6 examples
-        uses: actions/checkout@v6
-
-      - name: Get current time
-        uses: josStorer/get-current-time@v2
-        id: time
-        with:
-          format: MM/DD/YYYY HH:mm
-
-      - name: Download ${{ env.DISTNAME }}.pdf
-        uses: actions/download-artifact@v8.0.1
-        with:
-          name: ${{ env.DISTNAME }}.pdf
-          path: ${{ env.TAG }}
-
-      - name: Download ${{ env.DISTNAME }}.zip
-        uses: actions/download-artifact@v8.0.1
-        with:
-          name: ${{ env.DISTNAME }}.zip
-          path: ${{ env.TAG }}
-
-      - name: List release assets
-        run: ls -R ${{ env.TAG }}
-
-      - name: Delete latest release
-        if: |
-          github.repository_owner == 'MODFLOW-ORG' &&
-          github.ref_name == 'master' &&
-          github.event_name == 'push'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if gh release view $TAG; then
-            gh release delete $TAG --yes --cleanup-tag
-          fi
-
-      - name: Create new release
-        if: |
-          github.repository_owner == 'MODFLOW-ORG' &&
-          github.ref_name == 'master' &&
-          github.event_name == 'push'
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ env.TAG }}
-          name: Latest
-          body: "MODFLOW 6 examples: built ${{ steps.time.outputs.formattedTime }}"
-          allowUpdates: true
-          draft: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload release assets
-        if: |
-          github.repository_owner == 'MODFLOW-ORG' &&
-          github.ref_name == 'master' &&
-          github.event_name == 'push'
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.TAG }}/*
-          tag: ${{ env.TAG }}
-          overwrite: true
-          file_glob: true
