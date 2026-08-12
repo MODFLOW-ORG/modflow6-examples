@@ -761,10 +761,37 @@ def plot_concentrations(gwt_sims):
                 fig.savefig(fpth)
 
 
+def load_concentration(gwt):
+    # the central scheme is expected to diverge on discontinuous (square/step
+    # wave) fronts, in which case MF6 writes no concentration output
+    try:
+        ucnobj_mf6 = gwt.output.concentration()
+        return ucnobj_mf6.get_data(totim=ucnobj_mf6.get_times()[-1]).flatten()
+    except (ValueError, IndexError):
+        print(f"WARNING: no concentration output for {gwt.name} (scheme diverged)")
+        return None
+
+
 def plot_concentration(sim, ax):
     gwt = sim.get_model()
-    ucnobj_mf6 = gwt.output.concentration()
-    conc = ucnobj_mf6.get_data(totim=ucnobj_mf6.get_times()[-1]).flatten()
+    conc = load_concentration(gwt)
+
+    ax.set_xlabel("x [cm]")
+    ax.set_ylabel("y [cm]")
+    ax.set_aspect("equal")
+
+    if conc is None:
+        ax.text(
+            0.5,
+            0.5,
+            "diverged",
+            ha="center",
+            va="center",
+            transform=ax.transAxes,
+            fontsize="small",
+            color="red",
+        )
+        return
 
     tol = 1e-2
     vmin = -0.0 - tol
@@ -774,10 +801,6 @@ def plot_concentration(sim, ax):
     pmv = flopy.plot.PlotMapView(gwt, ax=ax)
     pc = pmv.plot_array(masked_conc, vmin=vmin, vmax=vmax, alpha=1)
     plt.colorbar(pc)
-
-    ax.set_xlabel("x [cm]")
-    ax.set_ylabel("y [cm]")
-    ax.set_aspect("equal")
 
 
 def plot_concentration_cross_sections(gwt_sims):
@@ -852,8 +875,9 @@ def plot_concentration_analytical(analytical_func, ax):
 
 def plot_concentration_cross_section(sim, scheme, ax):
     gwt = sim.get_model()
-    ucnobj_mf6 = gwt.output.concentration()
-    conc = ucnobj_mf6.get_data(totim=ucnobj_mf6.get_times()[-1]).flatten()
+    conc = load_concentration(gwt)
+    if conc is None:
+        return
 
     grid = gwt.modelgrid
     xc = grid.xcellcenters
