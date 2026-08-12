@@ -576,7 +576,7 @@ def plot_results(mt3d, mf6, idx, ax=None, ax2=None):
 
 # +
 def scenario(idx, silent=True):
-    mf2k5, mt3d, sim = build_models(example_name)
+    mf2k5, mt3d, sim = build_models(example_name, mixelm=mixelm)
     if write:
         write_models(mf2k5, mt3d, sim, silent=silent)
     if run:
