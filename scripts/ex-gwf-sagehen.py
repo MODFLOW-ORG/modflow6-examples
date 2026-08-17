@@ -1823,7 +1823,7 @@ fpath = pooch.retrieve(
     path=data_path,
     known_hash="md5:969ed0391d64804ec8395a578eb08ed1",
 )
-uz_ts = pd.read_csv(fpath, delim_whitespace=True, header=0)
+uz_ts = pd.read_csv(fpath, sep=r"\s+", header=0)
 
 # Need to set iuzbnd inactive where there are constant head cells, or where the
 # model grid is inactive
