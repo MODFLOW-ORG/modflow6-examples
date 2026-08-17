@@ -216,7 +216,7 @@ def build_mf6gwt(sim_folder, distribution_coefficient, decay, decay_sorbed):
             decay=decay,
             decay_sorbed=decay_sorbed,
             bulk_density=bd,
-            distcoef=distribution_coefficient,
+            distcoef=kd,
         )
     flopy.mf6.ModflowGwtadv(gwt)
     flopy.mf6.ModflowGwtdsp(
