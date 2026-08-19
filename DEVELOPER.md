@@ -330,5 +330,3 @@ GitHub Actions will run the following steps:
 5. Create a draft release and upload the documentation PDF and a zip archive of model input files as assets.
 
 Inspect and publish the release. After publishing, it is necessary to manually trigger a rebuild of the ReadTheDocs site. This can be done by starting the `rtd` workflow from the GitHub Actions web UI, specifying `refs/heads/master` for both the examples and MF6 repos in the dialog. (The workflow should be used from the `develop` branch.)
-
-**Note**: Releasing may eventually move to the [`modflow6`](https://github.com/MODFLOW-ORG/modflow6) repository's own release workflow, so that example releases stay in lockstep with MF6 releases (including nightly builds). See [MODFLOW-ORG/modflow6#2734](https://github.com/MODFLOW-ORG/modflow6/pull/2734) &mdash; still a draft. Until that (or an equivalent) is merged, this repository keeps releasing itself as described above.
