@@ -456,6 +456,7 @@ def build_models(mixelm=0, silent=False):
             alh=al,
             ath1=ath1,
             atv=atv,
+            diffc=dmcoef,
             filename=f"{gwtname}.dsp",
         )
 

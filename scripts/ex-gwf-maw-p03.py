@@ -85,7 +85,7 @@ H1 = 0.0  # Regional downgradient constant head ($ft$)
 maw_loc = (15, 13)  # Row, column location of well
 maw_lay = (1, 12)  # Layers with well screen
 maw_radius = 0.1333  # Well radius ($ft$)
-maw_bot = -65.0  # Bottom of the well ($ft$)
+maw_bot = -70.0  # Bottom of the well ($ft$)
 maw_highK = 1e9  # Hydraulic conductivity for well ($ft/d$)
 
 # set delr and delc for the local model
