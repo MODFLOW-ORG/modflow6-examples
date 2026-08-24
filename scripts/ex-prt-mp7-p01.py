@@ -988,4 +988,4 @@ def scenario(silent=False):
 
 
 # We are now ready to run the example problem. Subproblems 1A and 1B are solved by a single MODFLOW 6 run and a single MODPATH 7 run, so they are included under one "scenario". Each of the two subproblems is represented by its own particle release package (for MODFLOW 6) or particle group (for MODPATH 7).
-scenario(silent=True)
+scenario()

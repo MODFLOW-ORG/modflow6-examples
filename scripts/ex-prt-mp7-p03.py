@@ -939,4 +939,4 @@ def scenario(silent=False):
 
 # Run the MODPATH 7 example problem 3 scenario.
 
-scenario(silent=True)
+scenario()
