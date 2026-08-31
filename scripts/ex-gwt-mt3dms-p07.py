@@ -31,6 +31,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 
 # Example name and workspace paths. If this example is running

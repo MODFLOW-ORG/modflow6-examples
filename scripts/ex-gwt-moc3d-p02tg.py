@@ -23,6 +23,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 from scipy.special import erfc
 
@@ -410,11 +411,11 @@ def plot_results(sims):
 
         gwt = sim_mf6gwt.trans
         pmv = flopy.plot.PlotMapView(model=gwt, ax=axs)
-        
+
         levels = [1, 3, 10, 30, 100, 300]
         cs1 = plot_analytical(axs, levels)
         cs2 = pmv.contour_array(conc, colors="blue", linestyles="--", levels=levels)
-        
+
         axs.set_xlabel("x position (m)")
         axs.set_ylabel("y position (m)")
         axs.set_aspect(4.0)

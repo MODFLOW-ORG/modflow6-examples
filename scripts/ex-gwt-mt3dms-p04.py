@@ -31,6 +31,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 
 # Example name and workspace paths. If this example is running
@@ -536,7 +537,7 @@ def plot_results(mt3d, mf6, idx, leglab1, leglab2, ax=None):
             conc_mf6[0, 0, :, :], levels=levels, colors="r", linestyles="--"
         )
         ax.clabel(cs2)
-        
+
         handles = [Line2D([0], [0], color="r", linestyle="--", label=leglab2)]
         ax.legend(handles=handles, loc="upper left")
 

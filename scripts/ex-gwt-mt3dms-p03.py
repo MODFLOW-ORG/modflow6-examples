@@ -31,6 +31,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 
 # Example name and workspace paths. If this example is running
@@ -511,7 +512,7 @@ def plot_results(mt3d, mf6, idx, ax=None):
             conc_mf6[1], levels=[0.1, 1.0, 10.0, 50.0], colors="r", linestyles="--"
         )
         ax.clabel(cs2, inline=1, fontsize=10)
-        
+
         handles = [
             Line2D([0], [0], color="k", linestyle="-", label="MT3DMS"),
             Line2D([0], [0], color="r", linestyle="--", label="MODFLOW 6"),

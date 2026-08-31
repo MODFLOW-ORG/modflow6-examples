@@ -19,6 +19,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 from scipy.special import erfc
 
@@ -300,7 +301,7 @@ def plot_results(sims):
         axs.set_xlabel("x position (m)")
         axs.set_ylabel("y position (m)")
         axs.set_aspect(4.0)
-        
+
         handles = [
             Line2D([0], [0], color="black", linestyle="-", label="Analytical"),
             Line2D([0], [0], color="blue", linestyle="--", label="MODFLOW 6"),
