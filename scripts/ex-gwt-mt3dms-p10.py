@@ -656,10 +656,10 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         mm = flopy.plot.PlotMapView(model=mf2k5, ax=ax)
         mm.plot_grid(color=".5", alpha=0.2)
         cs = mm.contour_array(cinit, levels=np.arange(20, 200, 20))
-        ax.xlim(5100, 5100 + 28 * 50)
-        ax.ylim(9100, 9100 + 45 * 50)
-        ax.xlabel("Distance Along X-Axis, in meters")
-        ax.ylabel("Distance Along Y-Axis, in meters")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
         ax.clabel(cs, fmt=r"%3d")
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
             ax.plot(xc[j], yc[i], "ks")
@@ -688,10 +688,10 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         ]
         ax.legend(handles=handles, loc="upper left")
 
-        ax.xlim(5100, 5100 + 28 * 50)
-        ax.ylim(9100, 9100 + 45 * 50)
-        ax.xlabel("Distance Along X-Axis, in meters")
-        ax.ylabel("Distance Along Y-Axis, in meters")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
 
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
             ax.plot(xc[j], yc[i], "ks")
@@ -712,10 +712,10 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         cs2 = mm.contour_array(
             c_mf6, levels=np.arange(10, 200, 10), colors="red", linestyles="--"
         )
-        ax.xlim(5100, 5100 + 28 * 50)
-        ax.ylim(9100, 9100 + 45 * 50)
-        ax.xlabel("Distance Along X-Axis, in meters")
-        ax.ylabel("Distance Along Y-Axis, in meters")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
             ax.plot(xc[j], yc[i], "ks")
 
@@ -735,10 +735,10 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         cs2 = mm.contour_array(
             c_mf6, levels=np.arange(10, 200, 10), colors="red", linestyles="--"
         )
-        ax.xlim(5100, 5100 + 28 * 50)
-        ax.ylim(9100, 9100 + 45 * 50)
-        ax.xlabel("Distance Along X-Axis, in meters")
-        ax.ylabel("Distance Along Y-Axis, in meters")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
             ax.plot(xc[j], yc[i], "ks")
 
