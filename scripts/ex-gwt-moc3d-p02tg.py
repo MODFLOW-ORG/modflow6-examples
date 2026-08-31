@@ -410,18 +410,20 @@ def plot_results(sims):
 
         gwt = sim_mf6gwt.trans
         pmv = flopy.plot.PlotMapView(model=gwt, ax=axs)
-        # pmv.plot_array(conc, alpha=0.5)
-        # pmv.plot_grid()
+        
         levels = [1, 3, 10, 30, 100, 300]
         cs1 = plot_analytical(axs, levels)
         cs2 = pmv.contour_array(conc, colors="blue", linestyles="--", levels=levels)
+        
         axs.set_xlabel("x position (m)")
         axs.set_ylabel("y position (m)")
         axs.set_aspect(4.0)
 
-        labels = ["Analytical", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
-        axs.legend(lines, labels, loc="upper left")
+        handles = [
+            Line2D([0], [0], color="black", linestyle="-", label="Analytical"),
+            Line2D([0], [0], color="blue", linestyle="--", label="MODFLOW 6"),
+        ]
+        axs.legend(handles=handles, loc="upper left")
 
         if plot_show:
             plt.show()

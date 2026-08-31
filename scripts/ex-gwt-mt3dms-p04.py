@@ -526,20 +526,19 @@ def plot_results(mt3d, mf6, idx, leglab1, leglab2, ax=None):
         y = mt3d.modelgrid.ycellcenters
 
         levels = [0.15, 1.0, 2.0, 5.0]
-        mm = flopy.plot.PlotMapView(model=mt3d)
+        mm = flopy.plot.PlotMapView(model=mt3d, ax=ax)
 
         cf = plt.contourf(x, y, conc_mt3d[0, 0, :, :], levels=levels, alpha=0.5)
-        cbar = plt.colorbar(cf, shrink=0.25)
+        cbar = plt.colorbar(cf, ax=ax, shrink=0.25)
         cbar.ax.set_title(leglab1)
 
         cs2 = mm.contour_array(
             conc_mf6[0, 0, :, :], levels=levels, colors="r", linestyles="--"
         )
-        plt.clabel(cs2)
-        labels = [leglab2]
-        for i in range(len(labels)):
-            cs2.collections[i].set_label(labels[i])
-        plt.legend(loc="upper left")
+        ax.clabel(cs2)
+        
+        handles = [Line2D([0], [0], color="r", linestyle="--", label=leglab2)]
+        ax.legend(handles=handles, loc="upper left")
 
         plt.xlabel("Distance Along X-Axis, in meters")
         plt.ylabel("Distance Along Y-Axis, in meters")

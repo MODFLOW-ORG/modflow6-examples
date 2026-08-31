@@ -503,32 +503,24 @@ def plot_results(mt3d, mf6, idx, ax=None):
             fig = plt.figure(figsize=figure_size, dpi=300, tight_layout=True)
             ax = fig.add_subplot(1, 1, 1, aspect="equal")
 
-        mm = flopy.plot.PlotMapView(model=mt3d)
+        mm = flopy.plot.PlotMapView(model=mt3d, ax=ax)
         mm.plot_grid(color=".5", alpha=0.2)
         cs1 = mm.contour_array(conc_mt3d[1], levels=[0.1, 1.0, 10.0, 50.0], colors="k")
-        plt.clabel(cs1, inline=1, fontsize=10)
+        ax.clabel(cs1, inline=1, fontsize=10)
         cs2 = mm.contour_array(
             conc_mf6[1], levels=[0.1, 1.0, 10.0, 50.0], colors="r", linestyles="--"
         )
-        plt.clabel(cs2, inline=1, fontsize=10)
-        labels = ["MT3DMS", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
-
-        plt.xlabel("DISTANCE ALONG X-AXIS, IN METERS")
-        plt.ylabel("DISTANCE ALONG Y-AXIS, IN METERS")
+        ax.clabel(cs2, inline=1, fontsize=10)
+        
+        handles = [
+            Line2D([0], [0], color="k", linestyle="-", label="MT3DMS"),
+            Line2D([0], [0], color="r", linestyle="--", label="MODFLOW 6"),
+        ]
+        ax.set_xlabel("DISTANCE ALONG X-AXIS, IN METERS")
+        ax.set_ylabel("DISTANCE ALONG Y-AXIS, IN METERS")
         title = f"Plume at Time = 365 {time_units}"
+        ax.legend(handles=handles, loc="upper left")
 
-        ax.legend(lines, labels, loc="upper left")
-
-        # ax.plot(np.linspace(0, l, ncol), conc_mt3d[0,0,0,:], color='k', label='MT3DMS')
-        # ax.plot(np.linspace(0, l, ncol), conc_mf6[0,0,0,:], '^', color='b', label='MF6')
-        # ax.set_ylim(0, 1.2)
-        # ax.set_xlim(0, 1000)
-        # ax.set_xlabel('Distance, in m')
-        # ax.set_ylabel('Concentration')
-        # title = 'Concentration Profile at Time = 1,000 ' + '{}'.format(
-        #                                                        time_units)
-        # ax.legend()
         letter = chr(ord("@") + idx + 1)
         styles.heading(letter=letter, heading=title)
 

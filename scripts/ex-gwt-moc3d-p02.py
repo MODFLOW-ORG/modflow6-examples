@@ -300,10 +300,12 @@ def plot_results(sims):
         axs.set_xlabel("x position (m)")
         axs.set_ylabel("y position (m)")
         axs.set_aspect(4.0)
-
-        labels = ["Analytical", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
-        axs.legend(lines, labels, loc="upper left")
+        
+        handles = [
+            Line2D([0], [0], color="black", linestyle="-", label="Analytical"),
+            Line2D([0], [0], color="blue", linestyle="--", label="MODFLOW 6"),
+        ]
+        axs.legend(handles=handles, loc="upper left")
 
         if plot_show:
             plt.show()

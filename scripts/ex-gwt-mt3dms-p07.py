@@ -522,9 +522,11 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         letter = chr(ord("@") + idx + 1)
         styles.heading(letter=letter, heading=title)
 
-        labels = ["MT3DMS", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
-        ax.legend(lines, labels, loc="upper center")
+        handles = [
+            Line2D([0], [0], color="k", linestyle="-", label="MT3DMS"),
+            Line2D([0], [0], color="r", linestyle=":", label="MODFLOW 6"),
+        ]
+        ax.legend(handles=handles, loc="upper center")
 
         if axWasNone:
             ax = fig.add_subplot(3, 1, 2, aspect="equal")

@@ -397,13 +397,14 @@ def plot_results(sims, idx):
 
         levels = [0.01, 0.1, 1, 10, 100]
         cs1 = pmv.contour_array(concmt, levels=levels, colors="r")
-
         cs2 = pmv.contour_array(conc, levels=levels, colors="b", linestyles="--")
         ax.clabel(cs2, cs2.levels[::1], fmt="%3.2f", colors="b")
 
-        labels = ["MT3DMS", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
-        ax.legend(lines, labels, loc="lower right")
+        handles = [
+            Line2D([0], [0], color="r", linestyle="-", label="MT3DMS"),
+            Line2D([0], [0], color="b", linestyle="--", label="MODFLOW 6"),
+        ]
+        ax.legend(handles=handles, loc="lower right")
 
         ax.set_xlabel("x position (m)")
         ax.set_ylabel("y position (m)")
