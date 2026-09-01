@@ -16,6 +16,7 @@ import git
 import matplotlib.pyplot as plt
 import numpy as np
 from flopy.plot.styles import styles
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 
 # Example name and workspace paths. If this example is running
@@ -860,18 +861,21 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
             levels=contourLevels[0:4],
             masked_values=[1.0e30],
         )
-        plt.clabel(cs1, fmt=r"%4.2f")
-        plt.fill(poly_pts[:, 0], poly_pts[:, 1], alpha=0.2)
+        ax.clabel(cs1, fmt=r"%4.2f")
+        ax.fill(poly_pts[:, 0], poly_pts[:, 1], alpha=0.2)
         cs2 = mx.contour_array(
             combined_conc_3d[0],
             levels=contourLevels[0:4],
             colors="red",
             linestyles="--",
         )
-        plt.clabel(cs2, fmt=r"%4.2f")
+        ax.clabel(cs2, fmt=r"%4.2f")
 
-        labels = ["MF-NWT/MT3D-USGS", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
+        handles = [
+            Line2D([0], [0], color="k", linestyle="-", label="MF-NWT/MT3D-USGS"),
+            Line2D([0], [0], color="red", linestyle="--", label="MODFLOW 6"),
+        ]
+
         for x in np.linspace(0.25, 9.75, 11):
             ax.arrow(
                 x,
@@ -914,11 +918,11 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
             xycoords="axes fraction",
             clip_on=False,
         )
-        ax.legend(lines, labels, loc="upper left")
 
+        ax.legend(handles=handles, loc="upper left")
         title = "Unsaturated/saturated zone concentration X-section, time = 60 days"
         letter = chr(ord("@") + idx + 1)
-        # styles.heading(letter=letter, heading=title)
+
         plt.tight_layout()
 
         if plot_show:

@@ -33,6 +33,7 @@ import numpy as np
 import pooch
 from flopy.plot.styles import styles
 from flopy.utils.util_array import read1d
+from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
 
 # Example name and workspace paths. If this example is running
@@ -652,16 +653,16 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
             ax = fig.add_subplot(2, 2, 1, aspect="equal")
             axWasNone = True
 
-        mm = flopy.plot.PlotMapView(model=mf2k5)
+        mm = flopy.plot.PlotMapView(model=mf2k5, ax=ax)
         mm.plot_grid(color=".5", alpha=0.2)
         cs = mm.contour_array(cinit, levels=np.arange(20, 200, 20))
-        plt.xlim(5100, 5100 + 28 * 50)
-        plt.ylim(9100, 9100 + 45 * 50)
-        plt.xlabel("Distance Along X-Axis, in meters")
-        plt.ylabel("Distance Along Y-Axis, in meters")
-        plt.clabel(cs, fmt=r"%3d")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
+        ax.clabel(cs, fmt=r"%3d")
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
-            plt.plot(xc[j], yc[i], "ks")
+            ax.plot(xc[j], yc[i], "ks")
 
         title = "Layer 3 Initial Concentration"
         letter = chr(ord("@") + idx + 1)
@@ -672,25 +673,28 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
             ax = fig.add_subplot(2, 2, 2, aspect="equal")
 
         c = conc_mt3d[1, 2]  # Layer 3 @ 500 days (2nd specified output time)
-        mm = flopy.plot.PlotMapView(model=mf2k5)
+        mm = flopy.plot.PlotMapView(model=mf2k5, ax=ax)
         mm.plot_grid(color=".5", alpha=0.2)
         cs1 = mm.contour_array(c, levels=np.arange(10, 200, 10), colors="black")
-        plt.clabel(cs1, fmt=r"%3d")
+        ax.clabel(cs1, fmt=r"%3d")
         c_mf6 = conc_mf6[1, 2]  # Layer 3 @ 500 days
         cs2 = mm.contour_array(
             c_mf6, levels=np.arange(10, 200, 10), colors="red", linestyles="--"
         )
-        labels = ["MT3DMS", "MODFLOW 6"]
-        lines = [cs1.collections[0], cs2.collections[0]]
-        ax.legend(lines, labels, loc="upper left")
 
-        plt.xlim(5100, 5100 + 28 * 50)
-        plt.ylim(9100, 9100 + 45 * 50)
-        plt.xlabel("Distance Along X-Axis, in meters")
-        plt.ylabel("Distance Along Y-Axis, in meters")
+        handles = [
+            Line2D([0], [0], color="black", linestyle="-", label="MT3DMS"),
+            Line2D([0], [0], color="red", linestyle="--", label="MODFLOW 6"),
+        ]
+        ax.legend(handles=handles, loc="upper left")
+
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
 
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
-            plt.plot(xc[j], yc[i], "ks")
+            ax.plot(xc[j], yc[i], "ks")
 
         title = "MT3D Layer 3 Time = 500 days"
         letter = chr(ord("@") + idx + 2)
@@ -700,20 +704,20 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         if axWasNone:
             ax = fig.add_subplot(2, 2, 3, aspect="equal")
         c = conc_mt3d[2, 2]
-        mm = flopy.plot.PlotMapView(model=mf2k5)
+        mm = flopy.plot.PlotMapView(model=mf2k5, ax=ax)
         mm.plot_grid(color=".5", alpha=0.2)
         cs1 = mm.contour_array(c, levels=np.arange(10, 200, 10), colors="black")
-        plt.clabel(cs1, fmt=r"%3d")
+        ax.clabel(cs1, fmt=r"%3d")
         c_mf6 = conc_mf6[2, 2]
         cs2 = mm.contour_array(
             c_mf6, levels=np.arange(10, 200, 10), colors="red", linestyles="--"
         )
-        plt.xlim(5100, 5100 + 28 * 50)
-        plt.ylim(9100, 9100 + 45 * 50)
-        plt.xlabel("Distance Along X-Axis, in meters")
-        plt.ylabel("Distance Along Y-Axis, in meters")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
-            plt.plot(xc[j], yc[i], "ks")
+            ax.plot(xc[j], yc[i], "ks")
 
         title = "MT3D Layer 3 Time = 750 days"
         letter = chr(ord("@") + idx + 3)
@@ -726,17 +730,17 @@ def plot_results(mf2k5, mt3d, mf6, idx, ax=None):
         mm = flopy.plot.PlotMapView(model=mf2k5)
         mm.plot_grid(color=".5", alpha=0.2)
         cs1 = mm.contour_array(c, levels=np.arange(10, 200, 10), colors="black")
-        plt.clabel(cs1, fmt=r"%3d")
+        ax.clabel(cs1, fmt=r"%3d")
         c_mf6 = conc_mf6[3, 2]
         cs2 = mm.contour_array(
             c_mf6, levels=np.arange(10, 200, 10), colors="red", linestyles="--"
         )
-        plt.xlim(5100, 5100 + 28 * 50)
-        plt.ylim(9100, 9100 + 45 * 50)
-        plt.xlabel("Distance Along X-Axis, in meters")
-        plt.ylabel("Distance Along Y-Axis, in meters")
+        ax.set_xlim(5100, 5100 + 28 * 50)
+        ax.set_ylim(9100, 9100 + 45 * 50)
+        ax.set_xlabel("Distance Along X-Axis, in meters")
+        ax.set_ylabel("Distance Along Y-Axis, in meters")
         for k, i, j, q in mf2k5.wel.stress_period_data[0]:
-            plt.plot(xc[j], yc[i], "ks")
+            ax.plot(xc[j], yc[i], "ks")
 
         title = "MT3D Layer 3 Time = 1,000 days"
         letter = chr(ord("@") + idx + 4)
