@@ -52,6 +52,8 @@ The two differ because of the buoyancy term the exchange leaves out. Both delive
 
 The two-model simulation cannot reproduce the salt that reaches the inland portion of the domain. The one-model simulation carries salinity to 0.04 $kg/m^3$ landward of the boundary by dispersion against the flow; the inland model does not simulate transport and has no solute mass. The amount scales with dispersivity and with how close the boundary between the models is to the toe, and should guide where that boundary is placed.
 
+The division rests on the inland portion staying fresh. The transport model assembles its balance from the boundary packages of the coastal flow model, and the GWF-GWF exchange is not one of them, so the flows across the boundary are absent from the transport equation for the cells along the edge. Omitting them is the same as assuming they carry no solute, which is exact while the water crossing is fresh and wrong as soon as it is not: beginning at the concentration of seawater reverses the flow for the first 0.03 $d$, salt that should leave the coastal model stays behind, salinity in the boundary column reaches 157 $kg/m^3$, and the transport solution does not converge at the time step used here. Simulating transport on the inland model as well would lift the restriction, but only where that model is small enough for the added transport solution to stay cheap.
+
 \begin{StandardFigure}{
     Relative salinity contours of the two-model and one-model simulations at 0.5 $d$,
     on the relative salinity field of the two-model simulation. Both hold the same
