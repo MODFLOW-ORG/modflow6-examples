@@ -1,0 +1,86 @@
+\section{Horizontal Well in an Anisotropic Confined Aquifer}
+
+% Describe source of problem
+A horizontal well is a well whose screened interval is drilled laterally through the aquifer rather than vertically, so it withdraws water along a line of tens to hundreds of meters instead of over a small vertical interval. Drawdown from a horizontal well is not radial and the solutions written for vertical wells are not valid. \cite{zhan2001} developed an analytical solution for drawdown from a horizontal well with a finite length in an anisotropic confined aquifer. This example reproduces that solution and compares it to a horizontal well represented using the standard Well (WEL) Package and the NON\_VERTICAL\_WELLS option in the \mf Multi-Aquifer Well (MAW) Package.
+
+\subsection{Example Description}
+
+% spatial discretization and temporal discretization
+The aquifer is 10 $m$ thick and confined above and below by no-flow boundaries. Horizontal hydraulic conductivity is 10 $m/d$, vertical hydraulic conductivity is 1 $m/d$, and specific storage is $1 \times 10^{-4}$ $1/m$. A well 100 $m$ long is screened at mid-depth, 5 $m$ above the base of the aquifer, and discharges 1,000 $m^3/d$ for 1 $d$. Model parameters are summarized in table~\ref{tab:ex-gwf-hwell-01}.
+
+The domain is discretized into 11 layers, 118 rows, and 118 columns. An odd number of layers puts a layer center on the well. Rows and columns are 1.25 $m$ wide for 60 $m$ on either side of the center of the screen and expand by a factor of 1.7 to the edge of the domain, 817 $m$ from the well. Eighty columns span the screen. The stress period is 1 $d$ long and is divided into 60 time steps that increase by a factor of 1.2.
+
+% initial conditions and boundary conditions
+Head is 50 $m$ everywhere at the start of the simulation and drawdown is the decline from the initial head. The initial head is above the top of the model and the aquifer is confined. The edges of the domain are no-flow, where \cite{zhan2001} assume an aquifer of infinite extent.
+
+\cite{zhan2001} solve the problem for a well of finite length by integrating a point sink along the axis of the well, which holds discharge uniform over the screen. Their equation 23 gives the drawdown at a point as
+
+\begin{equation}
+	\label{eq:zhan}
+	\begin{split}
+		s_D = \frac{\sqrt{\pi}}{2 L_D} \int_{0}^{t_D} & \frac{1}{\sqrt{\tau}}
+		\left[ \mathrm{erf} \left( \frac{L_D / 2 + x_D}{2 \sqrt{\tau}} \right)
+		+ \mathrm{erf} \left( \frac{L_D / 2 - x_D}{2 \sqrt{\tau}} \right) \right]
+		\exp \left( - \frac{y_D^2}{4 \tau} \right) \\
+		& \times \left[ 1 + 2 \sum_{n=1}^{\infty} \cos \left( n \pi z_D \right)
+		\cos \left( n \pi z_{wD} \right) e^{-n^2 \pi^2 \tau} \right] \, d\tau ,
+	\end{split}
+\end{equation}
+
+\noindent where $\tau$ is the variable of integration (dimensionless), and the dimensionless quantities are
+
+\begin{equation}
+	\label{eq:zhan-dimensionless}
+	\begin{split}
+		& s_D = \frac{2 \pi K_h d}{Q} s , \qquad
+		t_D = \frac{K_z}{S_s d^2} t , \qquad
+		z_D = \frac{z}{d} , \qquad
+		z_{wD} = \frac{z_w}{d} , \\
+		& x_D = \frac{x}{d} \sqrt{\frac{K_z}{K_h}} , \qquad
+		y_D = \frac{y}{d} \sqrt{\frac{K_z}{K_h}} , \qquad
+		L_D = \frac{L}{d} \sqrt{\frac{K_z}{K_h}} ,
+	\end{split}
+\end{equation}
+
+\noindent where $s$ is the drawdown (L), $t$ is the time since pumping began (T), $x$ is the horizontal distance from the center of the screen along the axis of the well (L), $y$ is the horizontal distance from the axis of the well (L), $z$ is the elevation above the base of the aquifer (L), $d$ is the aquifer thickness (L), $z_w$ is the well elevation (L), $L$ is the screen length (L), $Q$ is the well discharge (L$^3$/T), $K_h$ and $K_z$ are the horizontal and vertical hydraulic conductivity (L/T), and $S_s$ is the specific storage (1/L). Equation~\ref{eq:zhan} is integrated numerically, with the series carried to 200 terms.
+
+The horizontal well is represented in the WEL Package by dividing the discharge evenly among the 80 cells the screen passes through, which is the distribution \cite{zhan2001} assume. Neither the well radius nor the resistance between the well and the aquifer enters the calculation.
+
+The horizontal well is represented in the MAW Package with the NON\_VERTICAL\_WELLS option, and storage in the well is not simulated. The MEAN conductance equation calculates the conductance from the hydraulic conductivity and thickness of the filter pack, a 50 $mm$ annulus with the same hydraulic conductivity as the aquifer.
+
+The solution of \cite{zhan2001} is also compared to two representations of the horizontal well that can be simulated using the Connected Linear Network (CLN) Process of \mfu \citep{modflowusg}. The first \mfu simulation represents the horizontal well as a single CLN node, which is directly comparable to the \mf approach. The second \mfu simulation represents the horizontal well as a network of 80 CLN nodes connected end to end, which resolves head loss along the borehole. Both use the connection option that computes the leakance from the conductivity and thickness of the filter pack, the counterpart of the MEAN conductance equation, and both treat the conduit as always full, which eliminates storage changes.
+
+% add static parameter table(s)
+\input{../tables/ex-gwf-hwell-01.tex}
+
+% for examples without scenarios
+\subsection{Example Results}
+
+Simulated and analytical drawdown at three observation points are shown in figure~\ref{fig:ex-gwf-hwell-compare}\textit{A}. Every representation approaches \cite{zhan2001} as the cone of depression spreads over more cells. After 0.1 $d$ the WEL Package well is within 1.3 percent at all three points. The difference is larger at early times, when drawdown is small and the cone of depression spans few cells, reaching 7 percent beside the screen at $1 \times 10^{-4}$ $d$ where drawdown is 0.13 $m$. Discharge is imposed at the distribution the analytical solution assumes, so the discrepancy results from spatial and temporal discretization error and the no-flow boundaries at the edges of the model domain.
+
+The \mf MAW well and single node \mfu CLN well representations are within 5.3 percent after 0.1 $d$ and differ from \cite{zhan2001} by 2.9 percent or less at 1 $d$, and depart in the same direction. These wells draw 2.3 times the mean discharge per unit length at the ends of the screen and 0.8 times the mean at its center, because the end of the screen draws water from beyond the well as well as from the sides, while the middle of the screen is flanked by the rest of the well (fig.~\ref{fig:ex-gwf-hwell-compare}\textit{B}). The analytical solution holds discharge uniform, so the difference is the boundary condition at the well rather than an error in the simulation.
+
+The MAW well and the single CLN node well agree with each other to 0.06 percent at the observation points after 0.1 $d$ and to 0.02 $m$ in the well head, 6.09 $m$ compared to 6.10 $m$ at 1 $d$. Discharge per connection at 1 $d$ agrees to 0.5 $m^3/d$ out of a mean of 12.5 $m^3/d$, and the difference is limited to the two cells at the ends of the screen, where the two codes compute the effective radius of the connection differently.
+
+The 80 CLN node network well reproduces the single CLN node well to 0.01 percent after 0.1 $d$. Head varies 1.08 $mm$ over the 100 $m$ of borehole at 1 $d$, 0.02 percent of the well drawdown, so resistance to laminar flow within a borehole of this diameter does not affect the aquifer. A network of CLN nodes would be needed only where the borehole is narrow enough, or the discharge large enough, that head loss along it is comparable to drawdown in the aquifer. Negligible head loss along the borehole also means the well is close to an equipotential, so inflow varies along the screen and the uniform discharge of the analytical solution is a convenience of the derivation rather than a property of the well. \cite{zhan2001} reach the same conclusion, simulating a uniform-head wellbore for comparison and reporting a difference of less than 5 percent beyond ten well diameters from the end of the screen, consistent with the 2.9 percent found here at 1 $d$. Screen entrance losses and turbulent flow within the borehole, which neither code simulates, would increase head loss along the well and shift inflow back toward uniform; the borehole Reynolds number at this discharge is theoretically well above the laminar limit, so uniform flux and uniform head bracket the behavior of a real well.
+
+\begin{StandardFigure}{
+    Simulated and analytical drawdown from a horizontal well. \textit{A}, drawdown
+    with time at three observation points at the elevation of the well. Lines are
+    the analytical solution of \cite{zhan2001} and symbols are the four
+    representations of the well. \textit{B}, discharge to the well along the screen
+    at 1 $d$. The WEL Package well imposes the uniform discharge the
+    analytical solution assumes; the representations that give the well one head
+    draw more at the ends of the screen and less at its center.
+    }{fig:ex-gwf-hwell-compare}{../figures/ex-gwf-hwell-compare.png}
+\end{StandardFigure}
+
+Drawdown in the plane of the well (layer 6) is mapped in figure~\ref{fig:ex-gwf-hwell-map}. The WEL Package well matches the analytical solution to 0.09 $m$ everywhere except the row of cells holding the screen, where the analytical drawdown is singular on the axis of the well and the model reports an average over a cell 1.25 $m$ wide. The MAW and CLN well representations are consistent, with more drawdown at the ends of the screen and less over its middle, which is the redistribution of discharge in figure~\ref{fig:ex-gwf-hwell-compare}\textit{B} carried into the aquifer.
+
+\begin{StandardFigure}{
+    Drawdown at the elevation of the well, 0.09 and 1 $d$ after pumping begins.
+    \textit{A} and \textit{F} are the analytical solution of \cite{zhan2001}, with
+    contours labeled in meters. The other panels are simulated drawdown minus
+    analytical drawdown. The line marks the screen.
+    }{fig:ex-gwf-hwell-map}{../figures/ex-gwf-hwell-map.png}
+\end{StandardFigure}
