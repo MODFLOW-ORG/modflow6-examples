@@ -122,6 +122,12 @@ yedges = yedges - 0.5 * yedges[-1]
 # Cells penetrated by the screen, and the row holding it
 jwell = np.where(np.abs(xcenters) <= 0.5 * screen_length)[0]
 iwell = int(np.argmin(np.abs(ycenters)))
+# y of each model row; row 0 is at the largest y, so the row index has to be
+# read through this array rather than through ycenters
+yrows = ycenters[::-1]
+# the grid is symmetric about the well, so no row is centered on it; the
+# analytical solution is evaluated relative to the row the well occupies
+ywell = yrows[iwell]
 
 # Observation points, at cell centers
 observations = (
@@ -133,9 +139,8 @@ observations = (
 # Window and times used for the difference maps
 map_extent = (110.0, 70.0)
 map_times = (0.1, 1.0)
-yrows = ycenters[::-1]
 map_cols = np.where(np.abs(xcenters) <= map_extent[0])[0]
-map_rows = np.where(np.abs(yrows) <= map_extent[1])[0]
+map_rows = np.where(np.abs(yrows - ywell) <= map_extent[1])[0]
 
 # Solver parameters
 nouter = 100
@@ -552,7 +557,14 @@ def plot_comparison(silent=True):
             k = int(np.argmin(np.abs(zcenters - z)))
             i = int(np.argmin(np.abs(ycenters - y)))
             j = int(np.argmin(np.abs(xcenters - x)))
-            analytical = np.array([drawdown_analytical(x, y, z, t) for t in times])
+            # evaluate at the cell center the model reports, measured from the
+            # well, so the comparison is not biased by the expanding cells
+            analytical = np.array(
+                [
+                    drawdown_analytical(xcenters[j], yrows[i] - ywell, zcenters[k], t)
+                    for t in times
+                ]
+            )
             ax.plot(times, analytical, color=colors[n], lw=1.0, zorder=3)
             for series, marker, size in (
                 (_drawdown_series(wel, k, i, j), "o", 4.5),
@@ -680,9 +692,10 @@ def analytical_field(times, z, xs, ys):
 
 
 def plot_difference_maps(silent=True):
-    xs, ys = xcenters[map_cols], yrows[map_rows]
+    # y is measured from the well, which lies half a cell off the grid center
+    xs, ys = xcenters[map_cols], yrows[map_rows] - ywell
     xe = xedges[map_cols[0] : map_cols[-1] + 2]
-    ye = yedges[::-1][map_rows[0] : map_rows[-1] + 2]
+    ye = yedges[::-1][map_rows[0] : map_rows[-1] + 2] - ywell
 
     wel, maw = _head_file(0), _head_file(1)
     times = np.array(wel.get_times())
