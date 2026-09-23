@@ -23,6 +23,11 @@ SNAPSHOT_CONFIG: dict[str, dict[str, Callable[[Path], NDArray]]] = {
         .round(2)
         .to_records(index=False),
     },
+    "ex-gwf-hwell": {
+        "ex-gwf-hwell-b/ex-gwf-hwell-b.maw.obs.csv": lambda p: pd.read_csv(p)
+        .round(6)
+        .to_records(index=False),
+    },
     "ex-prt-mp7-p01": {
         "prt/mp7-p01-prt.trk.csv": lambda p: pd.read_csv(p)
         .drop("name", axis=1)
