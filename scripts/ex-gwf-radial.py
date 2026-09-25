@@ -124,6 +124,7 @@ def get_disu_radial_kwargs(
     ihc = []
     cl12 = []
     hwva = []
+    angldegx = []
 
     area = np.zeros(nodes, dtype=float)
     top = np.zeros(nodes, dtype=float)
@@ -148,6 +149,7 @@ def get_disu_radial_kwargs(
             ihc.append(n + 1)
             cl12.append(n + 1)
             hwva.append(n + 1)
+            angldegx.append(0.0)  # placeholder, not used for the diagonal
             # up
             if lay > 0:
                 ja.append(n - nradial)
@@ -155,6 +157,7 @@ def get_disu_radial_kwargs(
                 ihc.append(0)
                 cl12.append(0.5 * (top[n] - bot[n]))
                 hwva.append(area[n])
+                angldegx.append(0.0)  # placeholder, not used for vertical connections
             # to center
             if rad > 0:
                 ja.append(n - 1)
@@ -162,6 +165,9 @@ def get_disu_radial_kwargs(
                 ihc.append(1)
                 cl12.append(0.5 * (radius_outer[rad] - radius_outer[rad - 1]))
                 hwva.append(2.0 * pi * radius_outer[rad - 1])
+                # outward normal of the inner face points toward the center,
+                # which is the negative x direction in the vertex layout
+                angldegx.append(180.0)
 
             # to outer
             if rad < nradial - 1:
@@ -169,6 +175,9 @@ def get_disu_radial_kwargs(
                 iac[n] += 1
                 ihc.append(1)
                 hwva.append(2.0 * pi * radius_outer[rad])
+                # outward normal of the outer face points away from the center,
+                # which is the positive x direction in the vertex layout
+                angldegx.append(0.0)
                 if rad > 0:
                     cl12.append(0.5 * (radius_outer[rad] - radius_outer[rad - 1]))
                 else:
@@ -180,6 +189,7 @@ def get_disu_radial_kwargs(
                 ihc.append(0)
                 cl12.append(0.5 * (top[n] - bot[n]))
                 hwva.append(area[n])
+                angldegx.append(0.0)  # placeholder, not used for vertical connections
 
     # Build rectangular equivalent of radial coordinates (unwrap radial bands)
     if get_vertex:
@@ -242,7 +252,7 @@ def get_disu_radial_kwargs(
         kw["nvert"] = len(vertices)  # = 2*nradial + 1
         kw["vertices"] = vertices
         kw["cell2d"] = cell2d
-        kw["angldegx"] = np.zeros(nja, dtype=float)
+        kw["angldegx"] = np.array(angldegx, dtype=float)
     else:
         kw["nvert"] = 0
 
