@@ -1188,7 +1188,6 @@ def build_models(name):
         k=k11,
         k33=k33,
         save_flows=True,
-        save_specific_discharge=True,
     )
 
     flopy.mf6.ModflowGwfsto(
