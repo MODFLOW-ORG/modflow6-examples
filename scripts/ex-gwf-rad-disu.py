@@ -1,6 +1,6 @@
 # ## Radial Groundwater Flow Model
 #
-# This example, ex-gwf-radial, shows how the MODFLOW 6 DISU Package
+# This example, ex-gwf-rad-disu, shows how the MODFLOW 6 DISU Package
 # can be used to simulate an axisymmetric radial model.
 #
 # The example corresponds to the first example described in:
