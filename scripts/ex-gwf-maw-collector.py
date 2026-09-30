@@ -225,6 +225,103 @@ def run_models(sim, silent=True):
 # Figure properties
 figure_size_map = (5.0, 5.4)
 figure_size_ts = (5.0, 3.5)
+figure_size_well = (5.0, 4.0)
+vertical_exaggeration = 5.0  # of the well schematic
+caisson_radius_plot = 12.5  # caisson radius drawn in the schematic ($m$)
+
+
+def plot_well_schematic(silent=True):
+    # the central part of the grid, the laterals plus a margin of cells, with
+    # the caisson at the center of its cell
+    margin = lateral_cells + 2
+    k, ic, jc = caisson
+    xe = np.arange(jc - margin, jc + margin + 2) * delr
+    ye = np.arange(ic - margin, ic + margin + 2) * delc
+    xc = (jc + 0.5) * delr
+    yc = (ic + 0.5) * delc
+    length = lateral_cells * delr
+
+    with styles.USGSPlot():
+        fig = plt.figure(figsize=figure_size_well, layout="constrained")
+        ax = fig.add_subplot(projection="3d")
+
+        # model grid at the elevation of the laterals
+        for x in xe:
+            ax.plot([x, x], [ye[0], ye[-1]], [zwell, zwell], color="0.6", lw=0.4)
+        for y in ye:
+            ax.plot([xe[0], xe[-1]], [y, y], [zwell, zwell], color="0.6", lw=0.4)
+
+        # top and bottom of the aquifer
+        corners = [
+            (xe[0], ye[0]),
+            (xe[-1], ye[0]),
+            (xe[-1], ye[-1]),
+            (xe[0], ye[-1]),
+            (xe[0], ye[0]),
+        ]
+        cx = [c[0] for c in corners]
+        cy = [c[1] for c in corners]
+        for z in (top, botm):
+            ax.plot(cx, cy, [z] * len(corners), color="black", lw=0.75)
+        for x, y in corners[:-1]:
+            ax.plot([x, x], [y, y], [botm, top], color="black", lw=0.75)
+
+        # caisson, enlarged so it is visible at the scale of the model
+        theta = np.linspace(0.0, 2.0 * np.pi, 40)
+        tt, zz = np.meshgrid(theta, np.array([botm, top]))
+        ax.plot_surface(
+            xc + caisson_radius_plot * np.cos(tt),
+            yc + caisson_radius_plot * np.sin(tt),
+            zz,
+            color="0.35",
+            shade=True,
+        )
+
+        # four horizontal laterals at mid-depth
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            ax.plot(
+                [xc, xc + dx * length],
+                [yc, yc + dy * length],
+                [zwell, zwell],
+                color="red",
+                lw=2.0,
+            )
+
+        # a view from above, 45 degrees from the laterals, without the
+        # background panes so the model grid is the only grid shown
+        ax.view_init(elev=35.0, azim=45.0)
+        ax.set_box_aspect(
+            (1.0, 1.0, vertical_exaggeration * (top - botm) / (xe[-1] - xe[0])),
+            zoom=0.85,
+        )
+        ax.grid(False)
+        for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
+            axis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.set_xlim(xe[0], xe[-1])
+        ax.set_ylim(ye[0], ye[-1])
+        ax.set_zlim(botm, top)
+        ax.set_zticks([botm, zwell, top])
+        ax.set_xlabel("x, in meters")
+        ax.set_ylabel("y, in meters")
+        ax.zaxis.set_rotate_label(False)
+        ax.set_zlabel("Elevation,\nin meters", labelpad=10, rotation=90)
+        handles = [
+            Line2D([], [], color="red", lw=2.0, label="Lateral"),
+            Line2D([], [], color="0.35", lw=6.0, label="Caisson"),
+            Line2D([], [], color="0.6", lw=0.75, label="Model grid"),
+        ]
+        styles.graph_legend(
+            ax=ax,
+            handles=handles,
+            labels=[h.get_label() for h in handles],
+            loc="upper left",
+            fontsize=7,
+        )
+
+        if plot_show:
+            plt.show()
+        if plot_save:
+            fig.savefig(figs_path / f"{sim_name}-well.png", dpi=300)
 
 
 def plot_head_map(silent=True):
@@ -328,6 +425,7 @@ def plot_well_head(silent=True):
 def plot_results(silent=True):
     if not plot:
         return
+    plot_well_schematic(silent=silent)
     plot_head_map(silent=silent)
     plot_well_head(silent=silent)
 
