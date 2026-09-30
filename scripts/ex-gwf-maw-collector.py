@@ -1,10 +1,11 @@
 # ## Radial Collector Well
 #
 # A radial collector well, also called a Ranney well, is a central caisson with
-# horizontal laterals that radiate outward near the base of an aquifer. This
-# example represents a radial collector well as a single multi-aquifer well with
-# one vertical connection to the caisson cell and one horizontal connection to
-# each cell a lateral passes through. A steady-state simulation shows the head
+# horizontal laterals that radiate outward near the base of an aquifer. The
+# caisson is not screened, so water enters the well only through the laterals.
+# This example represents a radial collector well as a single multi-aquifer well
+# with one horizontal connection to each cell a lateral passes through; the
+# caisson is not connected to the aquifer. A steady-state simulation shows the head
 # field around the well, and a transient simulation of pumping and recovery
 # compares the well head with the laterals represented as horizontal
 # connections and as thin vertical screens.
@@ -77,6 +78,7 @@ well_radius = 0.5  # Well radius ($m$)
 skin_radius = 1.0  # Radius to the outside of the filter pack ($m$)
 k_skin = 25.0  # Filter pack hydraulic conductivity ($m/d$)
 lateral_cells = 12  # Number of cells each lateral extends from the caisson
+lateral_elevation = 2.0  # Elevation of the laterals above the base of the aquifer ($m$)
 steady_rate = 25000.0  # Steady-state pumping rate ($m^3/d$)
 transient_rate = 40000.0  # Transient pumping rate ($m^3/d$)
 perlen = 5.0  # Length of the pumping and recovery periods ($d$)
@@ -86,15 +88,16 @@ tsmult = 1.2  # Time step multiplier
 # Static temporal data used by TDIS file
 tdis_ds = ((perlen, nstp, tsmult), (perlen, nstp, tsmult))
 
-# The caisson is in the center cell. Each lateral is a horizontal borehole at
-# mid-depth, so its connection is screened over one well diameter.
+# The caisson is in the center cell and is not connected to the aquifer. Each
+# lateral is a horizontal borehole near the base of the aquifer, so its
+# connection is screened over one well diameter.
 caisson = (0, nrow // 2, ncol // 2)
 
 # Every scenario is in its own folder, so the flow model has one name
 gwf_name = "collector"
-zwell = 0.5 * (top + botm)
-screen_top = zwell + well_radius
-screen_bot = zwell - well_radius
+zlateral = botm + lateral_elevation
+screen_top = zlateral + well_radius
+screen_bot = zlateral - well_radius
 
 # Solver parameters
 nouter = 100
@@ -164,14 +167,14 @@ def build_models(name, transient=True, horizontal=True):
                 chdspd.append([(0, i, j), strt])
     flopy.mf6.ModflowGwfchd(gwf, stress_period_data=chdspd, pname="CHD")
 
-    # one well head for the caisson and the laterals. The caisson connection is
-    # vertical and spans the layer. Each lateral cell is a separate connection,
-    # horizontal (90 degrees) and one cell long, when the length correction is
-    # applied, or a vertical screen one well diameter long when it is not.
+    # one well head for the four laterals; the unscreened caisson has no
+    # connection. Each lateral cell is a separate connection, horizontal
+    # (90 degrees) and one cell long, when the length correction is applied, or
+    # a vertical screen one well diameter long when it is not.
     laterals = lateral_cellids()
-    connectiondata = [[0, 0, caisson, top, botm, k_skin, skin_radius]]
+    connectiondata = []
     angledata = []
-    for icon, cellid in enumerate(laterals, start=1):
+    for icon, cellid in enumerate(laterals):
         connectiondata.append(
             [0, icon, cellid, screen_top, screen_bot, k_skin, skin_radius]
         )
@@ -247,9 +250,9 @@ def plot_well_schematic(silent=True):
 
         # model grid at the elevation of the laterals
         for x in xe:
-            ax.plot([x, x], [ye[0], ye[-1]], [zwell, zwell], color="0.6", lw=0.4)
+            ax.plot([x, x], [ye[0], ye[-1]], [zlateral, zlateral], color="0.6", lw=0.4)
         for y in ye:
-            ax.plot([xe[0], xe[-1]], [y, y], [zwell, zwell], color="0.6", lw=0.4)
+            ax.plot([xe[0], xe[-1]], [y, y], [zlateral, zlateral], color="0.6", lw=0.4)
 
         # top and bottom of the aquifer
         corners = [
@@ -282,7 +285,7 @@ def plot_well_schematic(silent=True):
             ax.plot(
                 [xc, xc + dx * length],
                 [yc, yc + dy * length],
-                [zwell, zwell],
+                [zlateral, zlateral],
                 color="red",
                 lw=2.0,
             )
@@ -300,14 +303,20 @@ def plot_well_schematic(silent=True):
         ax.set_xlim(xe[0], xe[-1])
         ax.set_ylim(ye[0], ye[-1])
         ax.set_zlim(botm, top)
-        ax.set_zticks([botm, zwell, top])
+        ax.set_zticks([botm, 0.5 * (top + botm), top])
         ax.set_xlabel("x, in meters")
         ax.set_ylabel("y, in meters")
         ax.zaxis.set_rotate_label(False)
         ax.set_zlabel("Elevation,\nin meters", labelpad=10, rotation=90)
         handles = [
             Line2D([], [], color="red", lw=2.0, label="Lateral"),
-            Line2D([], [], color="0.35", lw=6.0, label="Caisson"),
+            Line2D(
+                [],
+                [],
+                color="0.35",
+                lw=6.0,
+                label="Unscreened caisson",
+            ),
             Line2D([], [], color="0.6", lw=0.75, label="Model grid"),
         ]
         styles.graph_legend(
@@ -362,7 +371,7 @@ def plot_head_map(silent=True):
                 mfc="white",
                 ls="",
                 ms=6,
-                label="Caisson",
+                label="Unscreened caisson",
             ),
         ]
         styles.graph_legend(
