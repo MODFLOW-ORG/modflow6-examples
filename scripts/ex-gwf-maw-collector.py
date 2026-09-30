@@ -280,7 +280,7 @@ def plot_well_schematic(silent=True):
             shade=True,
         )
 
-        # four horizontal laterals at mid-depth
+        # four horizontal laterals near the base of the aquifer
         for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             ax.plot(
                 [xc, xc + dx * length],
