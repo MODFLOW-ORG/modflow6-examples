@@ -4,11 +4,11 @@
 # horizontal laterals that radiate outward near the base of an aquifer. The
 # caisson is not screened, so water enters the well only through the laterals.
 # This example represents a radial collector well as a single multi-aquifer well
-# with one horizontal connection to each cell a lateral passes through; the
-# caisson is not connected to the aquifer. A steady-state simulation shows the head
-# field around the well, and a transient simulation of pumping and recovery
-# compares the well head with the laterals represented as horizontal
-# connections and as thin vertical screens.
+# with an inactive connection for the caisson and one horizontal connection to
+# each cell a lateral passes through. A steady-state simulation shows the head
+# field around the well, and a transient simulation of pumping and recovery,
+# with storage in the well, compares the well head with the laterals
+# represented as horizontal connections and as thin vertical screens.
 
 # ### Initial setup
 #
@@ -24,6 +24,7 @@ import numpy as np
 from flopy.plot.styles import styles
 from matplotlib.lines import Line2D
 from modflow_devtools.misc import get_env, timed
+from mpl_toolkits.mplot3d import proj3d
 
 # Example name and workspace paths. If this example is running
 # in the git repository, use the folder structure described in
@@ -74,8 +75,8 @@ strt = 50.0  # Starting and constant head ($m$)
 k11 = 25.0  # Horizontal hydraulic conductivity ($m/d$)
 k33 = 25.0  # Vertical hydraulic conductivity ($m/d$)
 ss = 1.0e-4  # Specific storage ($1/m$)
-well_radius = 0.5  # Well radius ($m$)
-skin_radius = 1.0  # Radius to the outside of the filter pack ($m$)
+well_radius = 0.15  # Well radius ($m$)
+skin_radius = 0.3  # Radius to the outside of the filter pack ($m$)
 k_skin = 25.0  # Filter pack hydraulic conductivity ($m/d$)
 lateral_cells = 12  # Number of cells each lateral extends from the caisson
 lateral_elevation = 2.0  # Elevation of the laterals above the base of the aquifer ($m$)
@@ -88,7 +89,7 @@ tsmult = 1.2  # Time step multiplier
 # Static temporal data used by TDIS file
 tdis_ds = ((perlen, nstp, tsmult), (perlen, nstp, tsmult))
 
-# The caisson is in the center cell and is not connected to the aquifer. Each
+# The caisson is in the center cell and its connection is inactive. Each
 # lateral is a horizontal borehole near the base of the aquifer, so its
 # connection is screened over one well diameter.
 caisson = (0, nrow // 2, ncol // 2)
@@ -112,15 +113,18 @@ rclose = 1e-9
 
 
 # +
+# directions of the four laterals, as (row, column) steps from the caisson
+lateral_directions = ((-1, 0), (0, 1), (1, 0), (0, -1))
+
+
 def lateral_cellids():
-    # cells traversed by the four laterals, outward from the caisson
+    # cells traversed by the four laterals, one lateral at a time, outward from
+    # the caisson
     k, ic, jc = caisson
     cellids = []
-    for d in range(1, lateral_cells + 1):
-        cellids.append((k, ic - d, jc))
-        cellids.append((k, ic + d, jc))
-        cellids.append((k, ic, jc - d))
-        cellids.append((k, ic, jc + d))
+    for di, dj in lateral_directions:
+        for d in range(1, lateral_cells + 1):
+            cellids.append((k, ic + di * d, jc + dj * d))
     return cellids
 
 
@@ -167,18 +171,19 @@ def build_models(name, transient=True, horizontal=True):
                 chdspd.append([(0, i, j), strt])
     flopy.mf6.ModflowGwfchd(gwf, stress_period_data=chdspd, pname="CHD")
 
-    # one well head for the four laterals; the unscreened caisson has no
-    # connection. Each lateral cell is a separate connection, horizontal
-    # (90 degrees) and one cell long, when the length correction is applied, or
-    # a vertical screen one well diameter long when it is not.
-    laterals = lateral_cellids()
-    connectiondata = []
+    # one well head for the caisson and the four laterals. The first connection
+    # is the unscreened caisson, a vertical connection that is inactive. Each
+    # lateral cell is a separate connection, horizontal (90 degrees) and one
+    # cell long, when the length correction is applied, or a vertical screen one
+    # well diameter long when it is not.
+    connectiondata = [[0, 0, caisson, top, botm, k_skin, skin_radius]]
     angledata = []
-    for icon, cellid in enumerate(laterals):
+    for icon, cellid in enumerate(lateral_cellids(), start=1):
         connectiondata.append(
             [0, icon, cellid, screen_top, screen_bot, k_skin, skin_radius]
         )
         angledata.append([0, icon, 90.0, delr])
+    caisson_status = [0, "connection_status", 0, "inactive"]
     rate = transient_rate if transient else steady_rate
     maw_kwargs = {
         "save_flows": True,
@@ -188,11 +193,13 @@ def build_models(name, transient=True, horizontal=True):
         "pname": "MAW",
     }
     if transient:
-        maw_kwargs["no_well_storage"] = True
-        maw_kwargs["perioddata"] = {0: [[0, "rate", -rate]], 1: [[0, "rate", 0.0]]}
+        maw_kwargs["perioddata"] = {
+            0: [caisson_status, [0, "rate", -rate]],
+            1: [[0, "rate", 0.0]],
+        }
         maw_kwargs["observations"] = {f"{gwf_name}.maw.obs.csv": [("head", "head", 1)]}
     else:
-        maw_kwargs["perioddata"] = {0: [[0, "rate", -rate]]}
+        maw_kwargs["perioddata"] = {0: [caisson_status, [0, "rate", -rate]]}
     if horizontal:
         maw_kwargs["non_vertical_wells"] = True
         maw_kwargs["angledata"] = angledata
@@ -280,11 +287,12 @@ def plot_well_schematic(silent=True):
             shade=True,
         )
 
-        # four horizontal laterals near the base of the aquifer
-        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        # four horizontal laterals near the base of the aquifer; a row step is
+        # a step in the negative y direction
+        for di, dj in lateral_directions:
             ax.plot(
-                [xc, xc + dx * length],
-                [yc, yc + dy * length],
+                [xc, xc + dj * length],
+                [yc, yc - di * length],
                 [zlateral, zlateral],
                 color="red",
                 lw=2.0,
@@ -308,6 +316,10 @@ def plot_well_schematic(silent=True):
         ax.set_ylabel("y, in meters")
         ax.zaxis.set_rotate_label(False)
         ax.set_zlabel("Elevation,\nin meters", labelpad=10, rotation=90)
+
+        # connection numbers: the caisson, the first connection of each lateral,
+        # and every tenth connection
+        label_connections(ax, xc, yc)
         handles = [
             Line2D([], [], color="red", lw=2.0, label="Lateral"),
             Line2D(
@@ -331,6 +343,62 @@ def plot_well_schematic(silent=True):
             plt.show()
         if plot_save:
             fig.savefig(figs_path / f"{sim_name}-well.png", dpi=300)
+
+
+def label_connections(ax, xc, yc):
+    # positions on the page, in points, of a point in the model
+    fig = ax.get_figure()
+    fig.canvas.draw()
+
+    def project(x, y, z):
+        xp, yp, _ = proj3d.proj_transform(x, y, z, ax.get_proj())
+        return np.array([xp, yp])
+
+    def to_points(xy):
+        return ax.transData.transform(xy) * 72.0 / fig.dpi
+
+    text_kwargs = {
+        "textcoords": "offset points",
+        "fontsize": 7,
+        "ha": "center",
+        "va": "center",
+        "bbox": {"boxstyle": "round,pad=0.15", "fc": "white", "ec": "none"},
+        "arrowprops": {
+            "arrowstyle": "-",
+            "color": "black",
+            "lw": 0.5,
+            "shrinkA": 0.0,
+            "shrinkB": 0.0,
+        },
+        "zorder": 10,
+    }
+    ax.annotate("1", xy=project(xc, yc, top), xytext=(0.0, 12.0), **text_kwargs)
+
+    icon = 2
+    for di, dj in lateral_directions:
+        # connections are labeled below the lateral on the page, between the
+        # lateral and the outline of the aquifer; the first connection is
+        # labeled outward along the lateral, away from the caisson
+        p0 = to_points(project(xc, yc, zlateral))
+        p1 = to_points(project(xc + dj * delr, yc - di * delc, zlateral))
+        t = (p1 - p0) / np.hypot(*(p1 - p0))
+        normal = np.array([-t[1], t[0]])
+        if normal[1] > 0.0:
+            normal = -normal
+        for d in (1, lateral_cells):
+            if d == 1:
+                offset = 9.5 * normal + 24.0 * t
+            else:
+                offset = 9.5 * normal - 4.0 * t
+            # the leader ends at the node, the center of the cell at the
+            # elevation of the lateral, which is marked with a dot drawn on
+            # the page so that it is not hidden by the grid
+            xy = project(xc + dj * d * delr, yc - di * d * delc, zlateral)
+            ax.add_line(
+                Line2D([xy[0]], [xy[1]], marker="o", ms=2.0, color="black", zorder=11)
+            )
+            ax.annotate(str(icon + d - 1), xy=xy, xytext=offset, **text_kwargs)
+        icon += lateral_cells
 
 
 def plot_head_map(silent=True):
