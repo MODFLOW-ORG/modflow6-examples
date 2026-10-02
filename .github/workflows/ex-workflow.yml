@@ -71,7 +71,7 @@ jobs:
 
       - name: Update FloPy classes
         working-directory: modflow6-examples
-        run: pixi run update-flopy --releasemode
+        run: pixi run update-flopy --dfnpath ../modflow6/doc/mf6io/mf6ivar/dfn --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -156,7 +156,7 @@ jobs:
 
       - name: Update FloPy classes
         working-directory: modflow6-examples
-        run: pixi run update-flopy --releasemode
+        run: pixi run update-flopy --dfnpath ../modflow6/doc/mf6io/mf6ivar/dfn --releasemode
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
