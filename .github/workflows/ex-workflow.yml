@@ -71,7 +71,12 @@ jobs:
 
       - name: Update FloPy classes
         working-directory: modflow6-examples
-        run: pixi run update-flopy --releasemode
+        run: |
+          cmd="pixi run update-flopy --dfnpath ../modflow6/doc/mf6io/mf6ivar/dfn"
+          if [[ "${{ github.base_ref || github.ref_name }}" == "master" ]]; then
+            cmd="$cmd --releasemode"
+          fi
+          eval "$cmd"
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
@@ -156,7 +161,12 @@ jobs:
 
       - name: Update FloPy classes
         working-directory: modflow6-examples
-        run: pixi run update-flopy --releasemode
+        run: |
+          cmd="pixi run update-flopy --dfnpath ../modflow6/doc/mf6io/mf6ivar/dfn"
+          if [[ "${{ github.base_ref || github.ref_name }}" == "master" ]]; then
+            cmd="$cmd --releasemode"
+          fi
+          eval "$cmd"
 
       - name: Install MODFLOW executables
         uses: modflowpy/install-modflow-action@v1
