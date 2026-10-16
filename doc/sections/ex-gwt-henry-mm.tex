@@ -1,0 +1,63 @@
+\section{Henry Problem with Transport in the Coastal Portion of the Domain}
+
+% Describe source of problem
+Coastal groundwater models are commonly built over domains that are mostly fresh, and the vertical resolution a mixing zone needs is spent on an inland portion that never becomes brackish. This example divides the Henry problem \citep{henry1964} into two connected groundwater flow models and solves solute transport in only the coastal one.
+
+\subsection{Example Description}
+
+% spatial discretization and temporal discretization
+The model domain is the 2 $m$ by 1 $m$ cross section of \cite{henry1964}, divided 0.7 $m$ from the landward end (fig.~\ref{fig:ex-gwt-henry-mm-grid}). The inland model is a single layer 1 $m$ thick, discretized into 14 columns 0.05 $m$ wide, and simulates flow alone. The coastal model carries flow and transport and is discretized into 40 layers 0.025 $m$ thick and 118 columns, 0.025 $m$ wide as far as 0.9 $m$ and 0.010 $m$ wide seaward of that, over the mixing zone. The division sits well landward of the toe, which settles near 1.12 $m$, so the water crossing the boundary is fresh. Model parameters are summarized in table~\ref{tab:ex-gwt-henry-mm-01}.
+
+The single inland cell meets every cell in the first coastal column, so 40 connections join the two models in a GWF-GWF exchange. Each is described by a connection type, the distance from each cell center to the shared face, and a width. The connection type (IHC) is 2, a horizontal connection between vertically staggered cells, so the connection thickness is the vertical overlap of the two cells, 0.025 $m$, not the thickness of either. The distances (CL1 and CL2) are half the width of each cell, 0.025 $m$ inland and 0.0125 $m$ coastal. The width (HWVA) is the dimension perpendicular to flow, 1 $m$ for a section one row wide, giving each connection an area of 0.025 $m^2$. The 40 connections span 1 $m^2$, the whole face of the inland cell, which checks the nesting. Treating them as ordinary horizontal connections instead would average the full thickness of both cells and overstate the flow area by 20 times.
+
+The buoyancy (BUY) package is active in the coastal model, where transport is solved, and absent from the inland model. Flow across the exchange comes from the difference in head alone, without the buoyancy term applied to connections within a model.
+
+\mf requires two auxiliary variables on each connection where specific discharge is calculated. ANGLDEGX is the angle between the outward normal of the shared face and the x axis, zero here because the inland cell faces seaward. CDIST is the horizontal distance between cell centers, 0.0375 $m$, excluding the vertical offset between the staggered centers.
+
+% add static parameter table(s)
+\input{../tables/ex-gwt-henry-mm-01.tex}
+
+\begin{StandardFigure}{
+    Grids of the two models. \textit{A}, the inland and coastal grids, with the
+    boundary between the models dashed; the blue band is the portion drawn in
+    \textit{B}. \textit{B}, the cells on either side of the boundary at an
+    exaggerated horizontal scale; the inland cell is shaded gray, the first column of
+    coastal cells red, and the red lines are the 40 exchange connections.
+    }{fig:ex-gwt-henry-mm-grid}{../figures/ex-gwt-henry-mm-grid.png}
+\end{StandardFigure}
+
+% initial conditions and boundary conditions
+Freshwater enters the landward end of the inland model at 5.7024 $m^3/d$ through a well (WEL) package cell. The seaward end of the coastal model is a constant-head (CHD) boundary held at 1 $m$ in every layer, with an auxiliary concentration of 35 $kg/m^3$ passed to the source and sink mixing (SSM) package: water entering the coastal model enters at the concentration of seawater, and water leaving it leaves at the concentration computed for the boundary cell. Fluid density increases at 0.7 $kg/m^3$ per unit of concentration. Flow is steady state; transport runs 500 time steps over 0.5 $d$.
+
+The coastal model begins fresh and the wedge advances landward, rather than beginning at the concentration of seawater and retreating. Water crossing the boundary into the coastal model carries no solute, because the exchange is not one of the boundary packages the transport model draws its solute budget from. Where that water is fresh this is exact rather than approximate, since fresh water carries no solute, and beginning fresh keeps flow across the boundary seaward at every cell and time step. A coastal model fresh everywhere would stay fresh: with uniform density the constant-head boundary only discharges, and salt is admitted only where water enters. The seaward column is given the concentration of seawater while the rest of the coastal model begins fresh.
+
+% for examples without scenarios
+\subsection{Example Results}
+
+Simulated relative salinity and specific discharge at 0.5 $d$ are shown in figure~\ref{fig:ex-gwt-henry-mm-conc}. A wedge forms with a zone of recirculating seawater at the seaward boundary, and the inland model, which does not simulate transport, delivers fresh water across the boundary as a single layer.
+
+\begin{StandardFigure}{
+    Simulated relative salinity and specific discharge at 0.5 $d$. Relative salinity
+    is concentration divided by the concentration of seawater. Contours are drawn at
+    0.1, 0.5, and 0.9. The inland model does not simulate transport and is drawn at
+    zero salinity. Arrow length is proportional to specific discharge; arrows in the
+    inland model lie at mid-depth of the single layer. The dashed line is the
+    boundary between the models.
+    }{fig:ex-gwt-henry-mm-conc}{../figures/ex-gwt-henry-mm-conc.png}
+\end{StandardFigure}
+
+One model with the same discretization as the inland and coastal models was developed for comparison. Its unstructured (DISU) grid holds every cell in both and joins them with the same 40 staggered connections, declared in the grid rather than in an exchange. Both simulations begin from the same initial condition, so the division accounts for any difference in salinity. The two agree to 0.07 $kg/m^3$ root mean square over the coastal model and differ by at most 0.48 $kg/m^3$, about 1 percent of the concentration of seawater. The division moves the contour at half the concentration of seawater 4 $mm$ at the base of the aquifer and 1 $mm$ or less above mid-depth (fig.~\ref{fig:ex-gwt-henry-mm-compare}). The largest offset, 10 $mm$, falls on the most dilute contour at the base, where the salinity gradient is weakest and a small difference in salinity carries a contour a long way.
+
+The two differ because of the buoyancy term the exchange leaves out. Both deliver the specified 5.7024 $m^3/d$ across the boundary but distribute it differently with depth. In the one-model simulation buoyancy accounts for \num{-0.545} $m^3/d$ of the flow on those connections, and the difference in head adjusts to compensate; the two-model simulation delivers 54 percent more fresh water through the lowest connection and less through the upper ones, redistributing as much as 18 percent of the mean flow per connection. Buoyancy matters here because the difference in head across the boundary is only $2.5 \times 10^{-4}$ $m$, comparable to the buoyancy of the slightly saline boundary column, 0.04 to 0.30 $kg/m^3$, acting over a vertical offset of as much as 0.5 $m$. Fresh water delivered lower holds the wedge back, so the toe of the two-model simulation sits 4 $mm$ seaward.
+
+The two-model simulation cannot reproduce the salt that reaches the inland portion of the domain. The one-model simulation carries salinity to 0.04 $kg/m^3$ landward of the boundary by dispersion against the flow; the inland model does not simulate transport and has no solute mass. The amount scales with dispersivity and with how close the boundary between the models is to the toe, and should guide where that boundary is placed.
+
+The division rests on the inland portion staying fresh. The transport model assembles its balance from the boundary packages of the coastal flow model, and the GWF-GWF exchange is not one of them, so the flows across the boundary are absent from the transport equation for the cells along the edge. Omitting them is the same as assuming they carry no solute, which is exact while the water crossing is fresh and wrong as soon as it is not: beginning at the concentration of seawater reverses the flow for the first 0.03 $d$, salt that should leave the coastal model stays behind, salinity in the boundary column reaches 157 $kg/m^3$, and the transport solution does not converge at the time step used here. Simulating transport on the inland model as well would lift the restriction, but only where that model is small enough for the added transport solution to stay cheap.
+
+\begin{StandardFigure}{
+    Relative salinity contours of the two-model and one-model simulations at 0.5 $d$,
+    on the relative salinity field of the two-model simulation. Both hold the same
+    cells and connections, so the separation between the two sets of contours is caused
+    by the division.
+    }{fig:ex-gwt-henry-mm-compare}{../figures/ex-gwt-henry-mm-compare.png}
+\end{StandardFigure}
