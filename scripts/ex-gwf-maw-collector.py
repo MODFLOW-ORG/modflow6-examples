@@ -4,11 +4,11 @@
 # horizontal laterals that radiate outward near the base of an aquifer. The
 # caisson is not screened, so water enters the well only through the laterals.
 # This example represents a radial collector well as a single multi-aquifer well
-# with an inactive connection for the caisson and one horizontal connection to
-# each cell a lateral passes through. A steady-state simulation shows the head
-# field around the well, and a transient simulation of pumping and recovery,
-# with storage in the well, compares the well head with the laterals
-# represented as horizontal connections and as thin vertical screens.
+# with one horizontal connection to each cell a lateral passes through and no
+# connection for the caisson. A steady-state simulation shows the head field
+# around the well, and a transient simulation of pumping and recovery, with
+# storage in the well, compares the well head with the laterals represented as
+# horizontal connections and as thin vertical screens.
 
 # ### Initial setup
 #
@@ -89,9 +89,9 @@ tsmult = 1.2  # Time step multiplier
 # Static temporal data used by TDIS file
 tdis_ds = ((perlen, nstp, tsmult), (perlen, nstp, tsmult))
 
-# The caisson is in the center cell and its connection is inactive. Each
-# lateral is a horizontal borehole near the base of the aquifer, so its
-# connection is screened over one well diameter.
+# The caisson is in the center cell and has no connection. Each lateral is a
+# horizontal borehole near the base of the aquifer, so its connection is
+# screened over one well diameter.
 caisson = (0, nrow // 2, ncol // 2)
 
 # Every scenario is in its own folder, so the flow model has one name
@@ -171,19 +171,18 @@ def build_models(name, transient=True, horizontal=True):
                 chdspd.append([(0, i, j), strt])
     flopy.mf6.ModflowGwfchd(gwf, stress_period_data=chdspd, pname="CHD")
 
-    # one well head for the caisson and the four laterals. The first connection
-    # is the unscreened caisson, a vertical connection that is inactive. Each
-    # lateral cell is a separate connection, horizontal (90 degrees) and one
-    # cell long, when the length correction is applied, or a vertical screen one
-    # well diameter long when it is not.
-    connectiondata = [[0, 0, caisson, top, botm, k_skin, skin_radius]]
+    # one well head for the caisson and the four laterals. The caisson is not
+    # screened, so it has no connection. Each lateral cell is a separate
+    # connection, horizontal (90 degrees) and one cell long, when the length
+    # correction is applied, or a vertical screen one well diameter long when
+    # it is not.
+    connectiondata = []
     angledata = []
-    for icon, cellid in enumerate(lateral_cellids(), start=1):
+    for icon, cellid in enumerate(lateral_cellids()):
         connectiondata.append(
             [0, icon, cellid, screen_top, screen_bot, k_skin, skin_radius]
         )
         angledata.append([0, icon, 90.0, delr])
-    caisson_status = [0, "connection_status", 0, "inactive"]
     rate = transient_rate if transient else steady_rate
     maw_kwargs = {
         "save_flows": True,
@@ -194,12 +193,12 @@ def build_models(name, transient=True, horizontal=True):
     }
     if transient:
         maw_kwargs["perioddata"] = {
-            0: [caisson_status, [0, "rate", -rate]],
+            0: [[0, "rate", -rate]],
             1: [[0, "rate", 0.0]],
         }
         maw_kwargs["observations"] = {f"{gwf_name}.maw.obs.csv": [("head", "head", 1)]}
     else:
-        maw_kwargs["perioddata"] = {0: [caisson_status, [0, "rate", -rate]]}
+        maw_kwargs["perioddata"] = {0: [[0, "rate", -rate]]}
     if horizontal:
         maw_kwargs["non_vertical_wells"] = True
         maw_kwargs["angledata"] = angledata
@@ -317,8 +316,7 @@ def plot_well_schematic(silent=True):
         ax.zaxis.set_rotate_label(False)
         ax.set_zlabel("Elevation,\nin meters", labelpad=10, rotation=90)
 
-        # connection numbers: the caisson, the first connection of each lateral,
-        # and every tenth connection
+        # connection numbers: the first and last connection of each lateral
         label_connections(ax, xc, yc)
         handles = [
             Line2D([], [], color="red", lw=2.0, label="Lateral"),
@@ -372,9 +370,7 @@ def label_connections(ax, xc, yc):
         },
         "zorder": 10,
     }
-    ax.annotate("1", xy=project(xc, yc, top), xytext=(0.0, 12.0), **text_kwargs)
-
-    icon = 2
+    icon = 1
     for di, dj in lateral_directions:
         # connections are labeled below the lateral on the page, between the
         # lateral and the outline of the aquifer; the first connection is
