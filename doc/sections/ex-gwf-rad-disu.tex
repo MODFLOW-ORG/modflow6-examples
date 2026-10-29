@@ -10,7 +10,7 @@ This example replicates in MODFLOW 6 using FloPy the ``Pumping Well'' radial mod
 % spatial discretization 
 The example consists of a multi-layer, radial model representing an unconfined, homogeneous, and isotropic aquifer with a partially penetrating well. The radial grid represents the horizontal direction and is composed of 22 radial bands that vary in outer radius from 0.25 $ft$ to 2000 $ft$ 
 (fig.~\ref{fig:ex-gwf-rad-disu-grid}\textit{A}). Radial band 1 is a cylinder with a radius 0.25 $ft$ and radial band 22 is a hollow cylinder with an inner and outer radius of 1500 $ft$ and 2000 $ft$, respectively. The vertical direction consists of 25 uniform-layers that are 2 $ft$ thick; with a total aquifer thickness of 50 $ft$. A partially penetrating well is located at radial band 1 
-(fig.~\ref{fig:ex-gwf-rad-disu-grid}\textit{B}) and extracts water from the bottom 10 $ft$ (layer 21 to 25) at a rate of 4000 $ft^3/day$. The remaining model properties are summarized in table~\ref{tab:ex-gwf-radial-01}.
+(fig.~\ref{fig:ex-gwf-rad-disu-grid}\textit{B}) and extracts water from the bottom 10 $ft$ (layer 21 to 25) at a rate of 4000 $ft^3/day$. The remaining model properties are summarized in table~\ref{tab:ex-gwf-rad-disu-01}.
 
 \begin{StandardFigure}{
                                      Plan view of the two-dimensional, radial model grid.
@@ -30,7 +30,7 @@ The model simulation evaluates drawdown in response to pumping at an observation
 % boundary conditions
 
 % add static parameter table(s)
-\input{../tables/ex-gwf-radial-01.tex}
+\input{../tables/ex-gwf-rad-disu-01.tex}
 
 % Extra Section
 \subsection{Radial Setup with Unstructured Discretization (DISU)}

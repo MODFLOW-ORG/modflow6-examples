@@ -115,9 +115,9 @@ jobs:
           pandoc --version
 
       - name: Setup pixi
-        uses: prefix-dev/setup-pixi@v0.10.2
+        uses: prefix-dev/setup-pixi@v0.11.2
         with:
-          pixi-version: v0.41.4
+          pixi-version: v0.82.1
           manifest-path: modflow6-examples/pixi.toml
 
       - name: Set up headless display

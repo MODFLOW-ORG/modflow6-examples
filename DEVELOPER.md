@@ -323,8 +323,8 @@ GitHub Actions automatically creates a new release whenever code is merged into 
 
 GitHub Actions will run the following steps:
 
-1. Build MF6 from the target branch.
-2. Regenerate flopy modules suitable for this version of MF6.
+1. Build MF6 from its `develop` branch.
+2. Regenerate flopy modules from the corresponding definition files, in release mode.
 3. Generate example model input files. (We only distribute input files, not output files.)
 4. Build the PDF documentation as described above.
 5. Create a draft release and upload the documentation PDF and a zip archive of model input files as assets.
