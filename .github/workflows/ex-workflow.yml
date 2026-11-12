@@ -95,7 +95,7 @@ jobs:
       - name: Create example models
         working-directory: modflow6-examples/autotest
         # run the scripts via pytest without running the models, just build input files
-        run: pixi run pytest -v -n=auto --durations=0 test_scripts.py --init
+        run: pixi run pytest -v -n=auto --dist=worksteal --durations=0 test_scripts.py --init
 
       - name: Make zipfile
         working-directory: modflow6-examples
@@ -184,7 +184,7 @@ jobs:
 
       - name: Run examples, make plots
         working-directory: modflow6-examples/autotest
-        run: pixi run pytest -v -n=auto --durations=0 test_scripts.py --plot
+        run: pixi run pytest -v -n=auto --dist=worksteal --durations=0 test_scripts.py --plot
 
       - name: Run postprocessing
         working-directory: modflow6-examples/scripts
