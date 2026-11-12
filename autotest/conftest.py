@@ -8,6 +8,8 @@ from numpy.typing import NDArray
 pytest_plugins = ["modflow_devtools.fixtures", "modflow_devtools.snapshots"]
 
 EXCLUDE = []
+# slowest first, so they don't straggle at the end of parallel runs
+SLOW = ["ex-gwf-sagehen", "ex-gwt-rotate", "ex-gwt-uzt-2d", "ex-gwt-hecht-mendez"]
 PROJ_ROOT = Path(__file__).parents[1]
 SCRIPTS_PATH = PROJ_ROOT / "scripts"
 TABLES_PATH = PROJ_ROOT / "tables"
@@ -157,3 +159,13 @@ def pytest_generate_tests(metafunc):
             if file.stem not in EXCLUDE
         }
         metafunc.parametrize("example_script", scripts.values(), ids=scripts.keys())
+
+
+def pytest_collection_modifyitems(items):
+    def rank(item):
+        for i, name in enumerate(SLOW):
+            if f"[{name}.py]" in item.nodeid:
+                return i
+        return len(SLOW)
+
+    items.sort(key=rank)
