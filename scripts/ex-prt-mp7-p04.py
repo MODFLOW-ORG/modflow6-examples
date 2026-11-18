@@ -22,7 +22,6 @@ from pathlib import Path
 from pprint import pformat
 
 import flopy
-import flopy.utils.binaryfile as bf
 import git
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -609,9 +608,10 @@ def build_prt():
     flopy.mf6.ModflowPrtfmi(
         prt,
         packagedata=[
-            ("GWFHEAD", Path(f"../{gwf_ws.name}/{headfile_bkwd}")),
-            ("GWFBUDGET", Path(f"../{gwf_ws.name}/{budgetfile_bkwd}")),
+            ("GWFHEAD", Path(f"../{gwf_ws.name}/{headfile}")),
+            ("GWFBUDGET", Path(f"../{gwf_ws.name}/{budgetfile}")),
         ],
+        backward=True,
     )
 
     # Create an explicit model solution (EMS) for the MODFLOW 6 prt model
@@ -658,16 +658,6 @@ def build_models():
     return gwfsim, prtsim, mp7sim
 
 
-def reverse_budgetfile(fpth, rev_fpth, tdis):
-    f = bf.CellBudgetFile(fpth, tdis=tdis)
-    f.reverse(rev_fpth)
-
-
-def reverse_headfile(fpth, rev_fpth, tdis):
-    f = bf.HeadFile(fpth, tdis=tdis)
-    f.reverse(rev_fpth)
-
-
 def write_models(*sims, silent=False):
     for sim in sims:
         if isinstance(sim, MFSimulation):
@@ -684,11 +674,6 @@ def run_models(*sims, silent=False):
         else:
             success, buff = sim.run_model(silent=silent, report=True)
         assert success, pformat(buff)
-
-        if "gwf" in sim.name:
-            # Reverse budget and head files for backward tracking
-            reverse_budgetfile(gwf_ws / budgetfile, gwf_ws / budgetfile_bkwd, sim.tdis)
-            reverse_headfile(gwf_ws / headfile, gwf_ws / headfile_bkwd, sim.tdis)
 
 
 # -
@@ -960,6 +945,6 @@ def scenario(silent=False):
 
 
 # Now run the scenario for example problem 4.
-scenario(silent=False)
+scenario()
 
 # -
