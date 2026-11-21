@@ -1,9 +1,11 @@
-from collections.abc import Callable
+from functools import partial
+from io import BytesIO
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
-from numpy.typing import NDArray
+from modflow_devtools.snapshots import BinaryArrayExtension
 
 pytest_plugins = ["modflow_devtools.fixtures", "modflow_devtools.snapshots"]
 
@@ -17,47 +19,40 @@ IMAGES_PATH = PROJ_ROOT / "images"
 FIGURES_PATH = PROJ_ROOT / "figures"
 EXAMPLES_PATH = PROJ_ROOT / "examples"
 NOTEBOOKS_PATH = PROJ_ROOT / ".doc" / "_notebooks"
-SNAPSHOT_CONFIG: dict[str, dict[str, Callable[[Path], NDArray]]] = {
+# a rounded snapshot value can flip its last digit when solver roundoff
+# changes, so a value may differ from its snapshot by one unit in its last
+# rounded decimal (plus float noise); regenerate snapshots at each mf6 release
+SNAPSHOT_UNIT_FACTOR = 1.1
+
+
+def load_csv(path: Path, decimals: int, drop=()) -> np.recarray:
+    """Load a CSV output file as a rounded record array."""
+    df = pd.read_csv(path).drop(columns=list(drop))
+    return df.round(decimals).to_records(index=False)
+
+
+SNAPSHOT_CONFIG: dict[str, dict[str, partial]] = {
     # TODO: support multiple snapshot files. this is a dictionary to leave the door open for that.
     "ex-gwt-keating": {
-        "mf6prt/track.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "mf6prt/track.trk.csv": partial(load_csv, decimals=2, drop=["name"]),
     },
     "ex-gwf-maw-collector": {
-        "ex-gwf-maw-collector-b/collector.maw.obs.csv": lambda p: pd.read_csv(p)
-        .round(6)
-        .to_records(index=False),
+        "ex-gwf-maw-collector-b/collector.maw.obs.csv": partial(load_csv, decimals=6),
     },
     "ex-gwf-hwell": {
-        "ex-gwf-hwell-b/ex-gwf-hwell-b.maw.obs.csv": lambda p: pd.read_csv(p)
-        .round(6)
-        .to_records(index=False),
+        "ex-gwf-hwell-b/ex-gwf-hwell-b.maw.obs.csv": partial(load_csv, decimals=6),
     },
     "ex-prt-mp7-p01": {
-        "prt/mp7-p01-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p01-prt.trk.csv": partial(load_csv, decimals=2, drop=["name"]),
     },
     "ex-prt-mp7-p02": {
-        "prt/mp7-p02-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p02-prt.trk.csv": partial(load_csv, decimals=2, drop=["name"]),
     },
     "ex-prt-mp7-p03": {
-        "prt/mp7-p03-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p03-prt.trk.csv": partial(load_csv, decimals=2, drop=["name"]),
     },
     "ex-prt-mp7-p04": {
-        "prt/mp7-p04-prt.trk.csv": lambda p: pd.read_csv(p)
-        .drop("name", axis=1)
-        .round(2)
-        .to_records(index=False),
+        "prt/mp7-p04-prt.trk.csv": partial(load_csv, decimals=2, drop=["name"]),
     },
 }
 
@@ -94,17 +89,45 @@ def gif(request, plot) -> bool:
     return plot and not request.config.getoption("--no-gif")
 
 
+class TolerantArrayExtension(BinaryArrayExtension):
+    """Binary array snapshot that compares numeric fields with a tolerance."""
+
+    atol = 0.0
+
+    def matches(self, *, serialized_data, snapshot_data) -> bool:
+        if snapshot_data is None:
+            return False
+        received = np.load(BytesIO(serialized_data))
+        expected = np.load(BytesIO(snapshot_data))
+        if received.dtype != expected.dtype or received.shape != expected.shape:
+            return False
+        for name in received.dtype.names or (None,):
+            a = received if name is None else received[name]
+            b = expected if name is None else expected[name]
+            if np.issubdtype(a.dtype, np.number):
+                if not np.allclose(a, b, rtol=0.0, atol=self.atol, equal_nan=True):
+                    return False
+            elif not np.array_equal(a, b):
+                return False
+        return True
+
+
 @pytest.fixture
-def snapshot_config(
-    request, example_script, array_snapshot
-) -> dict[str, Callable[[Path], NDArray]] | None:
+def snapshot_config(request, example_script, snapshot):
     if request.config.getoption("--snapshot-disable"):
         return None
     example_name = Path(example_script).stem
     config = SNAPSHOT_CONFIG.get(example_name, {})
-    if config:
-        print(f"Snapshot file for {example_name}: {list(config.keys())[0]}")  # noqa: RUF015
-    return (config, array_snapshot) if any(config) else None
+    if not config:
+        return None
+    print(f"Snapshot file for {example_name}: {list(config.keys())[0]}")  # noqa: RUF015
+    decimals = min(load.keywords["decimals"] for load in config.values())
+    extension = type(
+        "TolerantArrayExtension",
+        (TolerantArrayExtension,),
+        {"atol": SNAPSHOT_UNIT_FACTOR * 10.0**-decimals},
+    )
+    return config, snapshot.use_extension(extension)
 
 
 def pytest_addoption(parser):
