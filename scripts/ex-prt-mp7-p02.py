@@ -32,7 +32,6 @@ from pathlib import Path
 from pprint import pformat
 
 import flopy
-import flopy.utils.binaryfile as bf
 import git
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -464,11 +463,13 @@ def build_prt_sim():
 
     # Instantiate the MODFLOW 6 prt flow model interface
     # using "time-reversed" budget and head files
+    gwf_headfile = f"{gwf_name}.hds"
+    gwf_budgetfile = f"{gwf_name}.cbb"
     pd = [
-        ("GWFHEAD", Path(f"../{gwf_ws.name}/{headfile_bkwd}")),
-        ("GWFBUDGET", Path(f"../{gwf_ws.name}/{budgetfile_bkwd}")),
+        ("GWFHEAD", Path(f"../{gwf_ws.name}/{gwf_headfile}")),
+        ("GWFBUDGET", Path(f"../{gwf_ws.name}/{gwf_budgetfile}")),
     ]
-    flopy.mf6.ModflowPrtfmi(prt, packagedata=pd)
+    flopy.mf6.ModflowPrtfmi(prt, packagedata=pd, backward=True)
 
     # Create an explicit model solution (EMS) for the MODFLOW 6 prt model
     ems = flopy.mf6.ModflowEms(
@@ -547,31 +548,8 @@ def run_models(*sims, silent=False):
             success, buff = sim.run_model(silent=silent, report=True)
         assert success, pformat(buff)
 
-        if "gwf" in sim.name:
-            # Reverse budget and head files for backward tracking
-            reverse_budgetfile(gwf_ws / budgetfile, gwf_ws / budgetfile_bkwd, sim.tdis)
-            reverse_headfile(gwf_ws / headfile, gwf_ws / headfile_bkwd, sim.tdis)
-
 
 # -
-
-# Because this problem tracks particles backwards, we need to reverse the head and budget files after running the groundwater flow model and before running the particle tracking model. Define functions to do this.
-
-# +
-
-
-def reverse_budgetfile(fpth, rev_fpth, tdis):
-    f = bf.CellBudgetFile(fpth, tdis=tdis)
-    f.reverse(rev_fpth)
-
-
-def reverse_headfile(fpth, rev_fpth, tdis):
-    f = bf.HeadFile(fpth, tdis=tdis)
-    f.reverse(rev_fpth)
-
-
-# -
-
 
 # Define a function to load pathline data from MODFLOW 6 PRT and MODPATH 7 pathline files.
 
